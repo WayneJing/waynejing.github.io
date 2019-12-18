@@ -375,7 +375,7 @@
 
       
         
-          <p><img src="/images/123.jpg" alt="1"></p>
+          <p><img src="/images/123.jpg" alt="1"><br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/06/2017-03-06-%E6%B7%B7%E5%90%88Copula%E5%87%BD%E6%95%B0%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/#more" rel="contents">
@@ -691,7 +691,6 @@
       
         
           <h1 id="Q-Q图"><a href="#Q-Q图" class="headerlink" title="Q-Q图"></a>Q-Q图</h1><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">%计算网格点上Copula分布函数值画QQ图</span></span><br><span class="line">Ccdf_n=copulacdf(<span class="string">'Gaussian'</span>,[Udata(:),Vdata(:)],rho_norm);</span><br><span class="line">Ccdf_t=copulacdf(<span class="string">'t'</span>,[Udata(:),Vdata(:)],rho_t,nuhat);</span><br><span class="line">Ccdf_G=copulacdf(<span class="string">'Gumbel'</span>,[Udata(:),Vdata(:)],paramhat_G);</span><br><span class="line">Ccdf_C=copulacdf(<span class="string">'Clayton'</span>,[Udata(:),Vdata(:)],paramhat_C);</span><br><span class="line">Ccdf_F=copulacdf(<span class="string">'Frank'</span>,[Udata(:),Vdata(:)],paramhat_F);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_n,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Normal Copula'</span>,<span class="string">'rho:'</span>,num2str(rho_norm(<span class="number">1</span>,<span class="number">2</span>))]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Normal'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_t,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'t-Copula'</span>,<span class="string">'rho:'</span>,num2str(rho_t(<span class="number">1</span>,<span class="number">2</span>)),<span class="string">'k:'</span>,num2str(nuhat)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'t'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_G,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Gumbel-Copula'</span>,<span class="string">'p_G:'</span>,num2str(paramhat_G)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Gumbel'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_C,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Clayton-Copula'</span>,<span class="string">'p_C'</span>,num2str(paramhat_C)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Clayton'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_F,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Frank-Copula'</span>,<span class="string">'p_F'</span>,num2str(paramhat_F)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Frank'</span>]);</span><br></pre></td></tr></table></figure>
-
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p> <img src="http://oag5ozkgs.bkt.clouddn.com/2in1_1.jpg" alt="qq图2"><br> <img src="http://oag5ozkgs.bkt.clouddn.com/3in1_1.jpg" alt="qq图3"></p>
           <!--noindex-->
           <div class="post-button text-center">
@@ -1007,13 +1006,13 @@
 
       
         
-          <p><a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28a48beacab57eaa1da8adc7ac58931c9a%29&filter=sc_long_sign&tn=SE_xueshusource_2kduw22v&sc_vurl=http%3A%2F%2Fwww.docin.com%2Fp-204143270.html%3Fref%3D360%26ref%3D360%26ref%3D360&ie=utf-8&sc_us=15886197312218780659" target="_blank" rel="noopener">1</a></p>
+          <p><a href="http://xueshu.baidu.com/s?wd=paperuri%3A%28a48beacab57eaa1da8adc7ac58931c9a%29&amp;filter=sc_long_sign&amp;tn=SE_xueshusource_2kduw22v&amp;sc_vurl=http%3A%2F%2Fwww.docin.com%2Fp-204143270.html%3Fref%3D360%26ref%3D360%26ref%3D360&amp;ie=utf-8&amp;sc_us=15886197312218780659" target="_blank" rel="noopener">1</a></p>
 <h1 id="二元Copula函数的定义以及性质"><a href="#二元Copula函数的定义以及性质" class="headerlink" title="二元Copula函数的定义以及性质"></a>二元Copula函数的定义以及性质</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义:"></a><strong>定义:</strong></h2><blockquote>
 <p>二元Copula函数是指满足以下性质的函数$C(u,v)$:</p>
 <ul>
 <li>$C(u,v)$ 的定义域为[0,1]x[0,1]；</li>
 <li>$C(u,v)$ 有零基面，并且是二维递增的；</li>
-<li>对任意$u,v\in [0,1]$，满足$C(u,1)=u，C(1,v)=v$。<br>所谓的有零基面是：至少存在一个$u_0\in[0,1]$ 和一个$v_0\in[0,1]$，使得$C(u_0,v)=0=C(u,v_0)$。<br>二维递增是指：对任意$0\le u_1\le u_2\le1$和$0\le v_1\le v_2\le1$，有<br>$$C(u_2,v_2)-C(u_2,v_1)-C(u_1,v_2)+C(u_1,v_1)\ge 0$$</li>
+<li>对任意$u,v\in [0,1]$，满足$C(u,1)=u，C(1,v)=v$。<br>所谓的有零基面是：至少存在一个$u_0\in[0,1]$ 和一个$v_0\in[0,1]$，使得$C(u_0,v)=0=C(u,v_0)$。<br>二维递增是指：对任意$0\le u_1\le u_2\le1$和$0\le v_1\le v_2\le1$，有<script type="math/tex; mode=display">C(u_2,v_2)-C(u_2,v_1)-C(u_1,v_2)+C(u_1,v_1)\ge 0</script></li>
 </ul>
 </blockquote>
           <!--noindex-->
@@ -1179,9 +1178,7 @@
 <li>如果Q-Q图是直线，当该直线成45度角并穿过原点时，说明分布与给定的正态分布完全一样。</li>
 <li>如果是成45度角但不穿过原点，说明均值与给定的正态分布不同</li>
 <li>如果是直线但不是45度角，说明均值与方差都与给定的分布不同。</li>
-<li>如果Q-Q图中间部分是直线，但是右边在直线下面，左边在直线上面，说明分布的峰度大于3，反之说明峰度小于3.</li>
-</ul>
-</blockquote>
+<li>如果Q-Q图中间部分是直线，但是右边在直线下面，左边在直线上面，说明分布的峰度大于3，反之说明峰度小于3.
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/27/2017-02-27-Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#more" rel="contents">
@@ -1339,7 +1336,7 @@
       
         
           <h1 id="关于研究目的"><a href="#关于研究目的" class="headerlink" title="关于研究目的"></a>关于研究目的</h1><p>由于风电基地的多个风电场地理位置比较靠近，且基本处于同一风带，风速之间具有较强的相关性，使得多个风电场的总体特性不同于单个风电场的特性。</p>
-<p>通过Copula理论进行多个风电场风俗的联合概率分布研究。</p>
+<p>通过Copula理论进行多个风电场风俗的联合概率分布研究。<br>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/21/2017-02-21-%E5%9F%BA%E4%BA%8ECopula%E7%90%86%E8%AE%BA%E7%9A%84%E9%A3%8E%E7%94%B5%E5%9C%BA%E9%97%B4%E5%BB%BA%E6%A8%A1/#more" rel="contents">
@@ -1550,163 +1547,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2016/10/23/2016-10-23-javaclass4/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/23/2016-10-23-javaclass4/" itemprop="url">Java第四次课</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T00:00:00+08:00">
-                2016-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2016/10/23/2016-10-23-javaclass4/" class="leancloud_visitors" data-flag-title="Java第四次课">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="1-基础面板搭建"><a href="#1-基础面板搭建" class="headerlink" title="1. 基础面板搭建"></a>1. 基础面板搭建</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/10/23/2016-10-23-javaclass4/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2016/10/23/2016-10-23-javaclass3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1814,6 +1654,163 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2016/10/23/2016-10-23-javaclass3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2016/10/23/2016-10-23-javaclass4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/10/23/2016-10-23-javaclass4/" itemprop="url">Java第四次课</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T00:00:00+08:00">
+                2016-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2016/10/23/2016-10-23-javaclass4/" class="leancloud_visitors" data-flag-title="Java第四次课">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="1-基础面板搭建"><a href="#1-基础面板搭建" class="headerlink" title="1. 基础面板搭建"></a>1. 基础面板搭建</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/10/23/2016-10-23-javaclass4/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>

@@ -388,8 +388,8 @@
         <h1 id="Q-Q图分析"><a href="#Q-Q图分析" class="headerlink" title="Q-Q图分析"></a>Q-Q图分析</h1><p><img src="http://oag5ozkgs.bkt.clouddn.com/2in1_1.jpg" alt="qq图2"><br><img src="http://oag5ozkgs.bkt.clouddn.com/3in1_1.jpg" alt="qq图3"></p>
 <p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">Q-Q图的判定原则</a>可知，各类Copula函数差别不 很 明 显，其 中Gumbel-Copula，Frank-Copula，t-Copula函数曲线均较为接近45°曲线，拟合效果相对较好。以下采用统计法</p>
 <a id="more"></a>
-
-<h1 id="K-S检验法"><a href="#K-S检验法" class="headerlink" title="K-S检验法"></a>K-S检验法</h1><table>
+<h1 id="K-S检验法"><a href="#K-S检验法" class="headerlink" title="K-S检验法"></a>K-S检验法</h1><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -400,7 +400,8 @@
 <th>$k_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>0.0406</td>
 <td>0.0395</td>
@@ -448,9 +449,12 @@
 <td>0.0385</td>
 <td>0.0156</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">K-S检验法的判定原则</a>可知，在六种不同的风电场组合中，Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数的 $KS$ 统计值相对较小，而Normal-Copula，Clayton-Copula的统计值相对较大</p>
-<h1 id="秩相关性测度"><a href="#秩相关性测度" class="headerlink" title="秩相关性测度"></a>秩相关性测度</h1><table>
+<h1 id="秩相关性测度"><a href="#秩相关性测度" class="headerlink" title="秩相关性测度"></a>秩相关性测度</h1><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>数据来源</th>
@@ -458,7 +462,8 @@
 <th>Spearman秩相关系数 $\rho_s$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>原始观测数据</td>
 <td>0.4816</td>
 <td>0.6628</td>
@@ -488,9 +493,12 @@
 <td>0.4592</td>
 <td>0.6465</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>通过与经验函数的Kendall秩相关系数，Spearman秩相关系数进行对比可以发现Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与原始数据保持着良好的秩相关性，而Normal-Copula，Clayton-Copula的秩相关性较差。</p>
-<h1 id="欧式距离"><a href="#欧式距离" class="headerlink" title="欧式距离"></a>欧式距离</h1><table>
+<h1 id="欧式距离"><a href="#欧式距离" class="headerlink" title="欧式距离"></a>欧式距离</h1><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -501,7 +509,8 @@
 <th>$d_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>2.8924</td>
 <td>2.8209</td>
@@ -549,10 +558,12 @@
 <td>4.8842</td>
 <td>1.4301</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>可以看到在以上6种风电场组合中Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与经验Copula函数的欧氏距离较小，而Normal-Copula，Clayton-Copula与经验函数的欧氏距离较大</p>
-<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>任何一个单一的Copula函数都不能够非常好的表达风电场的相依结构，因此考虑使用混合Copula函数，即将表现较好的3个Copula函数进行加权组合，即<br>$$C(u,v;a)=\omega_1C_{Gumbel}(u,v;\theta_1)+\omega_2C_{Frank}(u,v;\theta_2)+\omega_3C_t(u,v;\theta_3,k)$$</p>
-<p>其中 $\omega_1+ \omega_2+ \omega_3=1$</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>任何一个单一的Copula函数都不能够非常好的表达风电场的相依结构，因此考虑使用混合Copula函数，即将表现较好的3个Copula函数进行加权组合，即</p>
+<script type="math/tex; mode=display">C(u,v;a)=\omega_1C_{Gumbel}(u,v;\theta_1)+\omega_2C_{Frank}(u,v;\theta_2)+\omega_3C_t(u,v;\theta_3,k)</script><p>其中 $\omega_1+ \omega_2+ \omega_3=1$</p>
 
       
     </div>

@@ -390,26 +390,21 @@
 <li>如果Q-Q图是直线，当该直线成45度角并穿过原点时，说明分布与给定的正态分布完全一样。</li>
 <li>如果是成45度角但不穿过原点，说明均值与给定的正态分布不同</li>
 <li>如果是直线但不是45度角，说明均值与方差都与给定的分布不同。</li>
-<li>如果Q-Q图中间部分是直线，但是右边在直线下面，左边在直线上面，说明分布的峰度大于3，反之说明峰度小于3.</li>
+<li>如果Q-Q图中间部分是直线，但是右边在直线下面，左边在直线上面，说明分布的峰度大于3，反之说明峰度小于3.<a id="more"></a>
+</li>
 </ul>
+<p><a href="http://m.blog.csdn.net/article/details?id=52794839" target="_blank" rel="noopener"><strong>K-S检验法（Kolmogorov-Smirnov test）</strong></a><br>检验数据是否符合某种分布\<br>Kolmogorov-Smirnov是比较一个频率分布f(x)与理论分布g(x)或者两个观测值分布的检验方法。其原假设H0:两个数据分布一致或者数据符合理论分布。 $D=max| f(x)- g(x)|$ ，当实际观测值D&gt;D(n,α)则拒绝H0，否则则接受H0假设。\<br>KS检验与t-检验之类的其他方法不同是KS检验不需要知道数据的分布情况，可以算是一种非参数检验方法。当然这样方便的代价就是当检验的数据分布符合特定的分布事，KS检验的灵敏度没有相应的检验来的高。在样本量比较小的时候，KS检验最为非参数检验在分析两组数据之间是否不同时相当常用。\<br>PS：t-检验的假设是检验的数据满足正态分布，否则对于小样本不满足正态分布的数据用t-检验就会造成较大的偏差，虽然对于大样本不满足正态分布的数据而言t-检验还是相当精确有效的手段。\<br>本例中使用kstest2函数</p>
 </blockquote>
-<a id="more"></a>
-
-<blockquote>
-<p><a href="http://m.blog.csdn.net/article/details?id=52794839" target="_blank" rel="noopener"><strong>K-S检验法（Kolmogorov-Smirnov test）</strong></a><br>检验数据是否符合某种分布<br>Kolmogorov-Smirnov是比较一个频率分布f(x)与理论分布g(x)或者两个观测值分布的检验方法。其原假设H0:两个数据分布一致或者数据符合理论分布。 $D=max| f(x)- g(x)|$ ，当实际观测值D&gt;D(n,α)则拒绝H0，否则则接受H0假设。<br>KS检验与t-检验之类的其他方法不同是KS检验不需要知道数据的分布情况，可以算是一种非参数检验方法。当然这样方便的代价就是当检验的数据分布符合特定的分布事，KS检验的灵敏度没有相应的检验来的高。在样本量比较小的时候，KS检验最为非参数检验在分析两组数据之间是否不同时相当常用。<br>PS：t-检验的假设是检验的数据满足正态分布，否则对于小样本不满足正态分布的数据用t-检验就会造成较大的偏差，虽然对于大样本不满足正态分布的数据而言t-检验还是相当精确有效的手段。<br>本例中使用kstest2函数</p>
-</blockquote>
-<h1 id="对风电场风速进行处理——双参数威布尔分布"><a href="#对风电场风速进行处理——双参数威布尔分布" class="headerlink" title="对风电场风速进行处理——双参数威布尔分布"></a>对风电场风速进行处理——双参数威布尔分布</h1><p>双参数威布尔函数<br>$$F_w(x)=1-exp(-({x \over c})^k)$$<br>其概率密度函数为<br>$$P(x)={k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$<br>式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m/s$ 。</p>
+<h1 id="对风电场风速进行处理——双参数威布尔分布"><a href="#对风电场风速进行处理——双参数威布尔分布" class="headerlink" title="对风电场风速进行处理——双参数威布尔分布"></a>对风电场风速进行处理——双参数威布尔分布</h1><p>双参数威布尔函数</p>
+<script type="math/tex; mode=display">F_w(x)=1-exp(-({x \over c})^k)</script><p>其概率密度函数为</p>
+<script type="math/tex; mode=display">P(x)={k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)</script><p>式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m/s$ 。</p>
 <h1 id="Pearson相关系数"><a href="#Pearson相关系数" class="headerlink" title="Pearson相关系数"></a><a href="http://blog.csdn.net/wsywl/article/details/5727327" target="_blank" rel="noopener">Pearson相关系数</a></h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>皮尔逊相关也称为积差相关（或积矩相关）是英国统计学家皮尔逊于20世纪提出的一种计算直线相关的方法。在本例中主要用于对两组风速曲线的相关性进行表示</p>
 <p>假设有两个变量X、Y，那么两变量间的皮尔逊相关系数可通过以下公式计算：</p>
 <p>公式一：</p>
-<p>$$ \rho_{X,Y}={cov(X,Y) \over \sigma_X \sigma_Y}={E((X-\mu_X)(Y-\mu_Y))\over  \sigma_X \sigma_Y}={E(XY)-E(X)E(Y)\over \sqrt{E(X^2)-E^2(X)}\sqrt{E(Y^2)-E^2(Y)}}$$</p>
-<p>公式二：</p>
-<p>$$\rho_{X,Y}={N\sum{XY}-\sum{X} \sum{Y} \over\sqrt{N\sum{X^2}-(\sum{X})^2}\sqrt{N\sum{Y^2}-(\sum{Y})^2}}$$</p>
-<p>公式三：</p>
-<p>$$\rho_{X,Y}={\sum(X-\overline{X})(Y-\overline{Y}) \over\sqrt{\sum(X-\overline{X})^2\sum(Y-\overline{Y})^2}}$$</p>
-<p>公式四：</p>
-<p>$$\rho_{X,Y}={\sum{XY}-{\sum{X}\sum{Y}\over N}\over\sqrt{(\sum{X^2}-{(\sum{X})^2\over N})}\sqrt{(\sum{Y^2}-{(\sum{Y})^2\over N})}}$$</p>
-<p>以上列出的四个公式等价，其中E是数学期望，cov表示协方差，N表示变量取值的个数。</p>
+<script type="math/tex; mode=display">\rho_{X,Y}={cov(X,Y) \over \sigma_X \sigma_Y}={E((X-\mu_X)(Y-\mu_Y))\over  \sigma_X \sigma_Y}={E(XY)-E(X)E(Y)\over \sqrt{E(X^2)-E^2(X)}\sqrt{E(Y^2)-E^2(Y)}}</script><p>公式二：</p>
+<script type="math/tex; mode=display">\rho_{X,Y}={N\sum{XY}-\sum{X} \sum{Y} \over\sqrt{N\sum{X^2}-(\sum{X})^2}\sqrt{N\sum{Y^2}-(\sum{Y})^2}}</script><p>公式三：</p>
+<script type="math/tex; mode=display">\rho_{X,Y}={\sum(X-\overline{X})(Y-\overline{Y}) \over\sqrt{\sum(X-\overline{X})^2\sum(Y-\overline{Y})^2}}</script><p>公式四：</p>
+<script type="math/tex; mode=display">\rho_{X,Y}={\sum{XY}-{\sum{X}\sum{Y}\over N}\over\sqrt{(\sum{X^2}-{(\sum{X})^2\over N})}\sqrt{(\sum{Y^2}-{(\sum{Y})^2\over N})}}</script><p>以上列出的四个公式等价，其中E是数学期望，cov表示协方差，N表示变量取值的个数。</p>
 <h2 id="适用范围"><a href="#适用范围" class="headerlink" title="适用范围"></a>适用范围</h2><p>当两个变量的标准差都不为零时，相关系数才有定义，皮尔逊相关系数适用于：</p>
 <ol>
 <li><p>两个变量之间是线性关系，都是连续数据。</p>

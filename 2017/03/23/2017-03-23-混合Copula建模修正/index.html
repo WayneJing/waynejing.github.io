@@ -397,10 +397,9 @@
 <li>Frank-Copula参数定义域为$(-\infty,+\infty)$</li>
 </ul>
 <a id="more"></a>
-
 <h2 id="参数更新部分"><a href="#参数更新部分" class="headerlink" title="参数更新部分"></a>参数更新部分</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[turntheta,fval,exitflag,output,grad,hessian]</span>=<span class="title">updatetheta</span><span class="params">(N,U,V,theta,puz,t,n,nuhat)</span></span></span><br><span class="line">options=optimset(<span class="string">'Display'</span>,<span class="string">'iter-detailed'</span>,<span class="string">'MaxFunEvals'</span>,<span class="number">1000</span>,<span class="string">'TolFun'</span>,<span class="number">1e-6</span>,<span class="string">'TolX'</span>,<span class="number">1e-10</span>,<span class="string">'LargeScale'</span>,<span class="string">'on'</span>,<span class="string">'FinDiffType'</span>,<span class="string">'central'</span>,<span class="string">'HessUpdate'</span>,<span class="string">'bfgs'</span>);</span><br><span class="line">[turntheta,fval,exitflag,output,grad,hessian]=fminunc(@utheta,theta,options);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">utheta</span><span class="params">(theta)</span></span></span><br><span class="line"><span class="keyword">if</span> theta(<span class="number">3</span>)==<span class="number">0</span></span><br><span class="line">    theta(<span class="number">3</span>)=theta(<span class="number">3</span>)+<span class="number">0.0001</span>;  <span class="comment">%防止出现 Frank  Copula 的相依结构参数为 0</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">y=<span class="number">0</span>;</span><br><span class="line">th=<span class="built_in">eye</span>(<span class="number">2</span>);</span><br><span class="line">th1=<span class="built_in">eye</span>(<span class="number">2</span>);</span><br><span class="line">th(<span class="number">1</span>,<span class="number">2</span>)=<span class="built_in">atan</span>(theta(<span class="number">1</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line">th(<span class="number">2</span>,<span class="number">1</span>)=<span class="built_in">atan</span>(theta(<span class="number">1</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line">th1(<span class="number">1</span>,<span class="number">2</span>)=<span class="built_in">atan</span>(theta(<span class="number">4</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line">th1(<span class="number">2</span>,<span class="number">1</span>)=<span class="built_in">atan</span>(theta(<span class="number">4</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">j</span>=<span class="number">1</span>:N</span><br><span class="line"></span><br><span class="line">    y=y+<span class="built_in">log</span>(((det(th))^(<span class="number">-1</span>/<span class="number">2</span>))*<span class="built_in">gamma</span>((nuhat+<span class="number">2</span>)/<span class="number">2</span>)*<span class="built_in">gamma</span>(nuhat/<span class="number">2</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,:)*th^(<span class="number">-1</span>)*t(<span class="built_in">j</span>,:)'/nuhat)^(-(nuhat+<span class="number">2</span>)/<span class="number">2</span>)/((<span class="built_in">gamma</span>((nuhat+<span class="number">1</span>)/<span class="number">2</span>))^<span class="number">2</span>*((<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">1</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">2</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>))))*puz(<span class="built_in">j</span>,<span class="number">1</span>)+...</span><br><span class="line">        <span class="built_in">log</span>(<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)+(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>))^(<span class="number">1</span>/(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)))*(<span class="built_in">log</span>(U(<span class="built_in">j</span>))*<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^((<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)<span class="number">-1</span>)*(((-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^((<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>))+(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^((<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)))^(<span class="number">1</span>/(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>))+(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)<span class="number">-1</span>)/(U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*((-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^((<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>))+(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^((<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>)))^(<span class="number">2</span><span class="number">-1</span>/(<span class="built_in">exp</span>(theta(<span class="number">2</span>))+<span class="number">1</span>))))*puz(<span class="built_in">j</span>,<span class="number">2</span>)+...</span><br><span class="line">        <span class="built_in">log</span>(theta(<span class="number">3</span>)*(<span class="number">1</span>-<span class="built_in">exp</span>(-theta(<span class="number">3</span>)))*<span class="built_in">exp</span>(-theta(<span class="number">3</span>)*(U(<span class="built_in">j</span>)+V(<span class="built_in">j</span>)))/((<span class="number">1</span>-<span class="built_in">exp</span>(-theta(<span class="number">3</span>)))-(<span class="number">1</span>-<span class="built_in">exp</span>(-theta(<span class="number">3</span>)*U(<span class="built_in">j</span>)))*(<span class="number">1</span>-<span class="built_in">exp</span>(-theta(<span class="number">3</span>)*V(<span class="built_in">j</span>))))^<span class="number">2</span>)*puz(<span class="built_in">j</span>,<span class="number">3</span>)+...</span><br><span class="line">        <span class="built_in">log</span>((det(th1))^(<span class="number">-1</span>/<span class="number">2</span>)*<span class="built_in">exp</span>(<span class="number">-1</span>/<span class="number">2</span>*n(<span class="built_in">j</span>,:)*(th1^(<span class="number">-1</span>)-<span class="built_in">eye</span>(<span class="number">2</span>))*n(<span class="built_in">j</span>,:)'))*puz(<span class="built_in">j</span>,<span class="number">4</span>)+...</span><br><span class="line">        <span class="built_in">log</span>((<span class="number">1</span>+<span class="built_in">exp</span>(theta(<span class="number">5</span>)))*(U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>))^(-<span class="built_in">exp</span>(theta(<span class="number">5</span>))<span class="number">-1</span>)*(U(<span class="built_in">j</span>)^(-<span class="built_in">exp</span>(theta(<span class="number">5</span>)))+V(<span class="built_in">j</span>)^(-<span class="built_in">exp</span>(theta(<span class="number">5</span>)))<span class="number">-1</span>)^(<span class="number">-2</span><span class="number">-1</span>/<span class="built_in">exp</span>(theta(<span class="number">5</span>))))*puz(<span class="built_in">j</span>,<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">y=-y;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-
-<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h1><h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><table>
+<h1 id="结果分析"><a href="#结果分析" class="headerlink" title="结果分析"></a>结果分析</h1><h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>Copula函数</th>
@@ -409,7 +408,8 @@
 <th>$k$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>t-Copula</td>
 <td>0.9678</td>
 <td>0.1075</td>
@@ -439,12 +439,15 @@
 <td>0.0864</td>
 <td></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h2 id="Q-Q图"><a href="#Q-Q图" class="headerlink" title="Q-Q图"></a>Q-Q图</h2><p>与3个Copula函数混合时的模型相比：</p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula.jpg" alt="3个Copula函数混合Q-Q图"></p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula_new.jpg" alt="5个Copula函数混合Q-Q图"></p>
 <p>由于不是定量分析，对比效果不明显，以下采用定量分析</p>
-<h2 id="KS检验"><a href="#KS检验" class="headerlink" title="KS检验"></a>KS检验</h2><table>
+<h2 id="KS检验"><a href="#KS检验" class="headerlink" title="KS检验"></a>KS检验</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -457,7 +460,8 @@
 <th>$K_{5M}$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>北大桥，干河口</td>
 <td>0.0395</td>
 <td>0.0343</td>
@@ -467,9 +471,12 @@
 <td>0.0271</td>
 <td>0.0260</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>可以看出5个Copula混合时的模型较3个Copula混合时的效果更好</p>
-<h2 id="欧式距离"><a href="#欧式距离" class="headerlink" title="欧式距离"></a>欧式距离</h2><table>
+<h2 id="欧式距离"><a href="#欧式距离" class="headerlink" title="欧式距离"></a>欧式距离</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -482,7 +489,8 @@
 <th>$d_{5M}$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>北大桥，干河口</td>
 <td>3.6952</td>
 <td>2.4590</td>
@@ -492,11 +500,17 @@
 <td>1.3220</td>
 <td>1.2730</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>从欧氏距离上也能够得到与KS检验中同样的结果</p>
 <h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>综上，可以将混合Copula模型更新为如下形式</p>
-<p>$$<br>\begin{aligned}<br>C(u,v;a)= &amp; 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)<br>+\<br>&amp; 0.5502C_{Gumbel}(u,v;3.7781)+0.1946C_{Frank}(u,v;9.8959)+0.0864C_{Clayton}(u,v;0.0049)<br>\end{aligned}<br> $$</p>
-<p>PS:以上程序跑了9个小时，由于本人电脑运算处理速度问题，暂且限制在该精度下，但是结果仍可更加精确，后面会使用工作站进行进一步的精确计算</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+C(u,v;a)= & 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)
++\\
+& 0.5502C_{Gumbel}(u,v;3.7781)+0.1946C_{Frank}(u,v;9.8959)+0.0864C_{Clayton}(u,v;0.0049)
+\end{aligned}</script><p>PS:以上程序跑了9个小时，由于本人电脑运算处理速度问题，暂且限制在该精度下，但是结果仍可更加精确，后面会使用工作站进行进一步的精确计算</p>
 
       
     </div>

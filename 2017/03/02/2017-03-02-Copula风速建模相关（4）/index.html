@@ -388,14 +388,12 @@
 
       
         <h1 id="Q-Q图"><a href="#Q-Q图" class="headerlink" title="Q-Q图"></a>Q-Q图</h1><h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">%计算网格点上Copula分布函数值画QQ图</span></span><br><span class="line">Ccdf_n=copulacdf(<span class="string">'Gaussian'</span>,[Udata(:),Vdata(:)],rho_norm);</span><br><span class="line">Ccdf_t=copulacdf(<span class="string">'t'</span>,[Udata(:),Vdata(:)],rho_t,nuhat);</span><br><span class="line">Ccdf_G=copulacdf(<span class="string">'Gumbel'</span>,[Udata(:),Vdata(:)],paramhat_G);</span><br><span class="line">Ccdf_C=copulacdf(<span class="string">'Clayton'</span>,[Udata(:),Vdata(:)],paramhat_C);</span><br><span class="line">Ccdf_F=copulacdf(<span class="string">'Frank'</span>,[Udata(:),Vdata(:)],paramhat_F);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_n,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Normal Copula'</span>,<span class="string">'rho:'</span>,num2str(rho_norm(<span class="number">1</span>,<span class="number">2</span>))]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Normal'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_t,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'t-Copula'</span>,<span class="string">'rho:'</span>,num2str(rho_t(<span class="number">1</span>,<span class="number">2</span>)),<span class="string">'k:'</span>,num2str(nuhat)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'t'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_G,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Gumbel-Copula'</span>,<span class="string">'p_G:'</span>,num2str(paramhat_G)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Gumbel'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_C,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Clayton-Copula'</span>,<span class="string">'p_C'</span>,num2str(paramhat_C)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Clayton'</span>]);</span><br><span class="line"><span class="built_in">figure</span>;</span><br><span class="line">qqplot(<span class="built_in">reshape</span>(CopulaEmpirical,<span class="built_in">size</span>(Udata)),<span class="built_in">reshape</span>(Ccdf_F,<span class="built_in">size</span>(Udata)),<span class="string">'b'</span>);</span><br><span class="line">xlabel(<span class="string">'经验Copula'</span>);ylabel([<span class="string">'Frank-Copula'</span>,<span class="string">'p_F'</span>,num2str(paramhat_F)]); title([N&#123;n&#125;,<span class="string">'与'</span>,N&#123;m&#125;,<span class="string">'Q-Q图'</span>,<span class="string">'Frank'</span>]);</span><br></pre></td></tr></table></figure>
-
 <h2 id="结果"><a href="#结果" class="headerlink" title="结果"></a>结果</h2><p> <img src="http://oag5ozkgs.bkt.clouddn.com/2in1_1.jpg" alt="qq图2"><br> <img src="http://oag5ozkgs.bkt.clouddn.com/3in1_1.jpg" alt="qq图3"></p>
 <a id="more"></a>
-
 <h1 id="K-S检验"><a href="#K-S检验" class="headerlink" title="K-S检验"></a>K-S检验</h1><p><em>以北大桥与桥湾风电场为例</em></p>
 <h2 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%K-S检验</span></span><br><span class="line">[h_n,p_n,k_n]=kstest2(CopulaEmpirical',Ccdf_n)</span><br><span class="line">[h_t,p_t,k_t]=kstest2(CopulaEmpirical',Ccdf_t)</span><br><span class="line">[h_G,p_G,k_G]=kstest2(CopulaEmpirical',Ccdf_G)</span><br><span class="line">[h_C,p_C,k_C]=kstest2(CopulaEmpirical',Ccdf_C)</span><br><span class="line">[h_F,p_F,k_F]=kstest2(CopulaEmpirical',Ccdf_F)</span><br></pre></td></tr></table></figure>
-
-<h2 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h2><table>
+<h2 id="结果-1"><a href="#结果-1" class="headerlink" title="结果"></a>结果</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -406,7 +404,8 @@
 <th>$k_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>0.0406</td>
 <td>0.0395</td>
@@ -454,10 +453,12 @@
 <td>0.0385</td>
 <td>0.0156</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h1 id="Copula函数的秩相关性测度"><a href="#Copula函数的秩相关性测度" class="headerlink" title="Copula函数的秩相关性测度"></a>Copula函数的秩相关性测度</h1><h2 id="代码实现-2"><a href="#代码实现-2" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%Copula模型的相关性测度</span></span><br><span class="line"><span class="comment">%使用原始数据计算秩相关系数</span></span><br><span class="line">Kendall=corr([X,Y],<span class="string">'type'</span>,<span class="string">'Kendall'</span>)</span><br><span class="line">Spearman=corr([X,Y],<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br><span class="line"><span class="comment">%计算Copula的秩相关系数</span></span><br><span class="line">Kendall_norm = copulastat(<span class="string">'Gaussian'</span>,rho_norm)</span><br><span class="line">Spearman_norm = copulastat(<span class="string">'Gaussian'</span>,rho_norm,<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br><span class="line">Kendall_t = copulastat(<span class="string">'t'</span>,rho_t,nuhat)</span><br><span class="line">Spearman_t = copulastat(<span class="string">'t'</span>,rho_t,nuhat,<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br><span class="line">Kendall_G = copulastat(<span class="string">'Gumbel'</span>,paramhat_G)</span><br><span class="line">Spearman_G = copulastat(<span class="string">'Gumbel'</span>,paramhat_G,<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br><span class="line">Kendall_C = copulastat(<span class="string">'Clayton'</span>,paramhat_C)</span><br><span class="line">Spearman_C = copulastat(<span class="string">'Clayton'</span>,paramhat_C,<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br><span class="line">Kendall_F = copulastat(<span class="string">'Frank'</span>,paramhat_F)</span><br><span class="line">Spearman_F= copulastat(<span class="string">'Frank'</span>,paramhat_F,<span class="string">'type'</span>,<span class="string">'Spearman'</span>)</span><br></pre></td></tr></table></figure>
-
-<h2 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h2><table>
+<h2 id="结果-2"><a href="#结果-2" class="headerlink" title="结果"></a>结果</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>数据来源</th>
@@ -465,7 +466,8 @@
 <th>Spearman秩相关系数 $\rho_s$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>原始观测数据</td>
 <td>0.4816</td>
 <td>0.6628</td>
@@ -495,10 +497,12 @@
 <td>0.4592</td>
 <td>0.6465</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h1 id="欧式距离计算"><a href="#欧式距离计算" class="headerlink" title="欧式距离计算"></a>欧式距离计算</h1><h2 id="代码实现-3"><a href="#代码实现-3" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">%----------------求欧式距离</span></span><br><span class="line"><span class="comment">% 通过循环计算经验Copula函数在新产生的网格点处的函数值</span></span><br><span class="line">CUV=<span class="built_in">zeros</span>(<span class="built_in">size</span>(UU(:)));</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:<span class="built_in">numel</span>(UU)</span><br><span class="line">    CUV(<span class="built_in">i</span>)=C(UU(<span class="built_in">i</span>),VV(<span class="built_in">i</span>));</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">%求各Copula函数在原始样本点处的函数值</span></span><br><span class="line">Cnorm=copulacdf(<span class="string">'Gaussian'</span>,[UU(:),VV(:)],rho_norm);</span><br><span class="line">Ct=copulacdf(<span class="string">'t'</span>,[UU(:),VV(:)],rho_t,nuhat);</span><br><span class="line">CG=copulacdf(<span class="string">'Gumbel'</span>,[UU(:),VV(:)],paramhat_G);</span><br><span class="line">CC=copulacdf(<span class="string">'Clayton'</span>,[UU(:),VV(:)],paramhat_C);</span><br><span class="line">CF=copulacdf(<span class="string">'Frank'</span>,[UU(:),VV(:)],paramhat_F);</span><br><span class="line"></span><br><span class="line"><span class="comment">%计算欧式距离</span></span><br><span class="line">dnorm=<span class="built_in">sqrt</span>((CUV-Cnorm)'*(CUV-Cnorm))</span><br><span class="line">dt=<span class="built_in">sqrt</span>((CUV-Ct)'*(CUV-Ct))</span><br><span class="line">dG=<span class="built_in">sqrt</span>((CUV-CG)'*(CUV-CG))</span><br><span class="line">dC=<span class="built_in">sqrt</span>((CUV-CC)'*(CUV-CC))</span><br><span class="line">dF=<span class="built_in">sqrt</span>((CUV-CF)'*(CUV-CF))</span><br></pre></td></tr></table></figure>
-
-<h2 id="结果-3"><a href="#结果-3" class="headerlink" title="结果"></a>结果</h2><table>
+<h2 id="结果-3"><a href="#结果-3" class="headerlink" title="结果"></a>结果</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>风电场组合</th>
@@ -509,7 +513,8 @@
 <th>$d_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>2.8924</td>
 <td>2.8209</td>
@@ -557,7 +562,9 @@
 <td>4.8842</td>
 <td>1.4301</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 
       
     </div>

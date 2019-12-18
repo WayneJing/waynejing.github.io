@@ -83,12 +83,12 @@
 
 
 
-<meta name="description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数$$F_w(x)&#x3D;1-exp(-({x \over c})^k)$$其概率密度函数为$$P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m">
+<meta name="description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数 F_w(x)&#x3D;1-exp(-({x \over c})^k)其概率密度函数为 P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m&#x2F;s$ 。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="阶段性总结">
 <meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;2017&#x2F;03&#x2F;29&#x2F;2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93&#x2F;index.html">
 <meta property="og:site_name" content="WayneJing">
-<meta property="og:description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数$$F_w(x)&#x3D;1-exp(-({x \over c})^k)$$其概率密度函数为$$P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m">
+<meta property="og:description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数 F_w(x)&#x3D;1-exp(-({x \over c})^k)其概率密度函数为 P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m&#x2F;s$ 。">
 <meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;4in1_1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;6in1.jpg">
 <meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;%E5%9C%B0%E7%90%86%E4%BD%8D%E7%BD%AE.jpg">
@@ -396,7 +396,9 @@
 
       
         <h1 id="风速的随机性数学表述"><a href="#风速的随机性数学表述" class="headerlink" title="风速的随机性数学表述"></a>风速的随机性数学表述</h1><p>通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布</p>
-<p>双参数威布尔函数<br>$$F_w(x)=1-exp(-({x \over c})^k)$$<br>其概率密度函数为<br>$$P(x)={k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$<br>式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m/s$ 。</p>
+<p>双参数威布尔函数</p>
+<script type="math/tex; mode=display">F_w(x)=1-exp(-({x \over c})^k)</script><p>其概率密度函数为</p>
+<script type="math/tex; mode=display">P(x)={k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)</script><p>式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m/s$ 。</p>
 <h2 id="程序验证随机性"><a href="#程序验证随机性" class="headerlink" title="程序验证随机性"></a>程序验证随机性</h2><p>通过将风速数据的频数分布图与根据风速数据拟合的威布尔分布概率密度函数曲线进行对比可以发现，使用双参数威布尔分布去拟合风速数据是完全合理的。下图中红色的曲线为威布尔分布概率密度函数曲线，蓝色部分为风速的频率分布直方图。</p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/4in1_1.jpg" alt="图1 风速频数分布直方图"></p>
 <h2 id="场间风速的关系"><a href="#场间风速的关系" class="headerlink" title="场间风速的关系"></a>场间风速的关系</h2><p>通过对拟合后的风速数据的分布函数绘制频数分布直方图可以简单的看出场间风速的一些关系。下图为桥湾（1）、北大桥（2）、干河口（3）以及昌马（4）四个风电场两两之间的风速频数分布直方图</p>
@@ -412,6 +414,7 @@
 <h1 id="对场间风速进行建模"><a href="#对场间风速进行建模" class="headerlink" title="对场间风速进行建模"></a>对场间风速进行建模</h1></li>
 </ul>
 <h2 id="通过单个copula函数对场间风速进行建模"><a href="#通过单个copula函数对场间风速进行建模" class="headerlink" title="通过单个copula函数对场间风速进行建模"></a>通过单个copula函数对场间风速进行建模</h2><p><strong>参数估计结果</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -424,7 +427,8 @@
 <th>$\theta_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾与北大桥</td>
 <td>0.6339</td>
 <td>0.6386</td>
@@ -478,13 +482,16 @@
 <td>0.2141</td>
 <td>1.9736</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p><strong>对建模结果进行评价</strong></p>
 <p>与根据风速数据建立的经验Copula函数进行对比</p>
 <p>使用Q-Q图进行校验（非定量分析）</p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/2in1_1.jpg" alt="qq图2"><br><img src="http://oag5ozkgs.bkt.clouddn.com/3in1_1.jpg" alt="qq图3"></p>
 <p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">Q-Q图的判定原则</a>可知，各类Copula函数差别很明显，其 中Gumbel-Copula，Frank-Copula，t-Copula函数曲线均较为接近45°曲线，拟合效果相对较好。以下采用统计法</p>
 <p>使用K-S校验进行定量分析</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -496,7 +503,8 @@
 <th>$k_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>0.0406</td>
 <td>0.0395</td>
@@ -544,9 +552,12 @@
 <td>0.0385</td>
 <td>0.0156</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">K-S检验法的判定原则</a>可知，在六种不同的风电场组合中，Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数的 $KS$ 统计值相对较小，而Normal-Copula，Clayton-Copula的统计值相对较大</p>
 <p>秩相关性测度</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -555,7 +566,8 @@
 <th>Spearman秩相关系数 $\rho_s$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>原始观测数据</td>
 <td>0.4816</td>
 <td>0.6628</td>
@@ -585,9 +597,12 @@
 <td>0.4592</td>
 <td>0.6465</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>通过与经验函数的Kendall秩相关系数，Spearman秩相关系数进行对比可以发现Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与原始数据保持着良好的秩相关性，而Normal-Copula，Clayton-Copula的秩相关性较差。</p>
 <p>使用欧式距离进行分析</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -599,7 +614,8 @@
 <th>$d_F$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>桥湾，北大桥</td>
 <td>2.8924</td>
 <td>2.8209</td>
@@ -647,13 +663,16 @@
 <td>4.8842</td>
 <td>1.4301</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>可以看到在以上6种风电场组合中Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与经验Copula函数的欧氏距离较小，而Normal-Copula，Clayton-Copula与经验函数的欧氏距离较大</p>
 <h2 id="使用多个Copula函数进行混合对风速进行建模"><a href="#使用多个Copula函数进行混合对风速进行建模" class="headerlink" title="使用多个Copula函数进行混合对风速进行建模"></a>使用多个Copula函数进行混合对风速进行建模</h2><p>通过查阅文献可以知道，多个Copula函数通过加权相加后仍然是Copula函数</p>
 <p>由于Copula函数并非线性函数，简单的通过单个Copula函数拟合效果来选择使用哪几个Copula函数来进行混合可能不够准确，可能会存在两个单一表现并不好的Copula函数混合后结果却比较好的情况。</p>
 <p>因此，将论文中的三个Copula混合模型拓展至五个常用Copula进行混合建模。</p>
 <p>由于混合时运算量过大，因此选取干河口与北大桥的场间风速为例进行建模</p>
 <p><strong>三个Copula混合的参数结果</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -663,7 +682,8 @@
 <th>$k$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>t-Copula</td>
 <td>0.1244</td>
 <td>0.0822</td>
@@ -681,9 +701,14 @@
 <td>0.1683</td>
 <td></td>
 </tr>
-</tbody></table>
-<p>即<br>$$<br>C(u,v;a)=0.7495C_{Gumbel}(u,v;4.1127)+0.1683C_{Frank}(u,v;6.5931)<br>+0.0822C_t(u,v;0.1244,3)$$</p>
-<p><strong>五个Copula混合的参数结果</strong></p>
+</tbody>
+</table>
+</div>
+<p>即</p>
+<script type="math/tex; mode=display">
+C(u,v;a)=0.7495C_{Gumbel}(u,v;4.1127)+0.1683C_{Frank}(u,v;6.5931)
++0.0822C_t(u,v;0.1244,3)</script><p><strong>五个Copula混合的参数结果</strong></p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -693,7 +718,8 @@
 <th>$k$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>t-Copula</td>
 <td>0.9678</td>
 <td>0.1075</td>
@@ -723,15 +749,23 @@
 <td>0.0864</td>
 <td></td>
 </tr>
-</tbody></table>
-<p>即<br>$$<br>\begin{aligned}<br>C(u,v;a)= &amp; 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)<br>+\<br>&amp; 0.5502C_{Gumbel}(u,v;3.7781)+0.1946C_{Frank}(u,v;9.8959)+0.0864C_{Clayton}(u,v;0.0049)<br>\end{aligned}<br> $$</p>
-<p><strong>模型评价</strong></p>
+</tbody>
+</table>
+</div>
+<p>即</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+C(u,v;a)= & 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)
++\\
+& 0.5502C_{Gumbel}(u,v;3.7781)+0.1946C_{Frank}(u,v;9.8959)+0.0864C_{Clayton}(u,v;0.0049)
+\end{aligned}</script><p><strong>模型评价</strong></p>
 <p>Q-Q图校验</p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula.jpg" alt="3个Copula函数混合Q-Q图"></p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula_new.jpg" alt="5个Copula函数混合Q-Q图"></p>
 <p>由于不是定量分析，对比效果不明显，以下采用定量分析，但是可以对比单个Copula时的QQ图<br><img src="http://oag5ozkgs.bkt.clouddn.com/im1.jpg" alt="qq图2"><br><img src="http://oag5ozkgs.bkt.clouddn.com/im2.jpg" alt="qq图3"></p>
 <p>可以明显看出混合Copula的效果比单个Copula效果要好。</p>
 <p>K-S检验</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -745,7 +779,8 @@
 <th>$K_{5M}$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>北大桥，干河口</td>
 <td>0.0395</td>
 <td>0.0343</td>
@@ -755,9 +790,12 @@
 <td>0.0271</td>
 <td>0.0260</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>可以看出5个Copula混合时的模型较3个Copula混合时的效果更好</p>
 <p>欧氏距离</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -771,7 +809,8 @@
 <th>$d_{5M}$</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>北大桥，干河口</td>
 <td>3.6952</td>
 <td>2.4590</td>
@@ -781,19 +820,26 @@
 <td>1.3220</td>
 <td>1.2730</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>从欧氏距离上也能够得到与KS检验中同样的结果</p>
 <h2 id="使用多元Copula进行4维风电场间风速建模"><a href="#使用多元Copula进行4维风电场间风速建模" class="headerlink" title="使用多元Copula进行4维风电场间风速建模"></a>使用多元Copula进行4维风电场间风速建模</h2><p><strong>使用单一多维Copula建模</strong></p>
 <p>分别得到了Normal-Copula与t-Copula的多元风速相依结构矩阵</p>
-<p>$$\rho_n=\begin{bmatrix}<br>1 &amp; 0.6339 &amp; 0.5346 &amp; 0.6108\<br>0.6339 &amp; 1 &amp; 0.8092 &amp; 0.3639\<br>0.5346 &amp; 0.8092 &amp; 1 &amp; 0.3028\<br>0.6108 &amp; 0.3639 &amp; 0.3028 &amp; 1<br>\end{bmatrix}$$</p>
-<p>$$\rho_t=\begin{bmatrix}<br>1 &amp;0.6441  &amp;0.5591  &amp;0.6179 \<br>0.6441 &amp;1  &amp;0.8527  &amp;0.3769 \<br>0.5591 &amp;0.8527  &amp;1  &amp;0.3204 \<br>0.6179 &amp;0.3769  &amp;0.3204  &amp;1<br>\end{bmatrix}$$</p>
-<p>$$k_t=7.8639$$</p>
-<p><strong>模型评价</strong></p>
+<script type="math/tex; mode=display">\rho_n=\begin{bmatrix}
+1 & 0.6339 & 0.5346 & 0.6108\\
+0.6339 & 1 & 0.8092 & 0.3639\\
+0.5346 & 0.8092 & 1 & 0.3028\\
+0.6108 & 0.3639 & 0.3028 & 1
+\end{bmatrix}</script><script type="math/tex; mode=display">\rho_t=\begin{bmatrix}
+1 &0.6441  &0.5591  &0.6179 \\
+0.6441 &1  &0.8527  &0.3769 \\
+0.5591 &0.8527  &1  &0.3204 \\
+0.6179 &0.3769  &0.3204  &1
+\end{bmatrix}</script><script type="math/tex; mode=display">k_t=7.8639</script><p><strong>模型评价</strong></p>
 <p>K-S校验</p>
-<p>$$k_G=0.0281\k_t=0.0401$$</p>
-<p>欧氏距离</p>
-<p>$$d_G=11.0717\d_t=7.0748$$</p>
-<p>后来通过查阅文献得知KS校验不能在多维问题中使用，多维问题主要使用欧氏距离进行分析</p>
+<script type="math/tex; mode=display">k_G=0.0281\\k_t=0.0401</script><p>欧氏距离</p>
+<script type="math/tex; mode=display">d_G=11.0717\\d_t=7.0748</script><p>后来通过查阅文献得知KS校验不能在多维问题中使用，多维问题主要使用欧氏距离进行分析</p>
 <p><strong>使用多维混合Copula两种思路</strong></p>
 <ul>
 <li><p>使用多维的Copula直接进行混合<br>问题： Archimedean Copula族的Copula函数需要手动计算多维形式，并手动编程通过MLE方法估算函数参数，MATLAB自带的fit函数仅支持二元的Archimedean Copula参数估计。并且在计算4维t-Copula概率密度函数时的计算量非常大，单句指令需要运算三个小时，当嵌套至EM算法的迭代中时将耗费更多的时间，预计计算时间将达到十几天。</p>
@@ -802,8 +848,7 @@
 </li>
 </ul>
 <h1 id="光伏的随机性表达"><a href="#光伏的随机性表达" class="headerlink" title="光伏的随机性表达"></a>光伏的随机性表达</h1><h2 id="通过核密度估计来表达长时间内的光伏照射强度"><a href="#通过核密度估计来表达长时间内的光伏照射强度" class="headerlink" title="通过核密度估计来表达长时间内的光伏照射强度"></a>通过核密度估计来表达长时间内的光伏照射强度</h2><p>定义<br>  :   设$x_1,x_2,…,x_n$为随机变量$x$的样本，令随机变量$x$的概率密度函数为$f(x)$，则 $f(x)$ 的核密度估计为：</p>
-<p>  $$f_h(x)={1 \over nh}{\displaystyle \sum_{j=1}^n{K({x-x_j \over h})}}={1 \over n}{\displaystyle \sum_{j=1}^n{K_h(x-x_j)}}$$</p>
-<p>  其中$n$为样本容量，$h$ 为平滑系数，$K(·)$ 为核函数</p>
+<script type="math/tex; mode=display">f_h(x)={1 \over nh}{\displaystyle \sum_{j=1}^n{K({x-x_j \over h})}}={1 \over n}{\displaystyle \sum_{j=1}^n{K_h(x-x_j)}}</script><p>  其中$n$为样本容量，$h$ 为平滑系数，$K(·)$ 为核函数</p>
 <p><strong>结果</strong></p>
 <p><img src="http://oag5ozkgs.bkt.clouddn.com/1.jpg" alt="频率分布"></p>
 <p>可以看到在长时间尺度上（上例为半年）核密度估计的拟合程度很高，但是在稍短的时间尺度上（一个月）则效果较差，如下图</p>
