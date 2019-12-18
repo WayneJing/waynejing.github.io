@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="柔性建模,deferrable load,需求响应,可再生能源,real-time," />
+  <meta name="keywords" content="柔性建模,可再生能源,deferrable load,需求响应,real-time," />
 
 
 
@@ -93,9 +93,9 @@
 <meta property="article:modified_time" content="2018-06-21T03:47:04.121Z">
 <meta property="article:author" content="WayneJing">
 <meta property="article:tag" content="柔性建模">
+<meta property="article:tag" content="可再生能源">
 <meta property="article:tag" content="deferrable load">
 <meta property="article:tag" content="需求响应">
-<meta property="article:tag" content="可再生能源">
 <meta property="article:tag" content="real-time">
 <meta name="twitter:card" content="summary">
 
@@ -349,17 +349,6 @@
 
           
           
-             <span id="/2016/07/06/2016-07-06-%E5%8F%AF%E5%BB%B6%E8%BF%9F%E8%B4%9F%E8%8D%B7%E6%8E%A7%E5%88%B6/" class="leancloud_visitors" data-flag-title="可延迟负荷控制">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
 
           
             <span class="post-meta-divider">|</span>
@@ -434,11 +423,11 @@
           
             <a href="/tags/%E6%9F%94%E6%80%A7%E5%BB%BA%E6%A8%A1/" <i class="fa fa-tag"></i> 柔性建模</a>
           
+            <a href="/tags/%E5%8F%AF%E5%86%8D%E7%94%9F%E8%83%BD%E6%BA%90/" <i class="fa fa-tag"></i> 可再生能源</a>
+          
             <a href="/tags/deferrable-load/" <i class="fa fa-tag"></i> deferrable load</a>
           
             <a href="/tags/%E9%9C%80%E6%B1%82%E5%93%8D%E5%BA%94/" <i class="fa fa-tag"></i> 需求响应</a>
-          
-            <a href="/tags/%E5%8F%AF%E5%86%8D%E7%94%9F%E8%83%BD%E6%BA%90/" <i class="fa fa-tag"></i> 可再生能源</a>
           
             <a href="/tags/real-time/" <i class="fa fa-tag"></i> real-time</a>
           
@@ -463,8 +452,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/10/23/2016-10-23-javaclass4/" rel="prev" title="Java第四次课">
-                Java第四次课 <i class="fa fa-chevron-right"></i>
+              <a href="/2016/10/23/2016-10-23-javaclass3/" rel="prev" title="Java第三次课">
+                Java第三次课 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -830,113 +819,6 @@
 
 
   
-
-  
-  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
-  <script>AV.initialize("AREeXiY0PzNVVE9HKFwTxh6n-gzGzoHsz", "KvuDj6YRF67WOuSEwVEkrHH4");</script>
-  <script>
-    function showTime(Counter) {
-      var query = new AV.Query(Counter);
-      var entries = [];
-      var $visitors = $(".leancloud_visitors");
-
-      $visitors.each(function () {
-        entries.push( $(this).attr("id").trim() );
-      });
-
-      query.containedIn('url', entries);
-      query.find()
-        .done(function (results) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.get('url');
-            var time = item.get('time');
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for(var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if( countSpan.text() == '') {
-              countSpan.text(0);
-            }
-          }
-        })
-        .fail(function (object, error) {
-          console.log("Error: " + error.code + " " + error.message);
-        });
-    }
-
-    function addCount(Counter) {
-      var $visitors = $(".leancloud_visitors");
-      var url = $visitors.attr('id').trim();
-      var title = $visitors.attr('data-flag-title').trim();
-      var query = new AV.Query(Counter);
-
-      query.equalTo("url", url);
-      query.find({
-        success: function(results) {
-          if (results.length > 0) {
-            var counter = results[0];
-            counter.fetchWhenSave(true);
-            counter.increment("time");
-            counter.save(null, {
-              success: function(counter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(counter.get('time'));
-              },
-              error: function(counter, error) {
-                console.log('Failed to save Visitor num, with error message: ' + error.message);
-              }
-            });
-          } else {
-            var newcounter = new Counter();
-            /* Set ACL */
-            var acl = new AV.ACL();
-            acl.setPublicReadAccess(true);
-            acl.setPublicWriteAccess(true);
-            newcounter.setACL(acl);
-            /* End Set ACL */
-            newcounter.set("title", title);
-            newcounter.set("url", url);
-            newcounter.set("time", 1);
-            newcounter.save(null, {
-              success: function(newcounter) {
-                var $element = $(document.getElementById(url));
-                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
 
   
 
