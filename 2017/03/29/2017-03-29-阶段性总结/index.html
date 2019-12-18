@@ -1,0 +1,1361 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Copula,风速建模," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数$$F_w(x)&#x3D;1-exp(-({x \over c})^k)$$其概率密度函数为$$P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="阶段性总结">
+<meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;2017&#x2F;03&#x2F;29&#x2F;2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93&#x2F;index.html">
+<meta property="og:site_name" content="WayneJing">
+<meta property="og:description" content="风速的随机性数学表述通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布 双参数威布尔函数$$F_w(x)&#x3D;1-exp(-({x \over c})^k)$$其概率密度函数为$$P(x)&#x3D;{k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;4in1_1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;6in1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;%E5%9C%B0%E7%90%86%E4%BD%8D%E7%BD%AE.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;2in1_1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;3in1_1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;mcopula.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;mcopula_new.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;im1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;im2.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;1.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;1_2.jpg">
+<meta property="og:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;1_3.jpg">
+<meta property="article:published_time" content="2017-03-29T07:54:58.000Z">
+<meta property="article:modified_time" content="2018-06-21T03:46:10.816Z">
+<meta property="article:author" content="WayneJing">
+<meta property="article:tag" content="Copula">
+<meta property="article:tag" content="风速建模">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http:&#x2F;&#x2F;oag5ozkgs.bkt.clouddn.com&#x2F;4in1_1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fatelancer.github.io/2017/03/29/2017-03-29-阶段性总结/"/>
+
+
+
+
+
+  <title>阶段性总结 | WayneJing</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneJing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/29/2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">阶段性总结</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-29T15:54:58+08:00">
+                2017-03-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">毕业设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/29/2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/" class="leancloud_visitors" data-flag-title="阶段性总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="风速的随机性数学表述"><a href="#风速的随机性数学表述" class="headerlink" title="风速的随机性数学表述"></a>风速的随机性数学表述</h1><p>通过查阅文献可以得知，可以使用双参数威布尔分布来描述风速的概率分布</p>
+<p>双参数威布尔函数<br>$$F_w(x)=1-exp(-({x \over c})^k)$$<br>其概率密度函数为<br>$$P(x)={k \over c} ({k \over c})^{k-1}exp(-({x \over c})^k)$$<br>式中 $k$ 为形状参数，无量纲； $c$ 为尺度参数，反映风电场的平均风速，单位为 $m/s$ 。</p>
+<h2 id="程序验证随机性"><a href="#程序验证随机性" class="headerlink" title="程序验证随机性"></a>程序验证随机性</h2><p>通过将风速数据的频数分布图与根据风速数据拟合的威布尔分布概率密度函数曲线进行对比可以发现，使用双参数威布尔分布去拟合风速数据是完全合理的。下图中红色的曲线为威布尔分布概率密度函数曲线，蓝色部分为风速的频率分布直方图。</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/4in1_1.jpg" alt="图1 风速频数分布直方图"></p>
+<h2 id="场间风速的关系"><a href="#场间风速的关系" class="headerlink" title="场间风速的关系"></a>场间风速的关系</h2><p>通过对拟合后的风速数据的分布函数绘制频数分布直方图可以简单的看出场间风速的一些关系。下图为桥湾（1）、北大桥（2）、干河口（3）以及昌马（4）四个风电场两两之间的风速频数分布直方图</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/6in1.jpg" alt="图2 场间风速频数直方图"></p>
+<p>对于以上的关系可以通过地理以及气象等知识进行解释。下图是四个风电场的地理位置关系。<br><img src="http://oag5ozkgs.bkt.clouddn.com/%E5%9C%B0%E7%90%86%E4%BD%8D%E7%BD%AE.jpg" alt="Alt text"></p>
+<ul>
+<li>桥湾（1）与北大桥（2）间地理位置是东西平行，在东西风向盛行的酒泉地区两者风况有较大的相似，所以线性相关性较大，如图2-1</li>
+<li>干河口（3）与桥湾（1）的地理位置虽然接近东西平行，但是距离较远，因此线性相关性较低，如图2-2</li>
+<li>桥湾（1）与昌马（4）间地理位置接近南北垂直，但是由于两者间距离较近，所以线性相关性也较为明显，如图2-3</li>
+<li>干河口（3）与北大桥（2）的地理位置接近东西平行的，在东西风向盛行的酒泉地区两者风况有较大的相似。如图2-4可以看出存在较大的线性相关性。</li>
+<li>昌马（4）与北大桥（2）的距离较远，因此线性相关性较差，如图2-5</li>
+<li>干河口（3）与昌马（4）的距离最远，因此线性相关性也最差，如图2-6<a id="more"></a>
+<h1 id="对场间风速进行建模"><a href="#对场间风速进行建模" class="headerlink" title="对场间风速进行建模"></a>对场间风速进行建模</h1></li>
+</ul>
+<h2 id="通过单个copula函数对场间风速进行建模"><a href="#通过单个copula函数对场间风速进行建模" class="headerlink" title="通过单个copula函数对场间风速进行建模"></a>通过单个copula函数对场间风速进行建模</h2><p><strong>参数估计结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>风电场组合</th>
+<th>$\rho_{Norm}$</th>
+<th>$\rho_t$</th>
+<th>$k$</th>
+<th>$\theta_G$</th>
+<th>$\theta_C$</th>
+<th>$\theta_F$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>桥湾与北大桥</td>
+<td>0.6339</td>
+<td>0.6386</td>
+<td>9.1619</td>
+<td>1.8533</td>
+<td>0.6913</td>
+<td>5.0402</td>
+</tr>
+<tr>
+<td>桥湾与干河口</td>
+<td>0.5346</td>
+<td>0.5364</td>
+<td>9.7829</td>
+<td>1.6350</td>
+<td>0.4847</td>
+<td>3.8853</td>
+</tr>
+<tr>
+<td>桥湾与昌马</td>
+<td>0.6108</td>
+<td>0.6169</td>
+<td>10.4474</td>
+<td>1.7697</td>
+<td>0.6530</td>
+<td>4.8459</td>
+</tr>
+<tr>
+<td>北大桥与干河口</td>
+<td>0.8092</td>
+<td>0.8479</td>
+<td>2.7192</td>
+<td>2.9270</td>
+<td>1.4685</td>
+<td>9.8959</td>
+</tr>
+<tr>
+<td>北大桥与昌马</td>
+<td>0.3639</td>
+<td>0.3630</td>
+<td>33.9054</td>
+<td>1.3098</td>
+<td>0.3072</td>
+<td>2.3697</td>
+</tr>
+<tr>
+<td>干河口与昌马</td>
+<td>0.3028</td>
+<td>0.3026</td>
+<td>21.9903</td>
+<td>1.2628</td>
+<td>0.2141</td>
+<td>1.9736</td>
+</tr>
+</tbody></table>
+<p><strong>对建模结果进行评价</strong></p>
+<p>与根据风速数据建立的经验Copula函数进行对比</p>
+<p>使用Q-Q图进行校验（非定量分析）</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/2in1_1.jpg" alt="qq图2"><br><img src="http://oag5ozkgs.bkt.clouddn.com/3in1_1.jpg" alt="qq图3"></p>
+<p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">Q-Q图的判定原则</a>可知，各类Copula函数差别很明显，其 中Gumbel-Copula，Frank-Copula，t-Copula函数曲线均较为接近45°曲线，拟合效果相对较好。以下采用统计法</p>
+<p>使用K-S校验进行定量分析</p>
+<table>
+<thead>
+<tr>
+<th>风电场组合</th>
+<th>$k_N$</th>
+<th>$k_t$</th>
+<th>$k_G$</th>
+<th>$k_C$</th>
+<th>$k_F$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>桥湾，北大桥</td>
+<td>0.0406</td>
+<td>0.0395</td>
+<td>0.0302</td>
+<td>0.0520</td>
+<td>0.0364</td>
+</tr>
+<tr>
+<td>桥湾，干河口</td>
+<td>0.0260</td>
+<td>0.0219</td>
+<td>0.0156</td>
+<td>0.0489</td>
+<td>0.0208</td>
+</tr>
+<tr>
+<td>桥湾，昌马</td>
+<td>0.0260</td>
+<td>0.0239</td>
+<td>0.0156</td>
+<td>0.0499</td>
+<td>0.0239</td>
+</tr>
+<tr>
+<td>北大桥，干河口</td>
+<td>0.0395</td>
+<td>0.0343</td>
+<td>0.0302</td>
+<td>0.0468</td>
+<td>0.0323</td>
+</tr>
+<tr>
+<td>北大桥，昌马</td>
+<td>0.0239</td>
+<td>0.0239</td>
+<td>0.0156</td>
+<td>0.0385</td>
+<td>0.0166</td>
+</tr>
+<tr>
+<td>干河口，昌马</td>
+<td>0.0208</td>
+<td>0.0208</td>
+<td>0.0146</td>
+<td>0.0385</td>
+<td>0.0156</td>
+</tr>
+</tbody></table>
+<p>通过<a href="http://fatelancer.top/2017/02/27/Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E7%9B%B8%E5%85%B3%EF%BC%881%EF%BC%89/#copula函数的拟合优度校验与经验copula函数对比" target="_blank" rel="noopener">K-S检验法的判定原则</a>可知，在六种不同的风电场组合中，Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数的 $KS$ 统计值相对较小，而Normal-Copula，Clayton-Copula的统计值相对较大</p>
+<p>秩相关性测度</p>
+<table>
+<thead>
+<tr>
+<th>数据来源</th>
+<th>Kendall秩相关系数 $\tau$</th>
+<th>Spearman秩相关系数 $\rho_s$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>原始观测数据</td>
+<td>0.4816</td>
+<td>0.6628</td>
+</tr>
+<tr>
+<td>Normal-Copula</td>
+<td>0.4371</td>
+<td>0.6159</td>
+</tr>
+<tr>
+<td>t-Copula</td>
+<td>0.4410</td>
+<td>0.6151</td>
+</tr>
+<tr>
+<td>Gumbel-Copula</td>
+<td>0.4604</td>
+<td>0.6366</td>
+</tr>
+<tr>
+<td>Clayton-Copula</td>
+<td>0.2569</td>
+<td>0.3751</td>
+</tr>
+<tr>
+<td>Frank-Copula</td>
+<td>0.4592</td>
+<td>0.6465</td>
+</tr>
+</tbody></table>
+<p>通过与经验函数的Kendall秩相关系数，Spearman秩相关系数进行对比可以发现Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与原始数据保持着良好的秩相关性，而Normal-Copula，Clayton-Copula的秩相关性较差。</p>
+<p>使用欧式距离进行分析</p>
+<table>
+<thead>
+<tr>
+<th>风电场组合</th>
+<th>$d_N$</th>
+<th>$d_t$</th>
+<th>$d_G$</th>
+<th>$d_C$</th>
+<th>$d_F$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>桥湾，北大桥</td>
+<td>2.8924</td>
+<td>2.8209</td>
+<td>1.3953</td>
+<td>9.1763</td>
+<td>2.4125</td>
+</tr>
+<tr>
+<td>桥湾，干河口</td>
+<td>2.7285</td>
+<td>2.6970</td>
+<td>1.1862</td>
+<td>8.2528</td>
+<td>2.2180</td>
+</tr>
+<tr>
+<td>桥湾，昌马</td>
+<td>2.3450</td>
+<td>2.2558</td>
+<td>1.3469</td>
+<td>8.3662</td>
+<td>1.8227</td>
+</tr>
+<tr>
+<td>北大桥，干河口</td>
+<td>3.6952</td>
+<td>2.4590</td>
+<td>1.6097</td>
+<td>10.9923</td>
+<td>1.6888</td>
+</tr>
+<tr>
+<td>北大桥，昌马</td>
+<td>1.7187</td>
+<td>1.7470</td>
+<td>1.5995</td>
+<td>5.0238</td>
+<td>1.3692</td>
+</tr>
+<tr>
+<td>干河口，昌马</td>
+<td>1.8369</td>
+<td>1.8561</td>
+<td>1.3731</td>
+<td>4.8842</td>
+<td>1.4301</td>
+</tr>
+</tbody></table>
+<p>可以看到在以上6种风电场组合中Gumbel-Copula，Frank-Copula，t-Copula这三种Copula函数与经验Copula函数的欧氏距离较小，而Normal-Copula，Clayton-Copula与经验函数的欧氏距离较大</p>
+<h2 id="使用多个Copula函数进行混合对风速进行建模"><a href="#使用多个Copula函数进行混合对风速进行建模" class="headerlink" title="使用多个Copula函数进行混合对风速进行建模"></a>使用多个Copula函数进行混合对风速进行建模</h2><p>通过查阅文献可以知道，多个Copula函数通过加权相加后仍然是Copula函数</p>
+<p>由于Copula函数并非线性函数，简单的通过单个Copula函数拟合效果来选择使用哪几个Copula函数来进行混合可能不够准确，可能会存在两个单一表现并不好的Copula函数混合后结果却比较好的情况。</p>
+<p>因此，将论文中的三个Copula混合模型拓展至五个常用Copula进行混合建模。</p>
+<p>由于混合时运算量过大，因此选取干河口与北大桥的场间风速为例进行建模</p>
+<p><strong>三个Copula混合的参数结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>Copula函数</th>
+<th>$\theta$</th>
+<th>$\omega$</th>
+<th>$k$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>t-Copula</td>
+<td>0.1244</td>
+<td>0.0822</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Gumbel-Copula</td>
+<td>4.1127</td>
+<td>0.7495</td>
+<td></td>
+</tr>
+<tr>
+<td>Frank-Copula</td>
+<td>6.5931</td>
+<td>0.1683</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>即<br>$$<br>C(u,v;a)=0.7495C_{Gumbel}(u,v;4.1127)+0.1683C_{Frank}(u,v;6.5931)<br>+0.0822C_t(u,v;0.1244,3)$$</p>
+<p><strong>五个Copula混合的参数结果</strong></p>
+<table>
+<thead>
+<tr>
+<th>Copula函数</th>
+<th>$\theta$</th>
+<th>$\omega$</th>
+<th>$k$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>t-Copula</td>
+<td>0.9678</td>
+<td>0.1075</td>
+<td>2.7192</td>
+</tr>
+<tr>
+<td>Gumbel-Copula</td>
+<td>3.7781</td>
+<td>0.5502</td>
+<td></td>
+</tr>
+<tr>
+<td>Frank-Copula</td>
+<td>9.8959</td>
+<td>0.1946</td>
+<td></td>
+</tr>
+<tr>
+<td>Norm-Copula</td>
+<td>0.9250</td>
+<td>0.0613</td>
+<td></td>
+</tr>
+<tr>
+<td>Clayton-Copula</td>
+<td>0.0049</td>
+<td>0.0864</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>即<br>$$<br>\begin{aligned}<br>C(u,v;a)= &amp; 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)<br>+\<br>&amp; 0.5502C_{Gumbel}(u,v;3.7781)+0.1946C_{Frank}(u,v;9.8959)+0.0864C_{Clayton}(u,v;0.0049)<br>\end{aligned}<br> $$</p>
+<p><strong>模型评价</strong></p>
+<p>Q-Q图校验</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula.jpg" alt="3个Copula函数混合Q-Q图"></p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/mcopula_new.jpg" alt="5个Copula函数混合Q-Q图"></p>
+<p>由于不是定量分析，对比效果不明显，以下采用定量分析，但是可以对比单个Copula时的QQ图<br><img src="http://oag5ozkgs.bkt.clouddn.com/im1.jpg" alt="qq图2"><br><img src="http://oag5ozkgs.bkt.clouddn.com/im2.jpg" alt="qq图3"></p>
+<p>可以明显看出混合Copula的效果比单个Copula效果要好。</p>
+<p>K-S检验</p>
+<table>
+<thead>
+<tr>
+<th>风电场组合</th>
+<th>$k_N$</th>
+<th>$k_t$</th>
+<th>$k_G$</th>
+<th>$k_C$</th>
+<th>$k_F$</th>
+<th>$K_{3M}$</th>
+<th>$K_{5M}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>北大桥，干河口</td>
+<td>0.0395</td>
+<td>0.0343</td>
+<td>0.0302</td>
+<td>0.0468</td>
+<td>0.0323</td>
+<td>0.0271</td>
+<td>0.0260</td>
+</tr>
+</tbody></table>
+<p>可以看出5个Copula混合时的模型较3个Copula混合时的效果更好</p>
+<p>欧氏距离</p>
+<table>
+<thead>
+<tr>
+<th>风电场组合</th>
+<th>$d_N$</th>
+<th>$d_t$</th>
+<th>$d_G$</th>
+<th>$d_C$</th>
+<th>$d_F$</th>
+<th>$d_{3M}$</th>
+<th>$d_{5M}$</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>北大桥，干河口</td>
+<td>3.6952</td>
+<td>2.4590</td>
+<td>1.6097</td>
+<td>10.9923</td>
+<td>1.6888</td>
+<td>1.3220</td>
+<td>1.2730</td>
+</tr>
+</tbody></table>
+<p>从欧氏距离上也能够得到与KS检验中同样的结果</p>
+<h2 id="使用多元Copula进行4维风电场间风速建模"><a href="#使用多元Copula进行4维风电场间风速建模" class="headerlink" title="使用多元Copula进行4维风电场间风速建模"></a>使用多元Copula进行4维风电场间风速建模</h2><p><strong>使用单一多维Copula建模</strong></p>
+<p>分别得到了Normal-Copula与t-Copula的多元风速相依结构矩阵</p>
+<p>$$\rho_n=\begin{bmatrix}<br>1 &amp; 0.6339 &amp; 0.5346 &amp; 0.6108\<br>0.6339 &amp; 1 &amp; 0.8092 &amp; 0.3639\<br>0.5346 &amp; 0.8092 &amp; 1 &amp; 0.3028\<br>0.6108 &amp; 0.3639 &amp; 0.3028 &amp; 1<br>\end{bmatrix}$$</p>
+<p>$$\rho_t=\begin{bmatrix}<br>1 &amp;0.6441  &amp;0.5591  &amp;0.6179 \<br>0.6441 &amp;1  &amp;0.8527  &amp;0.3769 \<br>0.5591 &amp;0.8527  &amp;1  &amp;0.3204 \<br>0.6179 &amp;0.3769  &amp;0.3204  &amp;1<br>\end{bmatrix}$$</p>
+<p>$$k_t=7.8639$$</p>
+<p><strong>模型评价</strong></p>
+<p>K-S校验</p>
+<p>$$k_G=0.0281\k_t=0.0401$$</p>
+<p>欧氏距离</p>
+<p>$$d_G=11.0717\d_t=7.0748$$</p>
+<p>后来通过查阅文献得知KS校验不能在多维问题中使用，多维问题主要使用欧氏距离进行分析</p>
+<p><strong>使用多维混合Copula两种思路</strong></p>
+<ul>
+<li><p>使用多维的Copula直接进行混合<br>问题： Archimedean Copula族的Copula函数需要手动计算多维形式，并手动编程通过MLE方法估算函数参数，MATLAB自带的fit函数仅支持二元的Archimedean Copula参数估计。并且在计算4维t-Copula概率密度函数时的计算量非常大，单句指令需要运算三个小时，当嵌套至EM算法的迭代中时将耗费更多的时间，预计计算时间将达到十几天。</p>
+</li>
+<li><p>通过pair-Copula将多个二维Copula函数进行合并，直至出现四维Copula<br>问题：暂时没有找到对于pair-Copula构建过程较为详细的文献，还处在摸索阶段</p>
+</li>
+</ul>
+<h1 id="光伏的随机性表达"><a href="#光伏的随机性表达" class="headerlink" title="光伏的随机性表达"></a>光伏的随机性表达</h1><h2 id="通过核密度估计来表达长时间内的光伏照射强度"><a href="#通过核密度估计来表达长时间内的光伏照射强度" class="headerlink" title="通过核密度估计来表达长时间内的光伏照射强度"></a>通过核密度估计来表达长时间内的光伏照射强度</h2><p>定义<br>  :   设$x_1,x_2,…,x_n$为随机变量$x$的样本，令随机变量$x$的概率密度函数为$f(x)$，则 $f(x)$ 的核密度估计为：</p>
+<p>  $$f_h(x)={1 \over nh}{\displaystyle \sum_{j=1}^n{K({x-x_j \over h})}}={1 \over n}{\displaystyle \sum_{j=1}^n{K_h(x-x_j)}}$$</p>
+<p>  其中$n$为样本容量，$h$ 为平滑系数，$K(·)$ 为核函数</p>
+<p><strong>结果</strong></p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/1.jpg" alt="频率分布"></p>
+<p>可以看到在长时间尺度上（上例为半年）核密度估计的拟合程度很高，但是在稍短的时间尺度上（一个月）则效果较差，如下图</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/1_2.jpg" alt=""></p>
+<p>该种情况可以通过<a href="http://blog.csdn.net/matlab_matlab/article/details/56286868" target="_blank" rel="noopener">调整窗的宽度来提高拟合优度</a>，如下图为窗宽度为2.5时重新拟合一个月的光伏强度结果</p>
+<p><img src="http://oag5ozkgs.bkt.clouddn.com/1_3.jpg" alt="当width=2.5时拟合结果"></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><p>所有代码详见<a href="https://github.com/fatelancer/Copula_Wind" target="_blank" rel="noopener">Copula_Wind</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    WayneJing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://fatelancer.github.io/2017/03/29/2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/" title="阶段性总结">http://fatelancer.github.io/2017/03/29/2017-03-29-%E9%98%B6%E6%AE%B5%E6%80%A7%E6%80%BB%E7%BB%93/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Copula/" rel="tag"># Copula</a>
+          
+            <a href="/tags/%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/" rel="tag"># 风速建模</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/23/2017-03-23-%E6%B7%B7%E5%90%88Copula%E5%BB%BA%E6%A8%A1%E4%BF%AE%E6%AD%A3/" rel="next" title="混合Copula建模修正——更多Copula函数的加入">
+                <i class="fa fa-chevron-left"></i> 混合Copula建模修正——更多Copula函数的加入
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/06/2017-04-06-%E5%A4%9A%E7%BB%B4%E5%BD%A2%E5%BC%8F%E7%9A%84Copula%E5%87%BD%E6%95%B0%E6%8E%A8%E5%AF%BC%E5%8F%8A%E5%BB%BA%E6%A8%A1/" rel="prev" title="多维形式的Copula函数推导及建模">
+                多维形式的Copula函数推导及建模 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WayneJing</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chenjw1995@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fatelancer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://diligentpanda.github.io" target="_blank" title="Jianghe">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Jianghe</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#风速的随机性数学表述"><span class="nav-number">1.</span> <span class="nav-text">风速的随机性数学表述</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#程序验证随机性"><span class="nav-number">1.1.</span> <span class="nav-text">程序验证随机性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#场间风速的关系"><span class="nav-number">1.2.</span> <span class="nav-text">场间风速的关系</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#对场间风速进行建模"><span class="nav-number">2.</span> <span class="nav-text">对场间风速进行建模</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过单个copula函数对场间风速进行建模"><span class="nav-number">2.1.</span> <span class="nav-text">通过单个copula函数对场间风速进行建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用多个Copula函数进行混合对风速进行建模"><span class="nav-number">2.2.</span> <span class="nav-text">使用多个Copula函数进行混合对风速进行建模</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用多元Copula进行4维风电场间风速建模"><span class="nav-number">2.3.</span> <span class="nav-text">使用多元Copula进行4维风电场间风速建模</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#光伏的随机性表达"><span class="nav-number">3.</span> <span class="nav-text">光伏的随机性表达</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#通过核密度估计来表达长时间内的光伏照射强度"><span class="nav-number">3.1.</span> <span class="nav-text">通过核密度估计来表达长时间内的光伏照射强度</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#附录"><span class="nav-number">4.</span> <span class="nav-text">附录</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WayneJing</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AREeXiY0PzNVVE9HKFwTxh6n-gzGzoHsz", "KvuDj6YRF67WOuSEwVEkrHH4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>

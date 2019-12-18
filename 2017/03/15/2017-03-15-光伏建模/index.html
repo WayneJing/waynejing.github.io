@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="核密度估计," />
 
 
 
@@ -79,11 +79,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="WayneJing">
-<meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;archives&#x2F;2019&#x2F;12&#x2F;index.html">
+<meta name="description" content="光伏建模与风速建模的不同 对与风速建模而言，其符合双参数威布尔分布表示其样本数据符合双参数威布尔数据样本的特征 对于光伏建模而言，所谓的使用beta分布拟合光伏实际意义为在短时间内（一天之内）光照强度的曲线可以通过beta分布的概率密度函数去近似拟合  此二者有本质区别，因此如果仅通过曲线拟合表示光伏建模数据不能称作光伏建模随机性的数学表述，因此在缺乏先验的情况下只能求助于仅基于样本数据核密度估计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="光伏建模——核密度估计而非Beta分布">
+<meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;2017&#x2F;03&#x2F;15&#x2F;2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1&#x2F;index.html">
 <meta property="og:site_name" content="WayneJing">
+<meta property="og:description" content="光伏建模与风速建模的不同 对与风速建模而言，其符合双参数威布尔分布表示其样本数据符合双参数威布尔数据样本的特征 对于光伏建模而言，所谓的使用beta分布拟合光伏实际意义为在短时间内（一天之内）光照强度的曲线可以通过beta分布的概率密度函数去近似拟合  此二者有本质区别，因此如果仅通过曲线拟合表示光伏建模数据不能称作光伏建模随机性的数学表述，因此在缺乏先验的情况下只能求助于仅基于样本数据核密度估计">
+<meta property="article:published_time" content="2017-03-15T02:44:56.000Z">
+<meta property="article:modified_time" content="2017-03-17T06:47:48.283Z">
 <meta property="article:author" content="WayneJing">
+<meta property="article:tag" content="核密度估计">
 <meta name="twitter:card" content="summary">
 
 
@@ -114,13 +119,13 @@
 
 
 
-  <link rel="canonical" href="http://fatelancer.github.io/archives/2019/12/"/>
+  <link rel="canonical" href="http://fatelancer.github.io/2017/03/15/2017-03-15-光伏建模/"/>
 
 
 
 
 
-  <title>归档 | WayneJing</title>
+  <title>光伏建模——核密度估计而非Beta分布 | WayneJing</title>
   
 
 
@@ -139,7 +144,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -253,74 +258,217 @@
           <div id="content" class="content">
             
 
+  <div id="posts" class="posts-expand">
+    
+
+  
+
   
   
   
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
-
-      <span class="archive-page-counter">
-        
-        
-        
-          
-        
-        嗯..! 目前共计 23 篇日志。 继续努力。
-      </span>
-
-      
-
-        
-        
-        
-
-        
-          
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2019">2019</h1>
-          </div>
-        
-        
-
-        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2019/12/18/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">光伏建模——核密度估计而非Beta分布</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2019-12-18T19:52:52+08:00"
-              content="2019-12-18" >
-          12-18
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-15T10:44:56+08:00">
+                2017-03-15
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">毕业设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/" class="leancloud_visitors" data-flag-title="光伏建模——核密度估计而非Beta分布">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <h1 id="光伏建模与风速建模的不同"><a href="#光伏建模与风速建模的不同" class="headerlink" title="光伏建模与风速建模的不同"></a>光伏建模与风速建模的不同</h1><ul>
+<li>对与风速建模而言，其符合双参数威布尔分布表示其样本数据符合双参数威布尔数据样本的特征</li>
+<li>对于光伏建模而言，所谓的使用beta分布拟合光伏实际意义为在短时间内（一天之内）光照强度的曲线可以通过beta分布的概率密度函数去近似拟合</li>
+</ul>
+<p>此二者有本质区别，因此如果仅通过曲线拟合表示光伏建模数据不能称作光伏建模随机性的数学表述，因此在缺乏先验的情况下只能求助于仅基于样本数据核密度估计</p>
+<a id="more"></a>
+
+<h1 id="非参数核密度估计"><a href="#非参数核密度估计" class="headerlink" title="非参数核密度估计"></a>非参数核密度估计</h1><p>定义<br>  :   设$x_1,x_2,…,x_n$为随机变量$x$的样本，令随机变量$x$的概率密度函数为$f(x)$，则 $f(x)$ 的核密度估计为： </p>
+<p>  $$f_h(x)={1 \over nh}{\displaystyle \sum_{j=1}^n{K({x-x_j \over h})}}={1 \over n}{\displaystyle \sum_{j=1}^n{K_h(x-x_j)}}$$</p>
+<p>  其中$n$为样本容量，$h$ 为平滑系数，$K(·)$ 为核函数</p>
+<iframe src="http://www.cnblogs.com/wt869054461/p/5935992.html" width="100%" height="700px" frameborder="0" scrolling="auto"> </iframe>
+
+      
     </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    WayneJing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://fatelancer.github.io/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/" title="光伏建模——核密度估计而非Beta分布">http://fatelancer.github.io/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/%E6%A0%B8%E5%AF%86%E5%BA%A6%E4%BC%B0%E8%AE%A1/" rel="tag"># 核密度估计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/10/2017-03-10-%E6%B7%B7%E5%90%88Copula%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1%E2%80%94%E2%80%94%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0%E4%B8%8E%E7%BB%93%E6%9E%9C%E5%88%86%E6%9E%90/" rel="next" title="混合Copula风速建模——代码实现与结果分析">
+                <i class="fa fa-chevron-left"></i> 混合Copula风速建模——代码实现与结果分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/03/17/2017-03-17-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E6%A0%B8%E5%AF%86%E5%BA%A6%E4%BC%B0%E8%AE%A1%E5%AE%9E%E7%8E%B0/" rel="prev" title="光伏建模（2）——核密度估计实现">
+                光伏建模（2）——核密度估计实现 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -328,6 +476,10 @@
 
 
           
+
+  
+
+
 
         </div>
         
@@ -348,8 +500,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -431,6 +592,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#光伏建模与风速建模的不同"><span class="nav-number">1.</span> <span class="nav-text">光伏建模与风速建模的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#非参数核密度估计"><span class="nav-number">2.</span> <span class="nav-text">非参数核密度估计</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -584,6 +761,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
@@ -748,26 +929,6 @@
   
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
   
 
 

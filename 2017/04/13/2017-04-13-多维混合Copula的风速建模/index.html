@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="MATLAB,EM算法," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="多维混合Copula参数估计EM算法主体部分1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939">
+<meta property="og:type" content="article">
+<meta property="og:title" content="多维混合Copula的风速建模">
+<meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;2017&#x2F;04&#x2F;13&#x2F;2017-04-13-%E5%A4%9A%E7%BB%B4%E6%B7%B7%E5%90%88Copula%E7%9A%84%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1&#x2F;index.html">
+<meta property="og:site_name" content="WayneJing">
+<meta property="og:description" content="多维混合Copula参数估计EM算法主体部分1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939">
+<meta property="article:published_time" content="2017-04-13T08:12:39.000Z">
+<meta property="article:modified_time" content="2017-04-14T08:27:38.737Z">
+<meta property="article:author" content="WayneJing">
+<meta property="article:tag" content="MATLAB">
+<meta property="article:tag" content="EM算法">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fatelancer.github.io/2017/04/13/2017-04-13-多维混合Copula的风速建模/"/>
+
+
+
+
+
+  <title>多维混合Copula的风速建模 | WayneJing</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneJing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/04/13/2017-04-13-%E5%A4%9A%E7%BB%B4%E6%B7%B7%E5%90%88Copula%E7%9A%84%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">多维混合Copula的风速建模</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-13T16:12:39+08:00">
+                2017-04-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">毕业设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/04/13/2017-04-13-%E5%A4%9A%E7%BB%B4%E6%B7%B7%E5%90%88Copula%E7%9A%84%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/" class="leancloud_visitors" data-flag-title="多维混合Copula的风速建模">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="多维混合Copula参数估计"><a href="#多维混合Copula参数估计" class="headerlink" title="多维混合Copula参数估计"></a>多维混合Copula参数估计</h1><h2 id="EM算法主体部分"><a href="#EM算法主体部分" class="headerlink" title="EM算法主体部分"></a>EM算法主体部分</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">tic</span><br><span class="line">U=QWC;</span><br><span class="line">V=BDQC;</span><br><span class="line">Z=GHKC;</span><br><span class="line">M=CMC;</span><br><span class="line"><span class="comment">%初始化</span></span><br><span class="line">S=<span class="number">5</span>;</span><br><span class="line">th=<span class="number">0.001</span></span><br><span class="line">omega=[<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>];</span><br><span class="line">a1=copulafit(<span class="string">'Gaussian'</span>,[U,V,Z,M]);</span><br><span class="line">[a2,nuhat]=copulafit(<span class="string">'t'</span>,[U,V,Z,M]);</span><br><span class="line">a3=copula4fit(<span class="string">'Gumbel'</span>,[U,V,Z,M]);</span><br><span class="line">a4=copula4fit(<span class="string">'Clayton'</span>,[U,V,Z,M]);</span><br><span class="line">a5=copula4fit(<span class="string">'Frank'</span>,[U,V,Z,M]);</span><br><span class="line">theta=&#123;a1,a2,a3,a4,a5&#125;;</span><br><span class="line">tturntheta_old=<span class="built_in">zeros</span>(<span class="number">35</span>,<span class="number">1</span>);</span><br><span class="line">N=<span class="built_in">numel</span>(U);</span><br><span class="line">count=<span class="number">0</span>;</span><br><span class="line">tt=<span class="built_in">zeros</span>(N,<span class="number">4</span>);</span><br><span class="line">nn=<span class="built_in">zeros</span>(N,<span class="number">4</span>);</span><br><span class="line">tt(:,<span class="number">1</span>)=tinv(U(:),nuhat);</span><br><span class="line">tt(:,<span class="number">2</span>)=tinv(V(:),nuhat);</span><br><span class="line">tt(:,<span class="number">3</span>)=tinv(Z(:),nuhat);</span><br><span class="line">tt(:,<span class="number">4</span>)=tinv(M(:),nuhat);</span><br><span class="line">nn(:,<span class="number">1</span>)=norminv(U(:));</span><br><span class="line">nn(:,<span class="number">2</span>)=norminv(V(:));</span><br><span class="line">nn(:,<span class="number">3</span>)=norminv(Z(:));</span><br><span class="line">nn(:,<span class="number">4</span>)=norminv(M(:));</span><br><span class="line">t=<span class="built_in">inf</span>;</span><br><span class="line">COPULA=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">list1=cell(<span class="number">6</span>,<span class="number">101</span>);</span><br><span class="line">list2=<span class="built_in">zeros</span>(<span class="number">5</span>,<span class="number">101</span>);</span><br><span class="line">puz=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">puz1=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">turntheta_old=<span class="built_in">zeros</span>(<span class="number">15</span>,<span class="number">1</span>);</span><br><span class="line">lower=[-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,-<span class="built_in">inf</span>,<span class="number">1.001</span>,<span class="number">0.001</span>,-<span class="built_in">inf</span>];</span><br><span class="line">turntheta=<span class="built_in">zeros</span>(<span class="number">15</span>,<span class="number">1</span>);</span><br><span class="line"><span class="keyword">while</span> t&gt;=th&amp;&amp;count&lt;=<span class="number">100</span></span><br><span class="line">    theta_old=theta;</span><br><span class="line">    omega_old=omega;</span><br><span class="line"></span><br><span class="line"><span class="comment">%保证搜索过程中仍为正定矩阵</span></span><br><span class="line">    [A1,B1]=eig(theta_old&#123;<span class="number">1</span>&#125;);</span><br><span class="line">    [A2,B2]=eig(theta_old&#123;<span class="number">2</span>&#125;);</span><br><span class="line">    C1=A1*<span class="built_in">sqrt</span>(B1);</span><br><span class="line">    C2=A2*<span class="built_in">sqrt</span>(B2);</span><br><span class="line"></span><br><span class="line">    tturntheta_old(<span class="number">1</span>:<span class="number">16</span>)=<span class="built_in">reshape</span>(C1,[<span class="number">16</span>,<span class="number">1</span>]);</span><br><span class="line">    tturntheta_old(<span class="number">17</span>:<span class="number">32</span>)=<span class="built_in">reshape</span>(C2,[<span class="number">16</span>,<span class="number">1</span>]);</span><br><span class="line">    tturntheta_old(<span class="number">33</span>)=theta_old&#123;<span class="number">3</span>&#125;;</span><br><span class="line">    tturntheta_old(<span class="number">34</span>)=theta_old&#123;<span class="number">4</span>&#125;;</span><br><span class="line">    tturntheta_old(<span class="number">35</span>)=theta_old&#123;<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    COPULA(:,<span class="number">1</span>)=copulapdf(<span class="string">'Gaussian'</span>,[U,V,Z,M],theta_old&#123;<span class="number">1</span>&#125;);</span><br><span class="line">    COPULA(:,<span class="number">2</span>)=copulapdf(<span class="string">'t'</span>,[U,V,Z,M],theta_old&#123;<span class="number">2</span>&#125;,nuhat);</span><br><span class="line">    COPULA(:,<span class="number">3</span>)=copula4pdf(<span class="string">'Gumbel'</span>,[U,V,Z,M],theta_old&#123;<span class="number">3</span>&#125;);</span><br><span class="line">    COPULA(:,<span class="number">4</span>)=copula4pdf(<span class="string">'Clayton'</span>,[U,V,Z,M],theta_old&#123;<span class="number">4</span>&#125;);</span><br><span class="line">    COPULA(:,<span class="number">5</span>)=copula4pdf(<span class="string">'Frank'</span>,[U,V,Z,M],theta_old&#123;<span class="number">5</span>&#125;);</span><br><span class="line"></span><br><span class="line">    puz(:,<span class="number">1</span>)=COPULA(:,<span class="number">1</span>)*omega_old(<span class="number">1</span>);</span><br><span class="line">    puz(:,<span class="number">2</span>)=COPULA(:,<span class="number">2</span>)*omega_old(<span class="number">2</span>);</span><br><span class="line">    puz(:,<span class="number">3</span>)=COPULA(:,<span class="number">3</span>)*omega_old(<span class="number">3</span>);</span><br><span class="line">    puz(:,<span class="number">4</span>)=COPULA(:,<span class="number">4</span>)*omega_old(<span class="number">4</span>);</span><br><span class="line">    puz(:,<span class="number">5</span>)=COPULA(:,<span class="number">5</span>)*omega_old(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:N</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">1</span>)=puz(<span class="built_in">i</span>,<span class="number">1</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">2</span>)=puz(<span class="built_in">i</span>,<span class="number">2</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">3</span>)=puz(<span class="built_in">i</span>,<span class="number">3</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">4</span>)=puz(<span class="built_in">i</span>,<span class="number">4</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">5</span>)=puz(<span class="built_in">i</span>,<span class="number">5</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    omega(<span class="number">1</span>)=sum(puz1(:,<span class="number">1</span>))/N;</span><br><span class="line">    omega(<span class="number">2</span>)=sum(puz1(:,<span class="number">2</span>))/N;</span><br><span class="line">    omega(<span class="number">3</span>)=sum(puz1(:,<span class="number">3</span>))/N;</span><br><span class="line">    omega(<span class="number">4</span>)=sum(puz1(:,<span class="number">4</span>))/N;</span><br><span class="line">    omega(<span class="number">5</span>)=sum(puz1(:,<span class="number">5</span>))/N;</span><br><span class="line">    omega</span><br><span class="line">    [tturntheta,fval,exitflag,output]=update4theta(N,U,V,Z,M,tturntheta_old,puz1,tt,nn,lower,nuhat);</span><br><span class="line"></span><br><span class="line">    CC1=<span class="built_in">reshape</span>(tturntheta(<span class="number">1</span>:<span class="number">16</span>),[<span class="number">4</span>,<span class="number">4</span>]);</span><br><span class="line">    CC2=<span class="built_in">reshape</span>(tturntheta(<span class="number">17</span>:<span class="number">32</span>),[<span class="number">4</span>,<span class="number">4</span>]);</span><br><span class="line">    CC1=CC1*CC1';</span><br><span class="line">    CC2=CC2*CC2';</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">find</span>(eig(CC1)&lt;<span class="number">0.000000001</span>)&gt;<span class="number">0</span>)</span><br><span class="line">        CC1=CC1+<span class="built_in">eps</span>*<span class="built_in">eye</span>(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">find</span>(eig(CC2)&lt;<span class="number">0.000000001</span>)&gt;<span class="number">0</span>)</span><br><span class="line">        CC2=CC2+<span class="built_in">eps</span>*<span class="built_in">eye</span>(<span class="number">4</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line"></span><br><span class="line">    theta&#123;<span class="number">1</span>&#125;=[<span class="number">1</span>,CC1(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">2</span>,<span class="number">2</span>)),CC1(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">3</span>,<span class="number">3</span>)),CC1(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC1(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">2</span>,<span class="number">2</span>)),<span class="number">1</span>,CC1(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">2</span>,<span class="number">2</span>)*CC1(<span class="number">3</span>,<span class="number">3</span>)),CC1(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">2</span>,<span class="number">2</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC1(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">3</span>,<span class="number">3</span>)),CC1(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">2</span>,<span class="number">2</span>)*CC1(<span class="number">3</span>,<span class="number">3</span>)),<span class="number">1</span>,CC1(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">3</span>,<span class="number">3</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC1(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">1</span>,<span class="number">1</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>)),CC1(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">2</span>,<span class="number">2</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>)),CC1(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC1(<span class="number">3</span>,<span class="number">3</span>)*CC1(<span class="number">4</span>,<span class="number">4</span>)),<span class="number">1</span>];</span><br><span class="line">    theta&#123;<span class="number">2</span>&#125;=[<span class="number">1</span>,CC2(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">2</span>,<span class="number">2</span>)),CC2(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">3</span>,<span class="number">3</span>)),CC2(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC2(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">2</span>,<span class="number">2</span>)),<span class="number">1</span>,CC2(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">2</span>,<span class="number">2</span>)*CC2(<span class="number">3</span>,<span class="number">3</span>)),CC2(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">2</span>,<span class="number">2</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC2(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">3</span>,<span class="number">3</span>)),CC2(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">2</span>,<span class="number">2</span>)*CC2(<span class="number">3</span>,<span class="number">3</span>)),<span class="number">1</span>,CC2(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">3</span>,<span class="number">3</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            CC2(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">1</span>,<span class="number">1</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>)),CC2(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">2</span>,<span class="number">2</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>)),CC2(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(CC2(<span class="number">3</span>,<span class="number">3</span>)*CC2(<span class="number">4</span>,<span class="number">4</span>)),<span class="number">1</span>];</span><br><span class="line">    theta&#123;<span class="number">3</span>&#125;=tturntheta(<span class="number">33</span>);</span><br><span class="line">    theta&#123;<span class="number">4</span>&#125;=tturntheta(<span class="number">34</span>);</span><br><span class="line">    theta&#123;<span class="number">5</span>&#125;=tturntheta(<span class="number">35</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    theta;</span><br><span class="line">    list1&#123;<span class="number">1</span>,count+<span class="number">1</span>&#125;=theta&#123;<span class="number">1</span>&#125;;</span><br><span class="line">    list1&#123;<span class="number">2</span>,count+<span class="number">1</span>&#125;=theta&#123;<span class="number">2</span>&#125;;</span><br><span class="line">    list1&#123;<span class="number">3</span>,count+<span class="number">1</span>&#125;=theta&#123;<span class="number">3</span>&#125;;</span><br><span class="line">    list1&#123;<span class="number">4</span>,count+<span class="number">1</span>&#125;=theta&#123;<span class="number">4</span>&#125;;</span><br><span class="line">    list1&#123;<span class="number">5</span>,count+<span class="number">1</span>&#125;=theta&#123;<span class="number">5</span>&#125;;</span><br><span class="line"></span><br><span class="line">    theta&#123;<span class="number">1</span>&#125;</span><br><span class="line">    theta&#123;<span class="number">2</span>&#125;</span><br><span class="line">    theta&#123;<span class="number">3</span>&#125;</span><br><span class="line">    theta&#123;<span class="number">4</span>&#125;</span><br><span class="line">    theta&#123;<span class="number">5</span>&#125;</span><br><span class="line"></span><br><span class="line">    list2(:,count+<span class="number">1</span>)=omega;</span><br><span class="line">    t=<span class="built_in">max</span>([norm(tturntheta(:)-tturntheta_old(:));norm(omega_old(:)-omega(:))])</span><br><span class="line">    count=count+<span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">toc</span><br></pre></td></tr></table></figure>
+<p><strong>注：在多维模式下最应注意的是搜索过程中多维高斯Copula与t-Copula的相依结构参数应该保持正定</strong></p>
+<blockquote>
+<p>保持矩阵正定的方法<br>假设 $A$ 矩阵正定，则;<br>$A=Y<em>\lambda</em>Y^T$,其中 $\lambda$ 为对角线上为矩阵$A$的特征值的对角矩阵，$Y$为对应各特征值的特征向量矩阵。<br>因此对于$B=Y<em>\sqrt{\lambda}$，有$A=B</em>B^T$。<br>因此只需对$B$中的元素进行搜索就能保证最后合成的$A$一定为正定。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="非线性优化部分"><a href="#非线性优化部分" class="headerlink" title="非线性优化部分"></a>非线性优化部分</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[turntheta,fval,exitflag,output]</span>=<span class="title">update4theta</span><span class="params">(N,U,V,Z,M,ttheta,puz,t,n,lower,nuhat)</span></span></span><br><span class="line">tic</span><br><span class="line">options=optimset(<span class="string">'Display'</span>,<span class="string">'iter-detailed'</span>,<span class="string">'MaxFunEvals'</span>,<span class="number">10000</span>,<span class="string">'TolFun'</span>,<span class="number">1e-8</span>,<span class="string">'TolX'</span>,<span class="number">1e-10</span>,<span class="string">'LargeScale'</span>,<span class="string">'on'</span>,<span class="string">'HessUpdate'</span>,<span class="string">'bfgs'</span>,<span class="string">'UseParallel'</span>,<span class="number">1</span>);</span><br><span class="line">[turntheta,fval,exitflag,output]=fmincon(@u4theta,ttheta,[],[],[],[],lower,[],[],options);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">y</span>=<span class="title">u4theta</span><span class="params">(ttheta)</span></span></span><br><span class="line">    theta=cell(<span class="number">5</span>,<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">    X1=<span class="built_in">reshape</span>(ttheta(<span class="number">1</span>:<span class="number">16</span>),[<span class="number">4</span>,<span class="number">4</span>]);</span><br><span class="line">    X2=<span class="built_in">reshape</span>(ttheta(<span class="number">17</span>:<span class="number">32</span>),[<span class="number">4</span>,<span class="number">4</span>]);</span><br><span class="line">    X1=X1*X1';</span><br><span class="line">    X2=X2*X2';</span><br><span class="line"></span><br><span class="line">    theta&#123;<span class="number">1</span>&#125;=[<span class="number">1</span>,X1(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">2</span>,<span class="number">2</span>)),X1(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">3</span>,<span class="number">3</span>)),X1(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X1(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">2</span>,<span class="number">2</span>)),<span class="number">1</span>,X1(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">2</span>,<span class="number">2</span>)*X1(<span class="number">3</span>,<span class="number">3</span>)),X1(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">2</span>,<span class="number">2</span>)*X1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X1(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">3</span>,<span class="number">3</span>)),X1(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">2</span>,<span class="number">2</span>)*X1(<span class="number">3</span>,<span class="number">3</span>)),<span class="number">1</span>,X1(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">3</span>,<span class="number">3</span>)*X1(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X1(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">1</span>,<span class="number">1</span>)*X1(<span class="number">4</span>,<span class="number">4</span>)),X1(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">2</span>,<span class="number">2</span>)*X1(<span class="number">4</span>,<span class="number">4</span>)),X1(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X1(<span class="number">3</span>,<span class="number">3</span>)*X1(<span class="number">4</span>,<span class="number">4</span>)),<span class="number">1</span>];</span><br><span class="line">    theta&#123;<span class="number">2</span>&#125;=[<span class="number">1</span>,X2(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">2</span>,<span class="number">2</span>)),X2(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">3</span>,<span class="number">3</span>)),X2(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X2(<span class="number">1</span>,<span class="number">2</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">2</span>,<span class="number">2</span>)),<span class="number">1</span>,X2(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">2</span>,<span class="number">2</span>)*X2(<span class="number">3</span>,<span class="number">3</span>)),X2(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">2</span>,<span class="number">2</span>)*X2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X2(<span class="number">1</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">3</span>,<span class="number">3</span>)),X2(<span class="number">2</span>,<span class="number">3</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">2</span>,<span class="number">2</span>)*X2(<span class="number">3</span>,<span class="number">3</span>)),<span class="number">1</span>,X2(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">3</span>,<span class="number">3</span>)*X2(<span class="number">4</span>,<span class="number">4</span>));</span><br><span class="line">            X2(<span class="number">1</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">1</span>,<span class="number">1</span>)*X2(<span class="number">4</span>,<span class="number">4</span>)),X2(<span class="number">2</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">2</span>,<span class="number">2</span>)*X2(<span class="number">4</span>,<span class="number">4</span>)),X2(<span class="number">3</span>,<span class="number">4</span>)/<span class="built_in">sqrt</span>(X2(<span class="number">3</span>,<span class="number">3</span>)*X2(<span class="number">4</span>,<span class="number">4</span>)),<span class="number">1</span>];</span><br><span class="line">    theta&#123;<span class="number">3</span>&#125;=ttheta(<span class="number">33</span>);</span><br><span class="line">    theta&#123;<span class="number">4</span>&#125;=ttheta(<span class="number">34</span>);</span><br><span class="line">    theta&#123;<span class="number">5</span>&#125;=ttheta(<span class="number">35</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> theta&#123;<span class="number">5</span>&#125;==<span class="number">0</span></span><br><span class="line">    theta&#123;<span class="number">5</span>&#125;=theta&#123;<span class="number">5</span>&#125;+<span class="number">0.0001</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">th1=theta&#123;<span class="number">1</span>&#125;;</span><br><span class="line">th2=theta&#123;<span class="number">2</span>&#125;;</span><br><span class="line">th3=theta&#123;<span class="number">3</span>&#125;;</span><br><span class="line">th4=theta&#123;<span class="number">4</span>&#125;;</span><br><span class="line">th5=theta&#123;<span class="number">5</span>&#125;;</span><br><span class="line">y=<span class="number">0</span>;</span><br><span class="line">Y=<span class="built_in">zeros</span>(<span class="number">1</span>,N);</span><br><span class="line"><span class="keyword">parfor</span> <span class="built_in">j</span>=<span class="number">1</span>:N</span><br><span class="line">    Y(<span class="built_in">j</span>)=<span class="built_in">log</span>(det(th1)^(<span class="number">-1</span>/<span class="number">2</span>)*<span class="built_in">exp</span>(<span class="number">-1</span>/<span class="number">2</span>*n(<span class="built_in">j</span>,:)*(th1^(<span class="number">1</span>)-<span class="built_in">eye</span>(<span class="number">4</span>))*n(<span class="built_in">j</span>,:)'))*puz(<span class="built_in">j</span>,<span class="number">1</span>)+...</span><br><span class="line">         <span class="built_in">log</span>(det(th2)^(<span class="number">-1</span>/<span class="number">2</span>)*<span class="built_in">gamma</span>((nuhat+<span class="number">4</span>)/<span class="number">2</span>)*<span class="built_in">gamma</span>(nuhat/<span class="number">2</span>)^(<span class="number">3</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,:)*th2^(<span class="number">-1</span>)*t(<span class="built_in">j</span>,:)'/nuhat)^(-(nuhat+<span class="number">4</span>)/<span class="number">2</span>)/((<span class="built_in">gamma</span>((nuhat+<span class="number">1</span>)/<span class="number">2</span>))^<span class="number">4</span>*(<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">1</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">2</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">3</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>)*(<span class="number">1</span>+t(<span class="built_in">j</span>,<span class="number">4</span>)^<span class="number">2</span>/nuhat)^(-(nuhat+<span class="number">1</span>)/<span class="number">2</span>)))*puz(<span class="built_in">j</span>,<span class="number">2</span>)+...</span><br><span class="line">         <span class="built_in">log</span>((<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">4</span>/th3 - <span class="number">4</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) + (th3^<span class="number">2</span>*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">1</span>)^<span class="number">2</span>*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">2</span>/th3 - <span class="number">4</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) + (th3^<span class="number">2</span>*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">2</span>/th3 - <span class="number">2</span>)*(<span class="number">2</span>/th3 - <span class="number">3</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">2</span>/th3 - <span class="number">4</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) - (<span class="number">2</span>*th3*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">1</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3 - <span class="number">2</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">2</span>/th3 - <span class="number">2</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) - (<span class="number">2</span>*th3*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">2</span>/th3 - <span class="number">2</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3 - <span class="number">1</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">2</span>/th3 - <span class="number">3</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) - (th3^<span class="number">3</span>*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">2</span>)*(<span class="number">1</span>/th3 - <span class="number">3</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3 - <span class="number">4</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)) + (<span class="number">2</span>*th3^<span class="number">2</span>*<span class="built_in">exp</span>(-((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3))*(-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^(th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">1</span>)*(<span class="number">1</span>/th3 - <span class="number">2</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3 - <span class="number">1</span>)*((-<span class="built_in">log</span>(M(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(U(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(V(<span class="built_in">j</span>)))^th3 + (-<span class="built_in">log</span>(Z(<span class="built_in">j</span>)))^th3)^(<span class="number">1</span>/th3 - <span class="number">3</span>))/(M(<span class="built_in">j</span>)*U(<span class="built_in">j</span>)*V(<span class="built_in">j</span>)*Z(<span class="built_in">j</span>)))*puz(<span class="built_in">j</span>,<span class="number">3</span>)+...</span><br><span class="line">         <span class="built_in">log</span>((th4^<span class="number">3</span>*(<span class="number">1</span>/th4 + <span class="number">1</span>)*(<span class="number">1</span>/th4 + <span class="number">2</span>)*(<span class="number">1</span>/th4 + <span class="number">3</span>))/(M(<span class="built_in">j</span>)^(th4 + <span class="number">1</span>)*U(<span class="built_in">j</span>)^(th4 + <span class="number">1</span>)*V(<span class="built_in">j</span>)^(th4 + <span class="number">1</span>)*Z(<span class="built_in">j</span>)^(th4 + <span class="number">1</span>)*(<span class="number">1</span>/M(<span class="built_in">j</span>)^th4 + <span class="number">1</span>/U(<span class="built_in">j</span>)^th4 + <span class="number">1</span>/V(<span class="built_in">j</span>)^th4 + <span class="number">1</span>/Z(<span class="built_in">j</span>)^th4 - <span class="number">3</span>)^(<span class="number">1</span>/th4 + <span class="number">4</span>)))*puz(<span class="built_in">j</span>,<span class="number">4</span>)+...</span><br><span class="line">         <span class="built_in">log</span>((<span class="number">7</span>*th5^<span class="number">3</span>*<span class="built_in">exp</span>(<span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5)*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)^<span class="number">2</span>)/((<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>) + <span class="number">1</span>)^<span class="number">2</span>*(<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)) + (<span class="number">6</span>*th5^<span class="number">3</span>*<span class="built_in">exp</span>(<span class="number">4</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">4</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">4</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">4</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5)*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)^<span class="number">4</span>)/((<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>) + <span class="number">1</span>)^<span class="number">4</span>*(<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)) - (th5^<span class="number">3</span>*<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>))/((<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>) + <span class="number">1</span>)*(<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)) - (<span class="number">12</span>*th5^<span class="number">3</span>*<span class="built_in">exp</span>(<span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="number">2</span>*<span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5)*<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)^<span class="number">3</span>)/((<span class="built_in">exp</span>(<span class="built_in">log</span>((<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)) + <span class="built_in">log</span>((<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)/(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>)))*(<span class="built_in">exp</span>(-th5) - <span class="number">1</span>) + <span class="number">1</span>)^<span class="number">3</span>*(<span class="built_in">exp</span>(-M(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-U(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-V(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)*(<span class="built_in">exp</span>(-Z(<span class="built_in">j</span>)*th5) - <span class="number">1</span>)))*puz(<span class="built_in">j</span>,<span class="number">5</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">y=-sum(Y);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">toc</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="参数估计结果"><a href="#参数估计结果" class="headerlink" title="参数估计结果"></a>参数估计结果</h1><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">rho_n=[<span class="number">1.0000</span>   <span class="number">-0.4594</span>    <span class="number">0.6594</span>    <span class="number">0.3254</span></span><br><span class="line">     <span class="number">-0.4594</span>    <span class="number">1.0000</span>   <span class="number">-0.8218</span>    <span class="number">0.6426</span></span><br><span class="line">      <span class="number">0.6594</span>   <span class="number">-0.8218</span>    <span class="number">1.0000</span>   <span class="number">-0.4552</span></span><br><span class="line">      <span class="number">0.3254</span>    <span class="number">0.6426</span>   <span class="number">-0.4552</span>    <span class="number">1.0000</span>];</span><br><span class="line"></span><br><span class="line">rho_t=[<span class="number">1.0000</span>    <span class="number">0.6856</span>    <span class="number">0.6195</span>    <span class="number">0.6621</span></span><br><span class="line">      <span class="number">0.6856</span>    <span class="number">1.0000</span>    <span class="number">0.9344</span>    <span class="number">0.3696</span></span><br><span class="line">      <span class="number">0.6195</span>    <span class="number">0.9344</span>    <span class="number">1.0000</span>    <span class="number">0.3127</span></span><br><span class="line">      <span class="number">0.6621</span>    <span class="number">0.3696</span>    <span class="number">0.3127</span>    <span class="number">1.0000</span>];</span><br><span class="line"></span><br><span class="line">rho_g=<span class="number">1.9479</span>;</span><br><span class="line"></span><br><span class="line">rho_c=<span class="number">0.0010</span>;</span><br><span class="line"></span><br><span class="line">rho_f=<span class="number">2.0234</span>;</span><br><span class="line"></span><br><span class="line">omega=[<span class="number">0</span>    <span class="number">0.7098</span>    <span class="number">0.1432</span>    <span class="number">0.0364</span>    <span class="number">0.1106</span>]</span><br></pre></td></tr></table></figure>
+
+<p>欧式距离</p>
+<p>$d_m=6.6293$</p>
+<p>可以看出从欧氏距离上讲，确实混合Copula模型比单个Copula建模的效果要好。<br>由于高斯Copula在多维下并不能表现出尾部相关性，因此其权重参数为0。其余的Copula基本是按照各自拟合优度占据权重。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    WayneJing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://fatelancer.github.io/2017/04/13/2017-04-13-%E5%A4%9A%E7%BB%B4%E6%B7%B7%E5%90%88Copula%E7%9A%84%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/" title="多维混合Copula的风速建模">http://fatelancer.github.io/2017/04/13/2017-04-13-%E5%A4%9A%E7%BB%B4%E6%B7%B7%E5%90%88Copula%E7%9A%84%E9%A3%8E%E9%80%9F%E5%BB%BA%E6%A8%A1/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/MATLAB/" rel="tag"># MATLAB</a>
+          
+            <a href="/tags/EM%E7%AE%97%E6%B3%95/" rel="tag"># EM算法</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/06/2017-04-06-%E5%A4%9A%E7%BB%B4%E5%BD%A2%E5%BC%8F%E7%9A%84Copula%E5%87%BD%E6%95%B0%E6%8E%A8%E5%AF%BC%E5%8F%8A%E5%BB%BA%E6%A8%A1/" rel="next" title="多维形式的Copula函数推导及建模">
+                <i class="fa fa-chevron-left"></i> 多维形式的Copula函数推导及建模
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/09/04/2017-09-04-EESM-5620-L1-Introduction/" rel="prev" title="EESM 5620 L1 Introduction">
+                EESM 5620 L1 Introduction <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WayneJing</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chenjw1995@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fatelancer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://diligentpanda.github.io" target="_blank" title="Jianghe">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Jianghe</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多维混合Copula参数估计"><span class="nav-number">1.</span> <span class="nav-text">多维混合Copula参数估计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#EM算法主体部分"><span class="nav-number">1.1.</span> <span class="nav-text">EM算法主体部分</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#非线性优化部分"><span class="nav-number">1.2.</span> <span class="nav-text">非线性优化部分</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数估计结果"><span class="nav-number">2.</span> <span class="nav-text">参数估计结果</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WayneJing</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AREeXiY0PzNVVE9HKFwTxh6n-gzGzoHsz", "KvuDj6YRF67WOuSEwVEkrHH4");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+
+</body>
+</html>
