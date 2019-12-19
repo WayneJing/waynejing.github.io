@@ -1530,8 +1530,8 @@ C(u,v;a)= & 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)
         <category>毕业设计</category>
       </categories>
       <tags>
-        <tag>可再生能源</tag>
         <tag>Copula</tag>
+        <tag>可再生能源</tag>
         <tag>双参数威布尔函数</tag>
       </tags>
   </entry>
@@ -1556,8 +1556,8 @@ C(u,v;a)= & 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)
         <category>毕业设计</category>
       </categories>
       <tags>
-        <tag>可再生能源</tag>
         <tag>Copula</tag>
+        <tag>可再生能源</tag>
       </tags>
   </entry>
   <entry>
@@ -1636,9 +1636,9 @@ C(u,v;a)= & 0.1075C_t(u,v;0.9678,2.7192)+0.0613C_N(u,v;0.9250)
       </categories>
       <tags>
         <tag>柔性建模</tag>
+        <tag>可再生能源</tag>
         <tag>deferrable load</tag>
         <tag>需求响应</tag>
-        <tag>可再生能源</tag>
         <tag>real-time</tag>
       </tags>
   </entry>
