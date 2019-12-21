@@ -306,6 +306,180 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/21/LeetCode-4-Median-of-Two-Sorted-Arrays%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/21/LeetCode-4-Median-of-Two-Sorted-Arrays%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/" itemprop="url">LeetCode - 4.Median of Two Sorted Arrays寻找两个有序数组的中位数</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-21T14:43:09+08:00">
+                2019-12-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+<p>给定两个大小为 m 和 n 的有序数组 nums1 和 nums2。</p>
+<p>请你找出这两个有序数组的中位数，并且要求算法的时间复杂度为 O(log(m + n))。</p>
+<p>你可以假设 nums1 和 nums2 不会同时为空。</p>
+<p><strong>示例 1:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nums1 &#x3D; [1, 3]</span><br><span class="line">nums2 &#x3D; [2]</span><br><span class="line"></span><br><span class="line">则中位数是 2.0</span><br></pre></td></tr></table></figure><br><strong>示例 2:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">nums1 &#x3D; [1, 2]</span><br><span class="line">nums2 &#x3D; [3, 4]</span><br><span class="line"></span><br><span class="line">则中位数是 (2 + 3)&#x2F;2 &#x3D; 2.5</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays" target="_blank" rel="noopener">https://leetcode-cn.com/problems/median-of-two-sorted-arrays</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="1-合并两个数组然后取中位数"><a href="#1-合并两个数组然后取中位数" class="headerlink" title="1. 合并两个数组然后取中位数"></a>1. 合并两个数组然后取中位数</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findMedianSortedArrays</span><span class="params">(self, nums1: List[int], nums2: List[int])</span> -&gt; float:</span></span><br><span class="line">    _temp = nums1 + nums2</span><br><span class="line">    _temp.sort()</span><br><span class="line">    _length = len(_temp)</span><br><span class="line">    <span class="keyword">if</span> _length % <span class="number">2</span> == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (_temp[_length // <span class="number">2</span> - <span class="number">1</span>]+_temp[_length // <span class="number">2</span>])/<span class="number">2</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> _temp[(_length - <span class="number">1</span>) // <span class="number">2</span>]</span><br></pre></td></tr></table></figure>
+<h2 id="2-二分法"><a href="#2-二分法" class="headerlink" title="2. 二分法"></a>2. 二分法</h2><p>摘自windliang大佬题解：</p>
+<blockquote>
+<p>题目要求 <code>O(log(n))</code>的时间复杂度看到 <code>log</code>，很明显，我们只有用到二分的方法才能达到。我们不妨用另一种思路，题目是求中位数，其实就是求第 <code>k</code> 小数的一种特殊情况，而求第 <code>k</code> 小数有一种算法。</p>
+<p>假设我们要找第 <code>k</code> 小数，我们可以每次循环排除掉 <code>k/2</code> 个数。看下边一个例子。</p>
+<p>假设我们要找第 <code>7</code> 小的数字。</p>
+<p><img src="https://pic.leetcode-cn.com/735ea8129ab5b56b7058c6286217fa4bb5f8a198e4c8b2172fe0f75b29a966cd-image.png" alt="enter image description here"></p>
+<p>我们比较两个数组的第 <code>k/2</code> 个数字，如果 <code>k</code> 是奇数，向下取整。也就是比较第 3 个数字，上边数组中的 4 和下边数组中的 3，如果哪个小，就表明该数组的前 <code>k/2</code> 个数字都不是第 <code>k</code> 小数字，所以可以排除。也就是 1，2，3 这三个数字不可能是第 7 小的数字，我们可&gt; 以把它排除掉。将 1349 和 45678910 两个数组作为新的数组进行比较。</p>
+<p>更一般的情况 <code>A[1]</code> ，<code>A[2]</code> ，<code>A[3]</code>，<code>A[k/2]</code> … ，<code>B[1]</code>，<code>B[2]</code>，<code>B[3]</code>，<code>B[k/2]</code> … ，如果 <code>A[k/2]</code>&lt;<code>B[k/2]</code> ，那么<code>A[1]</code>，<code>A[2]</code>，<code>A[3]</code>，<code>A[k/2]</code>都不可能是第 <code>k</code> 小的数字。</p>
+<p>A 数组中比 <code>A[k/2]</code> 小的数有 <code>k/2-1</code> 个，B 数组中，<code>B[k/2]</code> 比 <code>A[k/2]</code> 小，假设 <code>B[k/2]</code>前边的数字都比 <code>A[k/2]</code> 小，也只有 <code>k/2-1</code> 个，所以比 <code>A[k/2]</code> 小的数字最多有 <code>k/1-1+k/2-1=k-2</code>个，所以 <code>A[k/2]</code> 最多是第 <code>k-1</code> 小的数。而比 <code>A[k/2]</code> 小的数更不可能是第 <code>k</code> 小的数了，所以可以把它们排除。</p>
+<p>橙色的部分表示已经去掉的数字。</p>
+<p><img src="https://pic.leetcode-cn.com/09b8649cd2b8bbea74f7f632b098fed5f8404530ff44b5a0b54a360b3cf7dd8f-image.png" alt="enter image description here"></p>
+<p>由于我们已经排除掉了 3 个数字，就是这 3 个数字一定在最前边，所以在两个新数组中，我们&gt; 只需要找第 7 - 3 = 4 小的数字就可以了，也就是 k = 4。此时两个数组，比较第 2 个数&gt; 字，3 &lt; 5，所以我们可以把小的那个数组中的 1 ，3 排除掉了。</p>
+<p><img src="https://pic.leetcode-cn.com/f2d72fd3dff109ad810895b9a0c8d8782f47df6b2f24f9de72704961bc547fcb-image.png" alt="enter image description here"></p>
+<p>我们又排除掉 2 个数字，所以现在找第 4 - 2 = 2 小的数字就可以了。此时比较两个数组中&gt; 的第 k / 2 = 1 个数，4 == 4，怎么办呢？由于两个数相等，所以我们无论去掉哪个数组中&gt; 的都行，因为去掉 1 个总会保留 1 个的，所以没有影响。为了统一，我们就假设 4 &gt; 4 吧，&gt; 所以此时将下边的 4 去掉。</p>
+<p><img src="https://pic.leetcode-cn.com/3c89a8ea29f2e19057b57242c8bc37c5f09b6796b96c30f3d42caea21c12f294-image.png" alt="enter image description here"></p>
+<p>由于又去掉 1 个数字，此时我们要找第 1 小的数字，所以只需判断两个数组中第一个数字哪个&gt; 小就可以了，也就是 4。</p>
+<p>所以第 7 小的数字是 4。</p>
+<p>我们每次都是取 <code>k/2</code> 的数进行比较，有时候可能会遇到数组长度小于 <code>k/2</code>的时候。<br><img src="https://pic.leetcode-cn.com/ad87d1f63a9bbd99e12605686290800ce61b03f9fb98d87f1d8c020d404421ac-image.png" alt="enter image description here"><br>此时 <code>k/2</code> 等于 3，而上边的数组长度是 2，我们此时将箭头指向它的末尾就可以了。这样的&gt; 话，由于 2 &lt; 3，所以就会导致上边的数组 1，2 都被排除。造成下边的情况。</p>
+<p><img src="https://pic.leetcode-cn.com/7ea1963f184b1dcaddf951326ccbe7aa09cfbb9ebee7fffb2ede131853b3d1de-image.png" alt=""></p>
+<p>由于 2 个元素被排除，所以此时 <code>k = 5</code>，又由于上边的数组已经空了，我们只需要返回下边的数组的第 5 个数字就可以了。</p>
+<p>从上边可以看到，无论是找第奇数个还是第偶数个数字，对我们的算法并没有影响，而且在算法进行中，<code>k</code> 的值都有可能从奇数变为偶数，最终都会变为 1 或者由于一个数组空了，直接返回结果。</p>
+<p>所以我们采用递归的思路，为了防止数组长度小于<code>k/2</code>，所以每次比较 <code>min(k/2，len(数组)</code>对应的数字，把小的那个对应的数组的数字排除，将两个新数组进入递归，并且 k 要减去排除的数字的个数。递归出口就是当 k=1 或者其中一个数字长度是 0 了。</p>
+<p>作者：windliang<br>链接：<a href="https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/" target="_blank" rel="noopener">https://leetcode-cn.com/problems/median-of-two-sorted-arrays/solution/xiang-xi-tong-su-de-si-lu-fen-xi-duo-jie-fa-by-w-2/</a><br>来源：力扣（LeetCode）<br>著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">findMedianSortedArrays</span><span class="params">(self, nums1: List[int], nums2: List[int])</span> -&gt; float:</span></span><br><span class="line">    n = len(nums1)</span><br><span class="line">    m = len(nums2)</span><br><span class="line">    <span class="comment"># 将偶数情况和奇数情况合并，当是奇数时，会计算两次同样的k</span></span><br><span class="line">    left = (n + m + <span class="number">1</span>) // <span class="number">2</span></span><br><span class="line">    right = (n + m + <span class="number">2</span>) // <span class="number">2</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">helper</span><span class="params">(nums1: List[int], start1: int, end1: int, nums2: List[int], start2: int, end2: int, k: int)</span> -&gt; int:</span></span><br><span class="line">        l1 = end1 - start1 + <span class="number">1</span></span><br><span class="line">        l2 = end2 - start2 + <span class="number">1</span></span><br><span class="line">        <span class="comment"># 始终保证l1 长度小于l2，如果有数组为空，则一定是num1</span></span><br><span class="line">        <span class="keyword">if</span> (l1 &gt; l2): <span class="keyword">return</span> helper(nums2, start2, end2, nums1, start1, end1, k)</span><br><span class="line">        <span class="keyword">if</span> (l1 == <span class="number">0</span>): <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (k == <span class="number">1</span>): <span class="keyword">return</span> min(nums1[start1], nums2[start2])</span><br><span class="line"></span><br><span class="line">        i = start1 + min(l1, k // <span class="number">2</span>) - <span class="number">1</span></span><br><span class="line">        j = start2 + min(l2, k // <span class="number">2</span>) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> nums1[i] &gt; nums2[j]:</span><br><span class="line">            <span class="keyword">return</span> helper(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>))</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> helper(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>))</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> (helper(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + helper(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) / <span class="number">2</span></span><br></pre></td></tr></table></figure>
+<h1 id="3-从中位数定义出发，切割数组，实现二分"><a href="#3-从中位数定义出发，切割数组，实现二分" class="headerlink" title="3. 从中位数定义出发，切割数组，实现二分"></a>3. 从中位数定义出发，切割数组，实现二分</h1><p>TBD</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/19/LeetCode-3-Longest-Substring-Without-Repeating-Characters%E6%97%A0%E9%87%8D%E5%A4%8D%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1654,156 +1828,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/" itemprop="url">光伏建模——核密度估计而非Beta分布</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-15T10:44:56+08:00">
-                2017-03-15
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">毕业设计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="光伏建模与风速建模的不同"><a href="#光伏建模与风速建模的不同" class="headerlink" title="光伏建模与风速建模的不同"></a>光伏建模与风速建模的不同</h1><ul>
-<li>对与风速建模而言，其符合双参数威布尔分布表示其样本数据符合双参数威布尔数据样本的特征</li>
-<li>对于光伏建模而言，所谓的使用beta分布拟合光伏实际意义为在短时间内（一天之内）光照强度的曲线可以通过beta分布的概率密度函数去近似拟合</li>
-</ul>
-<p>此二者有本质区别，因此如果仅通过曲线拟合表示光伏建模数据不能称作光伏建模随机性的数学表述，因此在缺乏先验的情况下只能求助于仅基于样本数据核密度估计</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1854,7 +1878,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">24</span>
+                  <span class="site-state-item-count">25</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1876,7 +1900,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">31</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
