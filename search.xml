@@ -16,6 +16,7 @@ P(i,j) = (P(i + 1, j - 1) and s[i] == s[j])</script><figure class="highlight pyt
         <category>LeetCode题解</category>
       </categories>
       <tags>
+        <tag>中等</tag>
         <tag>字符串</tag>
         <tag>动态规划</tag>
       </tags>
