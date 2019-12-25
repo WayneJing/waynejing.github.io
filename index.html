@@ -306,6 +306,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/" itemprop="url">LeetCode - 23.合并K个排序链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-25T20:35:30+08:00">
+                2019-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+<p>合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。</p>
+<p>示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  1-&gt;4-&gt;5,</span><br><span class="line">  1-&gt;3-&gt;4,</span><br><span class="line">  2-&gt;6</span><br><span class="line">]</span><br><span class="line">输出: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/merge-k-sorted-lists" target="_blank" rel="noopener">https://leetcode-cn.com/problems/merge-k-sorted-lists</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>此题可以分解来看。可以把多个有序链表的合并分解为多组两个有序链表的合并。而两个有序链表的合并刚好是<a href="2019/12/24/LeetCode-21-合并两个有序链表.md">LeetCode 21.合并两个有序链表</a>所解决的问题。<br>那么现在问题就在如何将多个有序链表的合并分解成两个有序链表了，分治算法可以解决这个问题。<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergeKLists</span><span class="params">(lists: List[ListNode])</span> -&gt; ListNode:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> lists:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self._merge(lists, <span class="number">0</span>, len(lists)<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_merge</span><span class="params">(lists: List[ListNode], left: int, right: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> left == right:</span><br><span class="line">        <span class="keyword">return</span> lists[left]</span><br><span class="line">    mid = (left + right) // <span class="number">2</span></span><br><span class="line">    l1 = self._merge(lists, left, mid)</span><br><span class="line">    l2 = self._merge(lists, mid + <span class="number">1</span>, right)</span><br><span class="line">    <span class="keyword">return</span> self._mergeTwoLists(l1, l2)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_mergeTwoLists</span><span class="params">(l1: ListNode, l2: ListNode)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> l1 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l2</span><br><span class="line">    <span class="keyword">if</span> l2 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l1</span><br><span class="line">    res = ListNode(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> l1.val &lt; l2.val:</span><br><span class="line">        res.val = l1.val</span><br><span class="line">        res.next = self._mergeTwoLists(l1.next, l2)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        res.val = l2.val</span><br><span class="line">        res.next = self._mergeTwoLists(l1, l2.next)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/25/LeetCode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -398,15 +548,18 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给出 n 代表生成括号的对数，请你写出一个函数，使其能够生成所有可能的并且有效的括号组合。</p>
 <p>例如，给出 n = 3，生成结果为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">  &quot;((()))&quot;,</span><br><span class="line">  &quot;(()())&quot;,</span><br><span class="line">  &quot;(())()&quot;,</span><br><span class="line">  &quot;()(())&quot;,</span><br><span class="line">  &quot;()()()&quot;</span><br><span class="line">]</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/generate-parentheses" target="_blank" rel="noopener">https://leetcode-cn.com/problems/generate-parentheses</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>将一对括号”()”作为一个整体，插入到已有的序列中。借助了BFS的思想。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generateParenthesis</span><span class="params">(self, n: int)</span> -&gt; List[str]:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'()'</span>]</span><br><span class="line">    stack = deque([<span class="string">'()'</span>])</span><br><span class="line">    visited = set()</span><br><span class="line">    index = n</span><br><span class="line">    <span class="keyword">while</span> index &gt; <span class="number">1</span>:</span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">        l = len(stack)</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(l):</span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(tmp)):</span><br><span class="line">                tmpstr = tmp[:i] + <span class="string">'()'</span> + tmp[i:]</span><br><span class="line">                <span class="keyword">if</span> tmpstr <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    visited.add(tmpstr)</span><br><span class="line">                    stack.appendleft(tmpstr)</span><br><span class="line">    <span class="keyword">return</span> list(stack)</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; generateParenthesis(<span class="keyword">int</span> n) &#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;res.push_back(<span class="string">"()"</span>); <span class="keyword">return</span> res;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt; que;</span><br><span class="line">    que.push(<span class="string">"()"</span>);</span><br><span class="line">    <span class="built_in">set</span>&lt;<span class="built_in">string</span>&gt; tmpset;</span><br><span class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> l,s,i;</span><br><span class="line">    <span class="built_in">string</span> tmpstr;</span><br><span class="line">    <span class="keyword">while</span> (start &lt; n - <span class="number">1</span>)&#123;</span><br><span class="line">        start++;</span><br><span class="line">        l = que.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> _ = <span class="number">0</span>; _ &lt; l; _++)&#123;</span><br><span class="line">            <span class="built_in">string</span> str = que.front();</span><br><span class="line">            que.pop();</span><br><span class="line">            s = str.<span class="built_in">size</span>();</span><br><span class="line">            <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; s; i++)&#123;</span><br><span class="line">                tmpstr = str;</span><br><span class="line">                tmpstr.insert(i, <span class="string">"()"</span>);</span><br><span class="line">                <span class="keyword">if</span> (tmpset.count(tmpstr) == <span class="number">0</span>)&#123;</span><br><span class="line">                    que.push(tmpstr);</span><br><span class="line">                    tmpset.insert(tmpstr);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!que.empty())&#123;</span><br><span class="line">        res.push_back(que.front());</span><br><span class="line">        que.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>将一对括号”()”作为一个整体，插入到已有的序列中。借助了BFS的思想。<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">generateParenthesis</span><span class="params">(self, n: int)</span> -&gt; List[str]:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">'()'</span>]</span><br><span class="line">    stack = deque([<span class="string">'()'</span>])</span><br><span class="line">    visited = set()</span><br><span class="line">    index = n</span><br><span class="line">    <span class="keyword">while</span> index &gt; <span class="number">1</span>:</span><br><span class="line">        index -= <span class="number">1</span></span><br><span class="line">        l = len(stack)</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(l):</span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(tmp)):</span><br><span class="line">                tmpstr = tmp[:i] + <span class="string">'()'</span> + tmp[i:]</span><br><span class="line">                <span class="keyword">if</span> tmpstr <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    visited.add(tmpstr)</span><br><span class="line">                    stack.appendleft(tmpstr)</span><br><span class="line">    <span class="keyword">return</span> list(stack)</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -545,15 +698,18 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>将两个有序链表合并为一个新的有序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。 </p>
 <p><strong>示例：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">输入：1-&gt;2-&gt;4, 1-&gt;3-&gt;4</span><br><span class="line">输出：1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/merge-two-sorted-lists" target="_blank" rel="noopener">https://leetcode-cn.com/problems/merge-two-sorted-lists</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergeTwoLists</span><span class="params">(l1: ListNode, l2: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">    <span class="keyword">if</span> l1 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l2</span><br><span class="line">    <span class="keyword">if</span> l2 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l1</span><br><span class="line">    tmp = ListNode(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> l1.val &lt; l2.val:</span><br><span class="line">        tmp.val = l1.val</span><br><span class="line">        tmp.next = self.mergeTwoLists(l1.next, l2)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmp.val = l2.val</span><br><span class="line">        tmp.next = self.mergeTwoLists(l1, l2.next)</span><br><span class="line">    <span class="keyword">return</span> tmp</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">ListNode* <span class="title">mergeTwoLists</span><span class="params">(ListNode* l1, ListNode* l2)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (!l1) <span class="keyword">return</span> l2;</span><br><span class="line">    <span class="keyword">if</span> (!l2) <span class="keyword">return</span> l1;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (l1-&gt;val &lt; l2-&gt;val)&#123;</span><br><span class="line">        l1-&gt;next = mergeTwoLists(l1-&gt;next, l2);</span><br><span class="line">        <span class="keyword">return</span> l1;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span>&#123;</span><br><span class="line">        l2-&gt;next = mergeTwoLists(l1, l2-&gt;next);</span><br><span class="line">        <span class="keyword">return</span> l2;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h2><p><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergeTwoLists</span><span class="params">(l1: ListNode, l2: ListNode)</span> -&gt; ListNode:</span></span><br><span class="line">    <span class="keyword">if</span> l1 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l2</span><br><span class="line">    <span class="keyword">if</span> l2 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l1</span><br><span class="line">    tmp = ListNode(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> l1.val &lt; l2.val:</span><br><span class="line">        tmp.val = l1.val</span><br><span class="line">        tmp.next = self.mergeTwoLists(l1.next, l2)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmp.val = l2.val</span><br><span class="line">        tmp.next = self.mergeTwoLists(l1, l2.next)</span><br><span class="line">    <span class="keyword">return</span> tmp</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-21-%E5%90%88%E5%B9%B6%E4%B8%A4%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -692,8 +848,7 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给定一个只包括 ‘(‘，’)’，’{‘，’}’，’[‘，’]’ 的字符串，判断字符串是否有效。</p>
 <p>有效字符串需满足：</p>
 <p>左括号必须用相同类型的右括号闭合。<br>左括号必须以正确的顺序闭合。<br>注意空字符串可被认为是有效字符串。</p>
@@ -710,11 +865,14 @@
 <li>遍历这个字符串</li>
 <li>如果是左括号，就把左括号入栈</li>
 <li>如果是右括号，则检测该右括号是否是栈顶的左括号对应的右括号，是就弹出栈顶，不是则返回false</li>
-<li>遍历结束，返回栈是否为空</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isValid</span><span class="params">(self, s: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    stack = deque()</span><br><span class="line">    keymap = &#123;<span class="string">'('</span>:<span class="string">')'</span>, <span class="string">'['</span>:<span class="string">']'</span>, <span class="string">'&#123;'</span>:<span class="string">'&#125;'</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):</span><br><span class="line">        <span class="keyword">if</span> s[i] <span class="keyword">in</span> keymap:</span><br><span class="line">            stack.append(s[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stack:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">if</span> s[i] != keymap[tmp]:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span> </span><br><span class="line">    <span class="keyword">if</span> len(stack) &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isValid</span><span class="params">(<span class="built_in">string</span> s)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="keyword">char</span>&gt; mapRelation = &#123;&#123;<span class="string">'('</span>,<span class="string">')'</span>&#125;,&#123;<span class="string">'['</span>,<span class="string">']'</span>&#125;,&#123;<span class="string">'&#123;'</span>,<span class="string">'&#125;'</span>&#125;&#125;;</span><br><span class="line">    <span class="built_in">stack</span>&lt;<span class="keyword">char</span>&gt; store;</span><br><span class="line">    <span class="keyword">if</span> (s.empty()) <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; s.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (mapRelation.count(s[i])) store.push(s[i]);</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span> (store.empty()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (s[i] == mapRelation[store.top()]) store.pop();</span><br><span class="line">            <span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> store.empty();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<li>遍历结束，返回栈是否为空<br><strong>Python 解法</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isValid</span><span class="params">(self, s: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    stack = deque()</span><br><span class="line">    keymap = &#123;<span class="string">'('</span>:<span class="string">')'</span>, <span class="string">'['</span>:<span class="string">']'</span>, <span class="string">'&#123;'</span>:<span class="string">'&#125;'</span>&#125;</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(s)):</span><br><span class="line">        <span class="keyword">if</span> s[i] <span class="keyword">in</span> keymap:</span><br><span class="line">            stack.append(s[i])</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> stack:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">if</span> s[i] != keymap[tmp]:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span> </span><br><span class="line">    <span class="keyword">if</span> len(stack) &gt; <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-20-%E6%9C%89%E6%95%88%E7%9A%84%E6%8B%AC%E5%8F%B7/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -853,8 +1011,7 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给定一个链表，删除链表的倒数第 n 个节点，并且返回链表的头结点。</p>
 <p><strong>示例</strong>：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">给定一个链表: 1-&gt;2-&gt;3-&gt;4-&gt;5, 和 n &#x3D; 2.</span><br><span class="line"></span><br><span class="line">当删除了倒数第二个节点后，链表变为 1-&gt;2-&gt;3-&gt;5.</span><br></pre></td></tr></table></figure><br>说明：</p>
 <p>给定的 n 保证是有效的。</p>
@@ -862,17 +1019,14 @@
 <p>你能尝试使用一趟扫描实现吗？</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list" target="_blank" rel="noopener">https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>遍历一遍链表，将所有链表节点存入容器中，直接删除倒数第n个节点，返回头节点。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeNthFromEnd</span><span class="params">(head: ListNode, n: int)</span> -&gt; ListNode:</span></span><br><span class="line">    nodeList = []</span><br><span class="line">    <span class="keyword">while</span> head:</span><br><span class="line">        nodeList.append(head)</span><br><span class="line">        head = head.next</span><br><span class="line">    nodeList[-n - <span class="number">1</span>].next = nodeList[-n + <span class="number">1</span>]</span><br><span class="line">    nodeList[-n].next = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> nodeList[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;ListNode*&gt; nodeList;</span><br><span class="line">    <span class="keyword">int</span> l;</span><br><span class="line">    <span class="keyword">while</span> (head)&#123;</span><br><span class="line">        nodeList.push_back(head);</span><br><span class="line">        head = head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    l = nodeList.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">if</span> (n == l) <span class="keyword">return</span> nodeList[<span class="number">0</span>]-&gt;next;</span><br><span class="line">    nodeList[l - n - <span class="number">1</span>]-&gt;next = nodeList[l - n]-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> nodeList[<span class="number">0</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="双指针"><a href="#双指针" class="headerlink" title="双指针"></a>双指针</h2><ol>
-<li>先用一个指针，走n + 1步</li>
-<li>然后用第二个指针从头开始，两个指针一起向后走</li>
-<li>当第一个指针走到结束时，第二个指针的下一个节点就是倒数第n个节点</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeNthFromEnd</span><span class="params">(head: ListNode, n: int)</span> -&gt; ListNode:</span></span><br><span class="line">    first = head</span><br><span class="line">    <span class="keyword">for</span> _ <span class="keyword">in</span> range(n + <span class="number">1</span>):</span><br><span class="line">        <span class="keyword">if</span> first:</span><br><span class="line">            first = first.next</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> head.next</span><br><span class="line">    second = head</span><br><span class="line">    <span class="keyword">while</span> first:</span><br><span class="line">        first = first.next</span><br><span class="line">        second = second.next</span><br><span class="line">    second.next = second.next.next</span><br><span class="line">    <span class="keyword">return</span> head</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"> * struct ListNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     ListNode *next;</span></span><br><span class="line"><span class="comment"> *     ListNode(int x) : val(x), next(NULL) &#123;&#125;</span></span><br><span class="line"><span class="comment"> * &#125;;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="function">ListNode* <span class="title">removeNthFromEnd</span><span class="params">(ListNode* head, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    ListNode* first = head;</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>;i &lt; n + <span class="number">1</span>; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span> (first) first = first-&gt;next;</span><br><span class="line">        <span class="keyword">else</span> <span class="keyword">return</span> head-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    ListNode* second = head;</span><br><span class="line">    <span class="keyword">while</span> (first)&#123;</span><br><span class="line">        first = first-&gt;next;</span><br><span class="line">        second = second-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line">    second-&gt;next = second-&gt;next-&gt;next;</span><br><span class="line">    <span class="keyword">return</span> head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="容器"><a href="#容器" class="headerlink" title="容器"></a>容器</h2><p>遍历一遍链表，将所有链表节点存入容器中，直接删除倒数第n个节点，返回头节点。<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Definition for singly-linked list.</span></span><br><span class="line"><span class="comment"># class ListNode:</span></span><br><span class="line"><span class="comment">#     def __init__(self, x):</span></span><br><span class="line"><span class="comment">#         self.val = x</span></span><br><span class="line"><span class="comment">#         self.next = None</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeNthFromEnd</span><span class="params">(head: ListNode, n: int)</span> -&gt; ListNode:</span></span><br><span class="line">    nodeList = []</span><br><span class="line">    <span class="keyword">while</span> head:</span><br><span class="line">        nodeList.append(head)</span><br><span class="line">        head = head.next</span><br><span class="line">    nodeList[-n - <span class="number">1</span>].next = nodeList[-n + <span class="number">1</span>]</span><br><span class="line">    nodeList[-n].next = <span class="literal">None</span></span><br><span class="line">    <span class="keyword">return</span> nodeList[<span class="number">0</span>]</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-19-%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACN%E4%B8%AA%E8%8A%82%E7%82%B9/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1011,22 +1165,24 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给定一个包括 n 个整数的数组 nums 和 一个目标值 target。找出 nums 中的三个整数，使得它们的和与 target 最接近。返回这三个数的和。假定每组输入只存在唯一答案。</p>
 <p>例如，给定数组 nums = [-1，2，1，-4], 和 target = 1.</p>
 <p>与 target 最接近的三个数的和为 2. (-1 + 2 + 1 = 2).</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/3sum-closest" target="_blank" rel="noopener">https://leetcode-cn.com/problems/3sum-closest</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>此题解法与<a href="LeetCode-15-三数之和.md">15.三数之和</a>极为相似。</p>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>此题解法与<a href="2019/12/24/LeetCode-15-三数之和.md">15.三数之和</a>极为相似。</p>
 <ol>
 <li>首先将数组排序</li>
 <li>从头开始遍历该数组</li>
-<li>以遍历到的当前元素的后一个元素下标为左指针，最后一个元素为右指针，记录当前的三个元素之和，更新与目标的最小距离</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(nums: List[int], target: int)</span> -&gt; int:</span></span><br><span class="line">    n = len(nums)</span><br><span class="line">    nums.sort()</span><br><span class="line">    re_min = <span class="number">0</span> <span class="comment">#存储当前最小的差值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        low = i+<span class="number">1</span></span><br><span class="line">        high = n<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span> low &lt; high:</span><br><span class="line">            three_sum = nums[i] + nums[low] + nums[high]</span><br><span class="line">            x = target - three_sum <span class="comment">#当前三数的差值</span></span><br><span class="line">            <span class="keyword">if</span> re_min == <span class="number">0</span>:</span><br><span class="line">                re_min = abs(x)</span><br><span class="line">                sum_min = three_sum <span class="comment">#sum_min为当前最接近的和</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> abs(x) &lt; re_min:</span><br><span class="line">                re_min = abs(x)</span><br><span class="line">                sum_min = three_sum</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> three_sum == target:</span><br><span class="line">                <span class="keyword">return</span> target</span><br><span class="line">            <span class="keyword">elif</span> three_sum &lt; target:</span><br><span class="line">                low += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                high -= <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> sum_min</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">threeSumClosest</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> target)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n = nums.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">int</span> left, right;</span><br><span class="line">    <span class="keyword">int</span> res_min = INT_MAX;</span><br><span class="line">    <span class="keyword">int</span> sum;</span><br><span class="line">    sort(nums.<span class="built_in">begin</span>(), nums.<span class="built_in">end</span>());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++)&#123;</span><br><span class="line">        left = i + <span class="number">1</span>;</span><br><span class="line">        right = n - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (left &lt; right)&#123;</span><br><span class="line">            <span class="keyword">int</span> threeSum = nums[i] + nums[left] + nums[right];</span><br><span class="line">            <span class="keyword">int</span> tmp = <span class="built_in">abs</span>(target - threeSum);</span><br><span class="line">            <span class="keyword">if</span> (tmp == <span class="number">0</span>) <span class="keyword">return</span> target;</span><br><span class="line">            <span class="keyword">if</span> (threeSum &gt; target) right--;</span><br><span class="line">            <span class="keyword">else</span> left++;</span><br><span class="line">            <span class="keyword">if</span> (tmp &lt; res_min)&#123;</span><br><span class="line">                sum = threeSum;</span><br><span class="line">                res_min = tmp;</span><br><span class="line">            &#125; </span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<li>以遍历到的当前元素的后一个元素下标为左指针，最后一个元素为右指针，记录当前的三个元素之和，更新与目标的最小距离<br><strong>Python 解法</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSumClosest</span><span class="params">(nums: List[int], target: int)</span> -&gt; int:</span></span><br><span class="line">    n = len(nums)</span><br><span class="line">    nums.sort()</span><br><span class="line">    re_min = <span class="number">0</span> <span class="comment">#存储当前最小的差值</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        low = i+<span class="number">1</span></span><br><span class="line">        high = n<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span> low &lt; high:</span><br><span class="line">            three_sum = nums[i] + nums[low] + nums[high]</span><br><span class="line">            x = target - three_sum <span class="comment">#当前三数的差值</span></span><br><span class="line">            <span class="keyword">if</span> re_min == <span class="number">0</span>:</span><br><span class="line">                re_min = abs(x)</span><br><span class="line">                sum_min = three_sum <span class="comment">#sum_min为当前最接近的和</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> abs(x) &lt; re_min:</span><br><span class="line">                re_min = abs(x)</span><br><span class="line">                sum_min = three_sum</span><br><span class="line">            </span><br><span class="line">            <span class="keyword">if</span> three_sum == target:</span><br><span class="line">                <span class="keyword">return</span> target</span><br><span class="line">            <span class="keyword">elif</span> three_sum &lt; target:</span><br><span class="line">                low += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                high -= <span class="number">1</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> sum_min</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/24/LeetCode-16-%E6%9C%80%E6%8E%A5%E8%BF%91%E7%9A%84%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1165,17 +1321,20 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给定一个仅包含数字 2-9 的字符串，返回所有它能表示的字母组合。</p>
 <p>给出数字到字母的映射如下（与电话按键相同）。注意 1 不对应任何字母。</p>
 <p><img src="https://assets.leetcode-cn.com/aliyun-lc-upload/original_images/17_telephone_keypad.png" alt=""></p>
 <p><strong>示例:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入：&quot;23&quot;</span><br><span class="line">输出：[&quot;ad&quot;, &quot;ae&quot;, &quot;af&quot;, &quot;bd&quot;, &quot;be&quot;, &quot;bf&quot;, &quot;cd&quot;, &quot;ce&quot;, &quot;cf&quot;].</span><br><span class="line">说明:</span><br><span class="line">尽管上面的答案是按字典序排列的，但是你可以任意选择答案输出的顺序。</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number" target="_blank" rel="noopener">https://leetcode-cn.com/problems/letter-combinations-of-a-phone-number</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>使用BFS</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterCombinations</span><span class="params">(self, digits: str)</span> -&gt; List[str]:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    numMap = &#123;<span class="string">'2'</span>:<span class="string">'abc'</span>, <span class="string">'3'</span>:<span class="string">'def'</span>, <span class="string">'4'</span>:<span class="string">'ghi'</span>, <span class="string">'5'</span>:<span class="string">'jkl'</span>, <span class="string">'6'</span>:<span class="string">'mno'</span>, <span class="string">'7'</span>:<span class="string">'pqrs'</span>, <span class="string">'8'</span>:<span class="string">'tuv'</span>, <span class="string">'9'</span>:<span class="string">'wxyz'</span>&#125;</span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> digits:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">if</span> len(digits) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> list(numMap[digits[<span class="number">0</span>]])</span><br><span class="line">    </span><br><span class="line">    stack = deque(list(numMap[digits[<span class="number">0</span>]]))</span><br><span class="line">    start = <span class="number">0</span></span><br><span class="line">    visited = set()</span><br><span class="line">    <span class="keyword">while</span> start &lt; len(digits) - <span class="number">1</span>:</span><br><span class="line">        start += <span class="number">1</span></span><br><span class="line">        l = len(stack)</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(l):</span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numMap[digits[start]])):</span><br><span class="line">                <span class="keyword">if</span> tmp + numMap[digits[start]][i] <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    visited.add(tmp + numMap[digits[start]][i])</span><br><span class="line">                    stack.appendleft(tmp + numMap[digits[start]][i])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> list(stack)</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; letterCombinations(<span class="built_in">string</span> digits) &#123;</span><br><span class="line">    <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt; res;</span><br><span class="line">    <span class="built_in">map</span>&lt;<span class="keyword">char</span>,<span class="built_in">string</span>&gt; m = &#123;&#123;<span class="string">'2'</span>,<span class="string">"abc"</span> &#125;,&#123;<span class="string">'3'</span>,<span class="string">"def"</span>&#125;,&#123;<span class="string">'4'</span>,<span class="string">"ghi"</span>&#125;,&#123;<span class="string">'5'</span>,<span class="string">"jkl"</span>&#125;,&#123;<span class="string">'6'</span>,<span class="string">"mno"</span>&#125;,&#123;<span class="string">'7'</span>,<span class="string">"pqrs"</span>&#125;,&#123;<span class="string">'8'</span>,<span class="string">"tuv"</span>&#125;,&#123;<span class="string">'9'</span>,<span class="string">"wxyz"</span>&#125;&#125;;</span><br><span class="line">    <span class="keyword">int</span> n = digits.<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) <span class="keyword">return</span> res;</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; m[digits[<span class="number">0</span>]].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">            <span class="built_in">string</span> str;</span><br><span class="line">            str.push_back(m[digits[<span class="number">0</span>]][i]);</span><br><span class="line">            res.push_back(str);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">queue</span>&lt;<span class="built_in">string</span>&gt; que;</span><br><span class="line">    <span class="keyword">int</span> start = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; i &lt; m[digits[<span class="number">0</span>]].<span class="built_in">size</span>();i++)&#123;</span><br><span class="line">        <span class="built_in">string</span> str;</span><br><span class="line">        str.push_back(m[digits[<span class="number">0</span>]][i]);</span><br><span class="line">        que.push(str);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (start &lt; n - <span class="number">1</span>)&#123;</span><br><span class="line">        start ++;</span><br><span class="line">        <span class="keyword">int</span> l = que.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> _ = <span class="number">0</span>; _ &lt; l; _++)&#123;</span><br><span class="line">            <span class="built_in">string</span> tmp = que.front();</span><br><span class="line">            que.pop();</span><br><span class="line">            <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; m[digits[start]].<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">                que.push(tmp + m[digits[start]][i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span> (!que.empty())&#123;</span><br><span class="line">        res.push_back(que.front());</span><br><span class="line">        que.pop();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>使用BFS<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">letterCombinations</span><span class="params">(self, digits: str)</span> -&gt; List[str]:</span></span><br><span class="line">    <span class="keyword">from</span> collections <span class="keyword">import</span> deque</span><br><span class="line">    numMap = &#123;<span class="string">'2'</span>:<span class="string">'abc'</span>, <span class="string">'3'</span>:<span class="string">'def'</span>, <span class="string">'4'</span>:<span class="string">'ghi'</span>, <span class="string">'5'</span>:<span class="string">'jkl'</span>, <span class="string">'6'</span>:<span class="string">'mno'</span>, <span class="string">'7'</span>:<span class="string">'pqrs'</span>, <span class="string">'8'</span>:<span class="string">'tuv'</span>, <span class="string">'9'</span>:<span class="string">'wxyz'</span>&#125;</span><br><span class="line">    res = []</span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> digits:</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    <span class="keyword">if</span> len(digits) == <span class="number">1</span>:</span><br><span class="line">        <span class="keyword">return</span> list(numMap[digits[<span class="number">0</span>]])</span><br><span class="line">    </span><br><span class="line">    stack = deque(list(numMap[digits[<span class="number">0</span>]]))</span><br><span class="line">    start = <span class="number">0</span></span><br><span class="line">    visited = set()</span><br><span class="line">    <span class="keyword">while</span> start &lt; len(digits) - <span class="number">1</span>:</span><br><span class="line">        start += <span class="number">1</span></span><br><span class="line">        l = len(stack)</span><br><span class="line">        <span class="keyword">for</span> _ <span class="keyword">in</span> range(l):</span><br><span class="line">            tmp = stack.pop()</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> range(len(numMap[digits[start]])):</span><br><span class="line">                <span class="keyword">if</span> tmp + numMap[digits[start]][i] <span class="keyword">not</span> <span class="keyword">in</span> visited:</span><br><span class="line">                    visited.add(tmp + numMap[digits[start]][i])</span><br><span class="line">                    stack.appendleft(tmp + numMap[digits[start]][i])</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> list(stack)</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/24/LeetCode-17-%E7%94%B5%E8%AF%9D%E5%8F%B7%E7%A0%81%E7%9A%84%E5%AD%97%E6%AF%8D%E7%BB%84%E5%90%88/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1322,9 +1481,9 @@
 <h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="双指针法"><a href="#双指针法" class="headerlink" title="双指针法"></a>双指针法</h2><ol>
 <li>先将数组排序</li>
 <li>从头开始遍历数组，如果当前元素小于0，转至步骤3，如果当前元素大于0，则没有向后遍历的意义，跳出循环</li>
-<li>取当前元素后面的一个为左指针，数组末尾为右指针，寻找两个元素和与当前元素构成和为0的组合</li>
+<li>取当前元素后面的一个为左指针，数组末尾为右指针，寻找两个元素和与当前元素构成和为0的组合<br><strong>Python 解法</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(nums: List[int])</span> -&gt; List[List[int]]:</span></span><br><span class="line">    n=len(nums)</span><br><span class="line">    res=[]</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">not</span> nums <span class="keyword">or</span> n&lt;<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    nums.sort()</span><br><span class="line">    res=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">if</span>(nums[i]&gt;<span class="number">0</span>):</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span> <span class="keyword">and</span> nums[i]==nums[i<span class="number">-1</span>]):</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        L=i+<span class="number">1</span></span><br><span class="line">        R=n<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span>(L&lt;R):</span><br><span class="line">            <span class="keyword">if</span>(nums[i]+nums[L]+nums[R]==<span class="number">0</span>):</span><br><span class="line">                res.append([nums[i],nums[L],nums[R]])</span><br><span class="line">                <span class="keyword">while</span>(L&lt;R <span class="keyword">and</span> nums[L]==nums[L+<span class="number">1</span>]):</span><br><span class="line">                    L=L+<span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span>(L&lt;R <span class="keyword">and</span> nums[R]==nums[R<span class="number">-1</span>]):</span><br><span class="line">                    R=R<span class="number">-1</span></span><br><span class="line">                L=L+<span class="number">1</span></span><br><span class="line">                R=R<span class="number">-1</span></span><br><span class="line">            <span class="keyword">elif</span>(nums[i]+nums[L]+nums[R]&gt;<span class="number">0</span>):</span><br><span class="line">                R=R<span class="number">-1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                L=L+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure></li>
 </ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">threeSum</span><span class="params">(nums: List[int])</span> -&gt; List[List[int]]:</span></span><br><span class="line">    n=len(nums)</span><br><span class="line">    res=[]</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">not</span> nums <span class="keyword">or</span> n&lt;<span class="number">3</span>):</span><br><span class="line">        <span class="keyword">return</span> []</span><br><span class="line">    nums.sort()</span><br><span class="line">    res=[]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n):</span><br><span class="line">        <span class="keyword">if</span>(nums[i]&gt;<span class="number">0</span>):</span><br><span class="line">            <span class="keyword">return</span> res</span><br><span class="line">        <span class="keyword">if</span>(i&gt;<span class="number">0</span> <span class="keyword">and</span> nums[i]==nums[i<span class="number">-1</span>]):</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        L=i+<span class="number">1</span></span><br><span class="line">        R=n<span class="number">-1</span></span><br><span class="line">        <span class="keyword">while</span>(L&lt;R):</span><br><span class="line">            <span class="keyword">if</span>(nums[i]+nums[L]+nums[R]==<span class="number">0</span>):</span><br><span class="line">                res.append([nums[i],nums[L],nums[R]])</span><br><span class="line">                <span class="keyword">while</span>(L&lt;R <span class="keyword">and</span> nums[L]==nums[L+<span class="number">1</span>]):</span><br><span class="line">                    L=L+<span class="number">1</span></span><br><span class="line">                <span class="keyword">while</span>(L&lt;R <span class="keyword">and</span> nums[R]==nums[R<span class="number">-1</span>]):</span><br><span class="line">                    R=R<span class="number">-1</span></span><br><span class="line">                L=L+<span class="number">1</span></span><br><span class="line">                R=R<span class="number">-1</span></span><br><span class="line">            <span class="keyword">elif</span>(nums[i]+nums[L]+nums[R]&gt;<span class="number">0</span>):</span><br><span class="line">                R=R<span class="number">-1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                L=L+<span class="number">1</span></span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -1464,8 +1623,7 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>编写一个函数来查找字符串数组中的最长公共前缀。</p>
 <p>如果不存在公共前缀，返回空字符串 “”。</p>
 <p>示例 1:</p>
@@ -1474,10 +1632,14 @@
 <p>所有输入只包含小写字母 a-z 。</p>
 <p>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/longest-common-prefix" target="_blank" rel="noopener">https://leetcode-cn.com/problems/longest-common-prefix</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
 </blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>从第一个字符串开始遍历，如果该字符串不是其他字符串的前缀，则将该字符串长度减一。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span><span class="params">(strs: List[str])</span> -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> strs:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    res = strs[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(strs)):</span><br><span class="line">        <span class="keyword">while</span> strs[i].find(res) != <span class="number">0</span>:</span><br><span class="line">            res = res[<span class="number">0</span>:len(res) - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="built_in">string</span> <span class="title">longestCommonPrefix</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; strs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (strs.<span class="built_in">size</span>() == <span class="number">0</span>) <span class="keyword">return</span> <span class="string">""</span>;</span><br><span class="line">    <span class="built_in">string</span> res = strs[<span class="number">0</span>];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; strs.<span class="built_in">size</span>(); i++)&#123;</span><br><span class="line">        <span class="keyword">while</span> (strs[i].<span class="built_in">find</span>(res) != <span class="number">0</span>) &#123;</span><br><span class="line">            res = res.substr(<span class="number">0</span>, res.<span class="built_in">size</span>() - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>从第一个字符串开始遍历，如果该字符串不是其他字符串的前缀，则将该字符串长度减一。<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">longestCommonPrefix</span><span class="params">(strs: List[str])</span> -&gt; str:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> strs:</span><br><span class="line">        <span class="keyword">return</span> <span class="string">""</span></span><br><span class="line">    res = strs[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(len(strs)):</span><br><span class="line">        <span class="keyword">while</span> strs[i].find(res) != <span class="number">0</span>:</span><br><span class="line">            res = res[<span class="number">0</span>:len(res) - <span class="number">1</span>]</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/24/LeetCode-14-%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%89%8D%E7%BC%80/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1616,8 +1778,7 @@
 
       
         
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
 <p>给定 n 个非负整数 a1，a2，…，an，每个数代表坐标中的一个点 (i, ai) 。在坐标内画 n 条垂直线，垂直线 i 的两个端点分别为 (i, ai) 和 (i, 0)。找出其中的两条线，使得它们与 x 轴共同构成的容器可以容纳最多的水。</p>
 <p>说明：你不能倾斜容器，且 n 的值至少为 2。</p>
 <p><img src="https://aliyun-lc-upload.oss-cn-hangzhou.aliyuncs.com/aliyun-lc-upload/uploads/2018/07/25/question_11.jpg" alt=""></p>
@@ -1628,170 +1789,14 @@
 </blockquote>
 <h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><ol>
 <li>使用双指针法</li>
-<li>当两个指针指向的数值不相等时，移动较短的那个指针，由于木桶效应，实际上决定容器盛水多少的是较短的那个指针和两个指针间的距离</li>
-</ol>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxArea</span><span class="params">(height: List[int])</span> -&gt; int:</span></span><br><span class="line">    start = <span class="number">0</span></span><br><span class="line">    end = len(height) - <span class="number">1</span></span><br><span class="line">    res = min(height[end], height[start])*(end - start)</span><br><span class="line">    <span class="keyword">while</span> start &lt; end:</span><br><span class="line">        <span class="keyword">if</span> height[start] &lt; height[end]:</span><br><span class="line">            start += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            end -= <span class="number">1</span></span><br><span class="line">        tmp = min(height[end], height[start])*(end - start)</span><br><span class="line">        res = max(res, tmp)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">maxArea</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; <span class="built_in">height</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> left = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> right = <span class="built_in">height</span>.<span class="built_in">size</span>() - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> maxVal = INT_MIN;</span><br><span class="line">    <span class="keyword">while</span> (left &lt; right)&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="built_in">height</span>[left] &lt; <span class="built_in">height</span>[right])&#123;</span><br><span class="line">            maxVal = <span class="built_in">max</span>(maxVal, <span class="built_in">height</span>[left] * (right - left));</span><br><span class="line">            left ++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            maxVal = <span class="built_in">max</span>(maxVal, <span class="built_in">height</span>[right] * (right - left));</span><br><span class="line">            right --;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> maxVal;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/23/LeetCode-10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/23/LeetCode-10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/" itemprop="url">LeetCode - 10. 正则表达式匹配</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-23T20:59:17+08:00">
-                2019-12-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode题解</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
-<p>给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 ‘.’ 和 ‘*’ 的正则表达式匹配。</p>
-<p>‘.’ 匹配任意单个字符<br>‘*’ 匹配零个或多个前面的那一个元素<br>所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。</p>
-<p>说明:</p>
-<p>s 可能为空，且只包含从 a-z 的小写字母。<br>p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。</p>
-<p><strong>示例</strong> 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aa&quot;</span><br><span class="line">p &#x3D; &quot;a&quot;</span><br><span class="line">输出: false</span><br><span class="line">解释: &quot;a&quot; 无法匹配 &quot;aa&quot; 整个字符串。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aa&quot;</span><br><span class="line">p &#x3D; &quot;a*&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: 因为 &#39;*&#39; 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 &#39;a&#39;。因此，字符串 &quot;aa&quot; 可被视为 &#39;a&#39; 重复了一次。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;ab&quot;</span><br><span class="line">p &#x3D; &quot;.*&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: &quot;.*&quot; 表示可匹配零个或多个（&#39;*&#39;）任意字符（&#39;.&#39;）。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 4:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aab&quot;</span><br><span class="line">p &#x3D; &quot;c*a*b&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: 因为 &#39;*&#39; 表示零个或多个，这里 &#39;c&#39; 为 0 个, &#39;a&#39; 被重复一次。因此可以匹配字符串 &quot;aab&quot;。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 5:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;mississippi&quot;</span><br><span class="line">p &#x3D; &quot;mis*is*p*.&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/regular-expression-matching" target="_blank" rel="noopener">https://leetcode-cn.com/problems/regular-expression-matching</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-</blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="直接调用正则库（略）"><a href="#直接调用正则库（略）" class="headerlink" title="直接调用正则库（略）"></a>直接调用正则库（略）</h2><h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><ol>
-<li>考虑最简单的情况，如果没有<code>.</code>，<code>*</code>，我们所需要对比的就只有两个字符串是否相同，那么最简单的情况可以写成以下方式<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    tmpRes = (first_s == first_p)</span><br><span class="line">    <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></li>
-<li>由于<code>.</code>可以匹配任意字符，则以上函数可以改写为：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    tmpRes = (first_p <span class="keyword">in</span> [first_s, <span class="string">'.'</span>])</span><br><span class="line">    <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></li>
-<li>最难的部分在于<code>*</code>。由于<code>*</code>指代前面的字符出现了0次或者一次，假设<code>p[j + 1] == &#39;*&#39;</code>那么可以有以下推论：<script type="math/tex; mode=display">
-P(s[i:], p[j:]) = P(s[i:], p[j + 2:]) or P(s[i + 1:], p[j:])</script>根据这个，以上的函数可以改写为：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> len(p) &gt;= <span class="number">2</span> <span class="keyword">and</span> p[<span class="number">1</span>] == <span class="string">'*'</span>:</span><br><span class="line">        <span class="keyword">return</span> isMatch(s[:], p[<span class="number">2</span>:]) <span class="keyword">or</span> isMatch(s[<span class="number">1</span>:], p[:])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmpRes = (first_p <span class="keyword">in</span> [first_s, <span class="string">'.'</span>])</span><br><span class="line">        <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure>
-将以上函数风格进行优化<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="keyword">not</span> s </span><br><span class="line">    first = bool(s) <span class="keyword">and</span> p[<span class="number">0</span>] <span class="keyword">in</span> [s[<span class="number">0</span>], <span class="string">'.'</span>]</span><br><span class="line">    <span class="keyword">if</span> len(p) &gt;= <span class="number">2</span> <span class="keyword">and</span> p[<span class="number">1</span>] == <span class="string">"*"</span>:</span><br><span class="line">        <span class="keyword">return</span> (self.isMatch(s, p[<span class="number">2</span>:])) <span class="keyword">or</span> (first <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p)) </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> first <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-          
+<li>当两个指针指向的数值不相等时，移动较短的那个指针，由于木桶效应，实际上决定容器盛水多少的是较短的那个指针和两个指针间的距离<br><strong>Python 解法</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">maxArea</span><span class="params">(height: List[int])</span> -&gt; int:</span></span><br><span class="line">    start = <span class="number">0</span></span><br><span class="line">    end = len(height) - <span class="number">1</span></span><br><span class="line">    res = min(height[end], height[start])*(end - start)</span><br><span class="line">    <span class="keyword">while</span> start &lt; end:</span><br><span class="line">        <span class="keyword">if</span> height[start] &lt; height[end]:</span><br><span class="line">            start += <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            end -= <span class="number">1</span></span><br><span class="line">        tmp = min(height[end], height[start])*(end - start)</span><br><span class="line">        res = max(res, tmp)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/24/LeetCode-11-%E7%9B%9B%E6%B0%B4%E6%9C%80%E5%A4%9A%E7%9A%84%E5%AE%B9%E5%99%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1829,7 +1834,7 @@ P(s[i:], p[j:]) = P(s[i:], p[j + 2:]) or P(s[i + 1:], p[j:])</script>根据这�
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
   </nav>
 
 
@@ -1875,7 +1880,7 @@ P(s[i:], p[j:]) = P(s[i:], p[j + 2:]) or P(s[i + 1:], p[j:])</script>根据这�
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">40</span>
+                  <span class="site-state-item-count">41</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
