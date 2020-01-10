@@ -306,6 +306,308 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/23/2017-03-23-%E6%B7%B7%E5%90%88Copula%E5%BB%BA%E6%A8%A1%E4%BF%AE%E6%AD%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/23/2017-03-23-%E6%B7%B7%E5%90%88Copula%E5%BB%BA%E6%A8%A1%E4%BF%AE%E6%AD%A3/" itemprop="url">混合Copula建模修正——更多Copula函数的加入</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-23T13:46:07+08:00">
+                2017-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">毕业设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="修正的原因"><a href="#修正的原因" class="headerlink" title="修正的原因"></a>修正的原因</h1><p>由于Copula函数并非线性函数，简单的通过单个Copula函数拟合效果来选择使用哪几个Copula函数来进行混合可能不够准确，可能会存在两个单一表现并不好的Copula函数混合后结果却比较好的情况。</p>
+<p>因此，将原来的混合Copula模型拓展至五个常用Copula进行混合建模。</p>
+<h1 id="修正后的代码"><a href="#修正后的代码" class="headerlink" title="修正后的代码"></a>修正后的代码</h1><h2 id="EM算法主体部分"><a href="#EM算法主体部分" class="headerlink" title="EM算法主体部分"></a>EM算法主体部分</h2><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br></pre></td><td class="code"><pre><span class="line">U=GHKC;</span><br><span class="line">V=BDQC;</span><br><span class="line"><span class="comment">% 初始化</span></span><br><span class="line">S=<span class="number">5</span>;</span><br><span class="line">th=<span class="number">0.01</span>;</span><br><span class="line">omega=[<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>,<span class="number">1</span>/<span class="number">5</span>];</span><br><span class="line">[a,nuhat]=copulafit(<span class="string">'t'</span>,[U,V]);</span><br><span class="line">a2=copulafit(<span class="string">'Gumbel'</span>,[U,V]);</span><br><span class="line">a3=copulafit(<span class="string">'Frank'</span>,[U,V]);</span><br><span class="line">a4=copulafit(<span class="string">'Gaussian'</span>,[U,V]);</span><br><span class="line">a5=copulafit(<span class="string">'Clayton'</span>,[U,V]);</span><br><span class="line">theta=[a(<span class="number">1</span>,<span class="number">2</span>),a2,a3,a4(<span class="number">1</span>,<span class="number">2</span>),a5];</span><br><span class="line">[N,~]=<span class="built_in">size</span>(U);</span><br><span class="line">count=<span class="number">0</span>;</span><br><span class="line">tt=<span class="built_in">zeros</span>(N,<span class="number">2</span>);</span><br><span class="line">nn=<span class="built_in">zeros</span>(N,<span class="number">2</span>);</span><br><span class="line">tt(:,<span class="number">1</span>)=tinv(U(:),nuhat);</span><br><span class="line">tt(:,<span class="number">2</span>)=tinv(V(:),nuhat);</span><br><span class="line">nn(:,<span class="number">1</span>)=norminv(U(:));</span><br><span class="line">nn(:,<span class="number">2</span>)=norminv(V(:));</span><br><span class="line">t=<span class="built_in">inf</span>;</span><br><span class="line">COPULA=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">list1=<span class="built_in">zeros</span>(<span class="number">5</span>,<span class="number">101</span>);</span><br><span class="line">list2=<span class="built_in">zeros</span>(<span class="number">5</span>,<span class="number">101</span>);</span><br><span class="line">puz=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">puz1=<span class="built_in">zeros</span>(N,S);</span><br><span class="line">turntheta_old=<span class="built_in">zeros</span>(<span class="number">1</span>,S);</span><br><span class="line">tic</span><br><span class="line"><span class="keyword">while</span> t&gt;=th&amp;&amp;count&lt;=<span class="number">50</span>;</span><br><span class="line">    theta_old=theta;</span><br><span class="line">    omega_old=omega;</span><br><span class="line">    <span class="comment">%转化为无约束限制的参数</span></span><br><span class="line">    turntheta_old(<span class="number">1</span>)=<span class="built_in">tan</span>(<span class="built_in">pi</span>*theta_old(<span class="number">1</span>)/<span class="number">2</span>);</span><br><span class="line">    turntheta_old(<span class="number">2</span>)=<span class="built_in">log</span>(theta_old(<span class="number">2</span>)<span class="number">-1</span>);</span><br><span class="line">    turntheta_old(<span class="number">4</span>)=<span class="built_in">tan</span>(<span class="built_in">pi</span>*theta_old(<span class="number">4</span>)/<span class="number">2</span>);</span><br><span class="line">    turntheta_old(<span class="number">5</span>)=<span class="built_in">log</span>(theta_old(<span class="number">5</span>));</span><br><span class="line">    COPULA(:,<span class="number">1</span>)=copulapdf(<span class="string">'t'</span>,[U(:) V(:)],theta_old(<span class="number">1</span>),nuhat);</span><br><span class="line">    COPULA(:,<span class="number">2</span>)=copulapdf(<span class="string">'Gumbel'</span>,[U(:) V(:)],theta_old(<span class="number">2</span>));</span><br><span class="line">    COPULA(:,<span class="number">3</span>)=copulapdf(<span class="string">'Frank'</span>,[U(:) V(:)],theta_old(<span class="number">3</span>));</span><br><span class="line">    COPULA(:,<span class="number">4</span>)=copulapdf(<span class="string">'Gaussian'</span>,[U(:) V(:)],theta_old(<span class="number">4</span>));</span><br><span class="line">    COPULA(:,<span class="number">5</span>)=copulapdf(<span class="string">'Clayton'</span>,[U(:) V(:)],theta_old(<span class="number">5</span>));</span><br><span class="line">    puz(:,<span class="number">1</span>)=COPULA(:,<span class="number">1</span>)*omega_old(<span class="number">1</span>);</span><br><span class="line">    puz(:,<span class="number">2</span>)=COPULA(:,<span class="number">2</span>)*omega_old(<span class="number">2</span>);</span><br><span class="line">    puz(:,<span class="number">3</span>)=COPULA(:,<span class="number">3</span>)*omega_old(<span class="number">3</span>);</span><br><span class="line">    puz(:,<span class="number">4</span>)=COPULA(:,<span class="number">4</span>)*omega_old(<span class="number">4</span>);</span><br><span class="line">    puz(:,<span class="number">5</span>)=COPULA(:,<span class="number">5</span>)*omega_old(<span class="number">5</span>);</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">i</span>=<span class="number">1</span>:N</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">1</span>)=puz(<span class="built_in">i</span>,<span class="number">1</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">2</span>)=puz(<span class="built_in">i</span>,<span class="number">2</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">3</span>)=puz(<span class="built_in">i</span>,<span class="number">3</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">4</span>)=puz(<span class="built_in">i</span>,<span class="number">4</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">        puz1(<span class="built_in">i</span>,<span class="number">5</span>)=puz(<span class="built_in">i</span>,<span class="number">5</span>)/sum(puz(<span class="built_in">i</span>,:));</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    omega(<span class="number">1</span>)=sum(puz1(:,<span class="number">1</span>))/N;</span><br><span class="line">    omega(<span class="number">2</span>)=sum(puz1(:,<span class="number">2</span>))/N;</span><br><span class="line">    omega(<span class="number">3</span>)=sum(puz1(:,<span class="number">3</span>))/N;</span><br><span class="line">    omega(<span class="number">4</span>)=sum(puz1(:,<span class="number">4</span>))/N;</span><br><span class="line">    omega(<span class="number">5</span>)=sum(puz1(:,<span class="number">5</span>))/N;</span><br><span class="line">    omega</span><br><span class="line">    tic</span><br><span class="line">    [turntheta,fval,exitflag,output,grad,hessian]=updatetheta(N,U,V,turntheta_old,puz1,tt,nn,nuhat);</span><br><span class="line">    toc</span><br><span class="line">    theta(<span class="number">1</span>)=<span class="built_in">atan</span>(turntheta(<span class="number">1</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line">    theta(<span class="number">2</span>)=<span class="built_in">exp</span>(turntheta(<span class="number">2</span>))+<span class="number">1</span>;</span><br><span class="line">    theta(<span class="number">4</span>)=<span class="built_in">atan</span>(turntheta(<span class="number">4</span>))*<span class="number">2</span>/<span class="built_in">pi</span>;</span><br><span class="line">    theta(<span class="number">5</span>)=<span class="built_in">exp</span>(turntheta(<span class="number">5</span>));</span><br><span class="line">    theta</span><br><span class="line">    list1(:,count+<span class="number">1</span>)=theta;</span><br><span class="line">    list2(:,count+<span class="number">1</span>)=omega;</span><br><span class="line">    t=<span class="built_in">max</span>([norm(theta_old(:)-theta(:));norm(omega_old(:)-omega(:))])</span><br><span class="line">    count=count+<span class="number">1</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">toc</span><br><span class="line">beep</span><br></pre></td></tr></table></figure>
+<p>代码中涉及对参数进行数学变换将其参数从各自有限定义域转为$(-\infty,+ \infty)$</p>
+<p>其中:</p>
+<ul>
+<li>t-Copula与正态Copula参数定义域为$(-1,1)$</li>
+<li>Gumbel-Copula参数定义域为$(1,+\infty)$</li>
+<li>Clayton-Copula参数定义域为$(0,+\infty)$</li>
+<li>Frank-Copula参数定义域为$(-\infty,+\infty)$</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/23/2017-03-23-%E6%B7%B7%E5%90%88Copula%E5%BB%BA%E6%A8%A1%E4%BF%AE%E6%AD%A3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/17/2017-03-17-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E6%A0%B8%E5%AF%86%E5%BA%A6%E4%BC%B0%E8%AE%A1%E5%AE%9E%E7%8E%B0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/03/17/2017-03-17-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E6%A0%B8%E5%AF%86%E5%BA%A6%E4%BC%B0%E8%AE%A1%E5%AE%9E%E7%8E%B0/" itemprop="url">光伏建模（2）——核密度估计实现</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-17T13:33:01+08:00">
+                2017-03-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
+                    <span itemprop="name">毕业设计</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="数据录入"><a href="#数据录入" class="headerlink" title="数据录入"></a>数据录入</h1><figure class="highlight matlab"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\一月\太阳能测光数据_2010-01-01 - 2010-02-01.xls'</span>);</span><br><span class="line">solardata=solar(:,<span class="number">2</span>);</span><br><span class="line">SData=cell(<span class="number">1</span>,<span class="number">7</span>);</span><br><span class="line">SData(<span class="number">1</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\二月\太阳能测光数据_2010-02.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">2</span>)]</span><br><span class="line">SData(<span class="number">2</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\三月\太阳能测光数据_2010-03-01 - 2010-04-01.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">2</span>)]</span><br><span class="line">SData(<span class="number">3</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\四月\太阳能测光数据_2010-04-01 - 2010-05-01.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">2</span>)]</span><br><span class="line">SData(<span class="number">4</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\五月\太阳能测光数据_2010-05-01 - 2010-06-01.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">2</span>)]</span><br><span class="line">SData(<span class="number">5</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\六月\太阳能测光数据_2010-06-01 - 2010-07-01.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">2</span>)]</span><br><span class="line">SData(<span class="number">6</span>)=&#123;solar&#125;;</span><br><span class="line"></span><br><span class="line">solar=xlsread(<span class="string">'E:\学习\毕设\数据资料\数据资料\windfarm data\敦煌太阳能测光数据1-7\七月\太阳能测光数据2010-7-1-2010-8-1.xls'</span>);</span><br><span class="line">solardata=[solardata; solar(:,<span class="number">3</span>)]</span><br><span class="line">SData(<span class="number">7</span>)=&#123;solar&#125;;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/17/2017-03-17-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1%EF%BC%882%EF%BC%89%E2%80%94%E2%80%94%E6%A0%B8%E5%AF%86%E5%BA%A6%E4%BC%B0%E8%AE%A1%E5%AE%9E%E7%8E%B0/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/03/15/2017-03-15-%E5%85%89%E4%BC%8F%E5%BB%BA%E6%A8%A1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1484,299 +1786,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2017/02/21/2017-02-21-%E5%9F%BA%E4%BA%8ECopula%E7%90%86%E8%AE%BA%E7%9A%84%E9%A3%8E%E7%94%B5%E5%9C%BA%E9%97%B4%E5%BB%BA%E6%A8%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/02/21/2017-02-21-%E5%9F%BA%E4%BA%8ECopula%E7%90%86%E8%AE%BA%E7%9A%84%E9%A3%8E%E7%94%B5%E5%9C%BA%E9%97%B4%E5%BB%BA%E6%A8%A1/" itemprop="url">基于Copula理论的风电场间建模</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-21T10:22:19+08:00">
-                2017-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%AF%95%E4%B8%9A%E8%AE%BE%E8%AE%A1/" itemprop="url" rel="index">
-                    <span itemprop="name">毕业设计</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="关于研究目的"><a href="#关于研究目的" class="headerlink" title="关于研究目的"></a>关于研究目的</h1><p>由于风电基地的多个风电场地理位置比较靠近，且基本处于同一风带，风速之间具有较强的相关性，使得多个风电场的总体特性不同于单个风电场的特性。</p>
-<p>通过Copula理论进行多个风电场风俗的联合概率分布研究。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/21/2017-02-21-%E5%9F%BA%E4%BA%8ECopula%E7%90%86%E8%AE%BA%E7%9A%84%E9%A3%8E%E7%94%B5%E5%9C%BA%E9%97%B4%E5%BB%BA%E6%A8%A1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2016/10/23/2016-10-23-javaclass3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2016/10/23/2016-10-23-javaclass3/" itemprop="url">Java第三次课</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-10-23T00:00:00+08:00">
-                2016-10-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="GUI设计"><a href="#GUI设计" class="headerlink" title="GUI设计"></a>GUI设计</h1>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2016/10/23/2016-10-23-javaclass3/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1827,7 +1836,7 @@
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
