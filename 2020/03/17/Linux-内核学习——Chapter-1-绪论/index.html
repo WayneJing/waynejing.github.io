@@ -91,7 +91,7 @@
 <meta property="og:description" content="关于linux的硬件的依赖性linux 试图在与硬件无关的源代码与硬件相关的源代码之间保持清晰地界限。因此，在linux系统的arch和include文件夹下包含了23个子目录，以对应Linux所支持的不同硬件平台。  alpha arm, arm26 cris frv h8300 i386 ia64 m32r m68k, m68knommu mips parisc ppc, ppc64 s390">
 <meta property="og:image" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;images&#x2F;image-20200317213808105.png">
 <meta property="article:published_time" content="2020-03-17T13:33:31.000Z">
-<meta property="article:modified_time" content="2020-03-17T13:57:10.493Z">
+<meta property="article:modified_time" content="2020-03-17T13:58:10.116Z">
 <meta property="article:author" content="WayneJing">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="Kernel">
@@ -467,6 +467,7 @@
 <p>多用户系统中的进程必须是抢占式的(preemptable)；操作系统记录下每个进程占有的CPU时间，并周期性的激活调度程序。</p>
 <p>而非抢占式的系统只有当进程自愿放弃CPU时，调度程序才被调用。</p>
 <p>类unix系统采用进程/内核模式。每个进程都自以为它是系统中唯一的进程，可以独占操作系统所提供的服务。当进城发出系统调用，硬件会把特权模式从user mode变成kernel mode，然后进程以非常有限的目的开始一个内核过程的执行。一旦这个请求完全得到满足，内核过程将迫使硬件返回user mode</p>
+<a id="more"></a>
 <h2 id="内核体系结构"><a href="#内核体系结构" class="headerlink" title="内核体系结构"></a>内核体系结构</h2><p>不甚理解</p>
 <h1 id="Unix文件系统概述"><a href="#Unix文件系统概述" class="headerlink" title="Unix文件系统概述"></a>Unix文件系统概述</h1><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><p>从用户的观点来看，文件被组织在一个树结构的命名空间中，</p>
 <p><img src="\images\image-20200317213808105.png" alt="image-20200317213808105"></p>

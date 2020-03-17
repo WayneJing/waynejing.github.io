@@ -398,8 +398,7 @@
 
       
         
-          
-            <h1 id="关于linux的硬件的依赖性"><a href="#关于linux的硬件的依赖性" class="headerlink" title="关于linux的硬件的依赖性"></a>关于linux的硬件的依赖性</h1><p>linux 试图在与硬件无关的源代码与硬件相关的源代码之间保持清晰地界限。因此，在linux系统的<code>arch</code>和<code>include</code>文件夹下包含了23个子目录，以对应Linux所支持的不同硬件平台。</p>
+          <h1 id="关于linux的硬件的依赖性"><a href="#关于linux的硬件的依赖性" class="headerlink" title="关于linux的硬件的依赖性"></a>关于linux的硬件的依赖性</h1><p>linux 试图在与硬件无关的源代码与硬件相关的源代码之间保持清晰地界限。因此，在linux系统的<code>arch</code>和<code>include</code>文件夹下包含了23个子目录，以对应Linux所支持的不同硬件平台。</p>
 <ul>
 <li>alpha</li>
 <li>arm, arm26</li>
@@ -459,72 +458,13 @@
 <p>多用户系统中的进程必须是抢占式的(preemptable)；操作系统记录下每个进程占有的CPU时间，并周期性的激活调度程序。</p>
 <p>而非抢占式的系统只有当进程自愿放弃CPU时，调度程序才被调用。</p>
 <p>类unix系统采用进程/内核模式。每个进程都自以为它是系统中唯一的进程，可以独占操作系统所提供的服务。当进城发出系统调用，硬件会把特权模式从user mode变成kernel mode，然后进程以非常有限的目的开始一个内核过程的执行。一旦这个请求完全得到满足，内核过程将迫使硬件返回user mode</p>
-<h2 id="内核体系结构"><a href="#内核体系结构" class="headerlink" title="内核体系结构"></a>内核体系结构</h2><p>不甚理解</p>
-<h1 id="Unix文件系统概述"><a href="#Unix文件系统概述" class="headerlink" title="Unix文件系统概述"></a>Unix文件系统概述</h1><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><p>从用户的观点来看，文件被组织在一个树结构的命名空间中，</p>
-<p><img src="\images\image-20200317213808105.png" alt="image-20200317213808105"></p>
-<h2 id="硬链接和软链接"><a href="#硬链接和软链接" class="headerlink" title="硬链接和软链接"></a>硬链接和软链接</h2><p>包含在目录中的文件名就是一个文件的硬链接。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln P1 P2</span><br></pre></td></tr></table></figure>
-<p>通过以上命令来创建一个新的硬链接，即为由路径<code>P1</code>表示的文件创建一个路径名为<code>P2</code>的硬链接。</p>
-<p>但是硬链接有两个方面的限制：</p>
-<ul>
-<li>不允许用户给目录创建硬链接。应为这可能把目录树变为环形图，从而不可能通过名字定位一个文件。</li>
-<li>只有在同一文件系统中的文件之间才能创建链接。这带来比较大的限制，因为现代Unix系统可能包含了多种文件系统，这些文件系统位于不同的磁盘和/或分区，用户也许无法知道它们之间的物理划分。</li>
-</ul>
-<p>为了克服这些限制，引入了软链接(soft link)也被称作符号链接。符号链接是短文件，这些文件包含有另一个文件的任意一个路径名。路径名可以指向位于任意一个文件系统的任意文件或目录，甚至可以指向一个不存在的文件。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ln -s P1 P2</span><br></pre></td></tr></table></figure>
-<p>创建一个路径名为<code>P2</code>的新软链接，P2指向路径名为P1。任何对P2的因勇斗可以被自动转换成指向P1的一个引用。</p>
-<h2 id="文件类型"><a href="#文件类型" class="headerlink" title="文件类型"></a>文件类型</h2><p>Unix文件可以是下列类型之一：</p>
-<ul>
-<li>普通文件</li>
-<li>目录</li>
-<li>符号链接</li>
-<li>面向块的设备文件(block-oriented device file)</li>
-<li>面向字符的设备文件(character-oriented device file)</li>
-<li>管道(pipe)和命名管道(named pipe)也叫 FIFO</li>
-<li>套接字(socket)</li>
-</ul>
-<p>前三种文件类型是所有Unix文件系统的基本类型。</p>
-<p>设备文件与与集成到内核中的设备驱动程序相关。</p>
-<h2 id="文件描述符与索引节点"><a href="#文件描述符与索引节点" class="headerlink" title="文件描述符与索引节点"></a>文件描述符与索引节点</h2><p>Unix对 <strong>文件的内容</strong> 和 <strong>描述文件的信息</strong>给出了清楚的区分。除了设备文件和特殊文件系统文件外，每个文件都有字符序列组成。文件内容不包含任何<strong>控制信息</strong>，如文件长度或文件结束符(EOF)。</p>
-<p>文件系统处理文件需要的所有信息包含在一个名为索引节点(inode)的数据结构中。每个文件都有自己的索引节点，文件系统用索引节点来标识文件。</p>
-<p>每个索引节点可能随着Unix系统不同其内容有所差异，但是至少满足POSIX标准中如下属性：</p>
-<ul>
-<li>文件类型</li>
-<li>与文件相关的硬链接个数</li>
-<li>以字节为单位的文件长度</li>
-<li>设备标识符</li>
-<li>在文件系统中标识文件的索引节点号</li>
-<li>文件拥有者的UID</li>
-<li>文件的用户组ID</li>
-<li>几个时间戳，表示索引节点状态改变的时间、最后访问时间及最后修改时间。</li>
-<li>访问权限和文件模式</li>
-</ul>
-<h2 id="访问权限和文件模式"><a href="#访问权限和文件模式" class="headerlink" title="访问权限和文件模式"></a>访问权限和文件模式</h2><p>文件的潜在用户分为三种类型：</p>
-<ul>
-<li>作为文件所有者的用户</li>
-<li>同组用户，不包括所有者</li>
-<li>其他</li>
-</ul>
-<p>而访问权限有三种读、写、执行，因此文件访问权限就用九种不同的二进制来标记。还有两种附加的标记即suid(set user ID), sgid(set group id)。</p>
-<h2 id="文件操作的系统调用"><a href="#文件操作的系统调用" class="headerlink" title="文件操作的系统调用"></a>文件操作的系统调用</h2><h3 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fd = open (path, flag, mode)</span><br></pre></td></tr></table></figure>
-<p>返回一个文件对象</p>
-<h3 id="访问打开的文件"><a href="#访问打开的文件" class="headerlink" title="访问打开的文件"></a>访问打开的文件</h3><p>顺序访问是文件的默认访问方式，即<code>read()</code>和<code>write()</code>系统调用总是从文件指针的当前位置开始读写，而修改文件指针则可通过以下：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">newoffset = lseek(fd, offset, <span class="built_in">whence</span>);</span><br></pre></td></tr></table></figure>
-<p>whence指定了文件指针的新位置的计算方式：</p>
-<ul>
-<li>offset + 0</li>
-<li>offset + 当前指针位置</li>
-<li>offset + 文件末尾</li>
-</ul>
-<p>而<code>read()</code>需要以下参数</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nread = <span class="built_in">read</span>(fd, buf, count);</span><br></pre></td></tr></table></figure>
-<h3 id="关闭文件"><a href="#关闭文件" class="headerlink" title="关闭文件"></a>关闭文件</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = close(fd);</span><br></pre></td></tr></table></figure>
-<h3 id="更名及删除文件"><a href="#更名及删除文件" class="headerlink" title="更名及删除文件"></a>更名及删除文件</h3><p>更名并不对文件的内容起作用，而是对一个或多个目录的内容起作用。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = rename(oldpath, newpath);</span><br></pre></td></tr></table></figure>
-<p>而删除本质上是减少文件链接数，当连接数为0，文件才被真正的删除</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">res = unlink(pathname);</span><br></pre></td></tr></table></figure>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2020/03/17/Linux-%E5%86%85%E6%A0%B8%E5%AD%A6%E4%B9%A0%E2%80%94%E2%80%94Chapter-1-%E7%BB%AA%E8%AE%BA/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
