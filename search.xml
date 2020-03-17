@@ -65,7 +65,7 @@
 <p>类unix系统采用进程/内核模式。每个进程都自以为它是系统中唯一的进程，可以独占操作系统所提供的服务。当进城发出系统调用，硬件会把特权模式从user mode变成kernel mode，然后进程以非常有限的目的开始一个内核过程的执行。一旦这个请求完全得到满足，内核过程将迫使硬件返回user mode</p>
 <h2 id="内核体系结构"><a href="#内核体系结构" class="headerlink" title="内核体系结构"></a>内核体系结构</h2><p>不甚理解</p>
 <h1 id="Unix文件系统概述"><a href="#Unix文件系统概述" class="headerlink" title="Unix文件系统概述"></a>Unix文件系统概述</h1><h2 id="文件"><a href="#文件" class="headerlink" title="文件"></a>文件</h2><p>从用户的观点来看，文件被组织在一个树结构的命名空间中，</p>
-<p><img src="..\images\image-20200317213808105.png" alt="image-20200317213808105"></p>
+<p><img src="\images\image-20200317213808105.png" alt="image-20200317213808105"></p>
 <h2 id="硬链接和软链接"><a href="#硬链接和软链接" class="headerlink" title="硬链接和软链接"></a>硬链接和软链接</h2><p>包含在目录中的文件名就是一个文件的硬链接。</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">ln P1 P2</span><br></pre></td></tr></table></figure>
 <p>通过以上命令来创建一个新的硬链接，即为由路径<code>P1</code>表示的文件创建一个路径名为<code>P2</code>的硬链接。</p>
