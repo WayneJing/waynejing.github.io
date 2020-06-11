@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Linux,Shell," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="配置和环境环境环境里储存的是什么环境中储存着环境变量和shell变量，除了变量之外，shell还储存了一些编程数据，也就是别名和shell函数 检查环境set命令会同时显示shell变量和环境变量，printenv只会显示环境变量 printenv 会打出特定的变量值 123# wayne @ wayne in ~ [14:35:56]$ printenv USERwayne 查看单个环境变量也可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shelll配置与环境">
+<meta property="og:url" content="http:&#x2F;&#x2F;fatelancer.github.io&#x2F;2020&#x2F;06&#x2F;11&#x2F;shelll%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%8E%AF%E5%A2%83&#x2F;index.html">
+<meta property="og:site_name" content="WayneJing">
+<meta property="og:description" content="配置和环境环境环境里储存的是什么环境中储存着环境变量和shell变量，除了变量之外，shell还储存了一些编程数据，也就是别名和shell函数 检查环境set命令会同时显示shell变量和环境变量，printenv只会显示环境变量 printenv 会打出特定的变量值 123# wayne @ wayne in ~ [14:35:56]$ printenv USERwayne 查看单个环境变量也可">
+<meta property="article:published_time" content="2020-06-11T13:42:06.000Z">
+<meta property="article:modified_time" content="2020-06-11T13:42:36.468Z">
+<meta property="article:author" content="WayneJing">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://fatelancer.github.io/2020/06/11/shelll配置与环境/"/>
+
+
+
+
+
+  <title>Shelll配置与环境 | WayneJing</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.1.1"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WayneJing</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-sitemap">
+          <a href="/sitemap.xml" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br />
+            
+            站点地图
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2020/06/11/shelll%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Shelll配置与环境</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-06-11T21:42:06+08:00">
+                2020-06-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o"></i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="配置和环境"><a href="#配置和环境" class="headerlink" title="配置和环境"></a>配置和环境</h1><h2 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h2><h3 id="环境里储存的是什么"><a href="#环境里储存的是什么" class="headerlink" title="环境里储存的是什么"></a>环境里储存的是什么</h3><p>环境中储存着环境变量和shell变量，除了变量之外，shell还储存了一些编程数据，也就是别名和shell函数</p>
+<h4 id="检查环境"><a href="#检查环境" class="headerlink" title="检查环境"></a>检查环境</h4><p>set命令会同时显示shell变量和环境变量，printenv只会显示环境变量</p>
+<p>printenv 会打出特定的变量值</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [14:35:56]</span></span><br><span class="line">$ printenv USER</span><br><span class="line">wayne</span><br></pre></td></tr></table></figure>
+<p>查看单个环境变量也可以用</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [14:37:21]</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$USER</span></span><br><span class="line">wayne</span><br></pre></td></tr></table></figure>
+<p>set 和 printenv 不能查看别名，查看别名要用 alias</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [14:38:48]</span></span><br><span class="line">$ <span class="built_in">alias</span></span><br><span class="line">-=<span class="string">'cd -'</span></span><br><span class="line">..=<span class="string">'cd ..'</span></span><br><span class="line">...=../..</span><br><span class="line">....=../../..</span><br><span class="line">.....=../../../..</span><br><span class="line">......=../../../../..</span><br><span class="line">1=<span class="string">'cd -'</span></span><br><span class="line">2=<span class="string">'cd -2'</span></span><br><span class="line">3=<span class="string">'cd -3'</span></span><br><span class="line">4=<span class="string">'cd -4'</span></span><br><span class="line">5=<span class="string">'cd -5'</span></span><br><span class="line">6=<span class="string">'cd -6'</span></span><br><span class="line">7=<span class="string">'cd -7'</span></span><br><span class="line">8=<span class="string">'cd -8'</span></span><br><span class="line">9=<span class="string">'cd -9'</span></span><br><span class="line">_=<span class="string">'sudo '</span></span><br><span class="line">afind=<span class="string">'ack -il'</span></span><br><span class="line">egrep=<span class="string">'egrep --color=auto --exclude-dir=&#123;.bzr,CVS,.git,.hg,.svn,.idea,.tox&#125;'</span></span><br><span class="line">fgrep=<span class="string">'fgrep --color=auto --exclude-dir=&#123;.bzr,CVS,.git,.hg,.svn,.idea,.tox&#125;'</span></span><br></pre></td></tr></table></figure>
+<h3 id="环境是如何建立的"><a href="#环境是如何建立的" class="headerlink" title="环境是如何建立的"></a>环境是如何建立的</h3><h4 id="login和non-login-shell"><a href="#login和non-login-shell" class="headerlink" title="login和non-login shell"></a>login和non-login shell</h4><p>shell会话存在两种，分别为login shell和non-login shell会话</p>
+<p>login shell会提示用户输入用户名和密码，启动文件 一般是.profile文件</p>
+<p>non-login shell不会提示用户输入密码，启动文件一般是 .bashrc</p>
+<h4 id="启动文件有什么"><a href="#启动文件有什么" class="headerlink" title="启动文件有什么"></a>启动文件有什么</h4><p>以下是.bashrc的内容</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># ~/.bashrc</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"> </span><br><span class="line">[[ $- != *i* ]] &amp;&amp; <span class="built_in">return</span></span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="title">colors</span></span>() &#123;</span><br><span class="line">        <span class="built_in">local</span> fgc bgc vals seq0</span><br><span class="line"> </span><br><span class="line">        <span class="built_in">printf</span> <span class="string">"Color escapes are %s\n"</span> <span class="string">'\e[$&#123;value&#125;;...;$&#123;value&#125;m'</span></span><br><span class="line">        <span class="built_in">printf</span> <span class="string">"Values 30..37 are \e[33mforeground colors\e[m\n"</span></span><br><span class="line">        <span class="built_in">printf</span> <span class="string">"Values 40..47 are \e[43mbackground colors\e[m\n"</span></span><br><span class="line">        <span class="built_in">printf</span> <span class="string">"Value  1 gives a  \e[1mbold-faced look\e[m\n\n"</span></span><br><span class="line"> </span><br><span class="line">        <span class="comment"># foreground colors</span></span><br><span class="line">        <span class="keyword">for</span> fgc <span class="keyword">in</span> &#123;30..37&#125;; <span class="keyword">do</span></span><br><span class="line">                <span class="comment"># background colors</span></span><br><span class="line">                <span class="keyword">for</span> bgc <span class="keyword">in</span> &#123;40..47&#125;; <span class="keyword">do</span></span><br><span class="line">                        fgc=<span class="variable">$&#123;fgc#37&#125;</span> <span class="comment"># white</span></span><br><span class="line">                        bgc=<span class="variable">$&#123;bgc#40&#125;</span> <span class="comment"># black</span></span><br><span class="line"> </span><br><span class="line">                        vals=<span class="string">"<span class="variable">$&#123;fgc:+$fgc;&#125;</span><span class="variable">$&#123;bgc&#125;</span>"</span></span><br><span class="line">                        vals=<span class="variable">$&#123;vals%%;&#125;</span></span><br><span class="line"> </span><br><span class="line">                        seq0=<span class="string">"<span class="variable">$&#123;vals:+\e[$&#123;vals&#125;</span>m&#125;"</span></span><br><span class="line">                        <span class="built_in">printf</span> <span class="string">"  %-9s"</span> <span class="string">"<span class="variable">$&#123;seq0:-(default)&#125;</span>"</span></span><br><span class="line">                        <span class="built_in">printf</span> <span class="string">" <span class="variable">$&#123;seq0&#125;</span>TEXT\e[m"</span></span><br><span class="line">                        <span class="built_in">printf</span> <span class="string">" \e[<span class="variable">$&#123;vals:+$&#123;vals+$vals;&#125;</span>&#125;1mBOLD\e[m"</span></span><br><span class="line">                <span class="keyword">done</span></span><br><span class="line">                <span class="built_in">echo</span>; <span class="built_in">echo</span></span><br><span class="line">        <span class="keyword">done</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">[ -r /usr/share/bash-completion/bash_completion ] &amp;&amp; . /usr/share/bash-completion/bash_completion</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Change the window title of X terminals</span></span><br><span class="line"><span class="keyword">case</span> <span class="variable">$&#123;TERM&#125;</span> <span class="keyword">in</span></span><br><span class="line">        xterm*|rxvt*|Eterm*|aterm|kterm|gnome*|interix|konsole*)</span><br><span class="line">                PROMPT_COMMAND=<span class="string">'echo -ne "\033]0;$&#123;USER&#125;@$&#123;HOSTNAME%%.*&#125;:$&#123;PWD/#$HOME/\~&#125;\007"'</span></span><br><span class="line">                ;;</span><br><span class="line">        screen*)</span><br><span class="line">                PROMPT_COMMAND=<span class="string">'echo -ne "\033_$&#123;USER&#125;@$&#123;HOSTNAME%%.*&#125;:$&#123;PWD/#$HOME/\~&#125;\033\\"'</span></span><br><span class="line">                ;;</span><br><span class="line"><span class="keyword">esac</span></span><br><span class="line"> </span><br><span class="line">use_color=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Set colorful PS1 only on colorful terminals.</span></span><br><span class="line"><span class="comment"># dircolors --print-database uses its own built-in database</span></span><br><span class="line"><span class="comment"># instead of using /etc/DIR_COLORS.  Try to use the external file</span></span><br><span class="line"><span class="comment"># first to take advantage of user additions.  Use internal bash</span></span><br><span class="line"><span class="comment"># globbing instead of external grep binary.</span></span><br><span class="line">safe_term=<span class="variable">$&#123;TERM//[^[:alnum:]]/?&#125;</span>   <span class="comment"># sanitize TERM</span></span><br><span class="line">match_lhs=<span class="string">""</span></span><br><span class="line">[[ -f ~/.dir_colors   ]] &amp;&amp; match_lhs=<span class="string">"<span class="variable">$&#123;match_lhs&#125;</span><span class="variable">$(&lt;~/.dir_colors)</span>"</span></span><br><span class="line">[[ -f /etc/DIR_COLORS ]] &amp;&amp; match_lhs=<span class="string">"<span class="variable">$&#123;match_lhs&#125;</span><span class="variable">$(&lt;/etc/DIR_COLORS)</span>"</span></span><br><span class="line">[[ -z <span class="variable">$&#123;match_lhs&#125;</span>    ]] \</span><br><span class="line">        &amp;&amp; <span class="built_in">type</span> -P dircolors &gt;/dev/null \</span><br><span class="line">        &amp;&amp; match_lhs=$(dircolors --<span class="built_in">print</span>-database)</span><br><span class="line">[[ $<span class="string">'\n'</span><span class="variable">$&#123;match_lhs&#125;</span> == *$<span class="string">'\n'</span><span class="string">"TERM "</span><span class="variable">$&#123;safe_term&#125;</span>* ]] &amp;&amp; use_color=<span class="literal">true</span></span><br><span class="line"> </span><br><span class="line"><span class="keyword">if</span> <span class="variable">$&#123;use_color&#125;</span> ; <span class="keyword">then</span></span><br><span class="line">        <span class="comment"># Enable colors for ls, etc.  Prefer ~/.dir_colors #64489</span></span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">type</span> -P dircolors &gt;/dev/null ; <span class="keyword">then</span></span><br><span class="line">                <span class="keyword">if</span> [[ -f ~/.dir_colors ]] ; <span class="keyword">then</span></span><br><span class="line">                        <span class="built_in">eval</span> $(dircolors -b ~/.dir_colors)</span><br><span class="line">                <span class="keyword">elif</span> [[ -f /etc/DIR_COLORS ]] ; <span class="keyword">then</span></span><br><span class="line">                        <span class="built_in">eval</span> $(dircolors -b /etc/DIR_COLORS)</span><br><span class="line">                <span class="keyword">fi</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"> </span><br><span class="line">        <span class="keyword">if</span> [[ <span class="variable">$&#123;EUID&#125;</span> == 0 ]] ; <span class="keyword">then</span></span><br><span class="line">                PS1=<span class="string">'\[\033[01;31m\][\h\[\033[01;36m\] \W\[\033[01;31m\]]\$\[\033[00m\] '</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                PS1=<span class="string">'\[\033[01;32m\][\u@\h\[\033[01;37m\] \W\[\033[01;32m\]]\$\[\033[00m\] '</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"> </span><br><span class="line">        <span class="built_in">alias</span> ls=<span class="string">'ls --color=auto'</span></span><br><span class="line">        <span class="built_in">alias</span> grep=<span class="string">'grep --colour=auto'</span></span><br><span class="line">        <span class="built_in">alias</span> egrep=<span class="string">'egrep --colour=auto'</span></span><br><span class="line">        <span class="built_in">alias</span> fgrep=<span class="string">'fgrep --colour=auto'</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">        <span class="keyword">if</span> [[ <span class="variable">$&#123;EUID&#125;</span> == 0 ]] ; <span class="keyword">then</span></span><br><span class="line">                <span class="comment"># show root@ when we don't have colors</span></span><br><span class="line">                PS1=<span class="string">'\u@\h \W \$ '</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">                PS1=<span class="string">'\u@\h \w \$ '</span></span><br><span class="line">        <span class="keyword">fi</span></span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"> </span><br><span class="line"><span class="built_in">unset</span> use_color safe_term match_lhs sh</span><br><span class="line"> </span><br><span class="line"><span class="built_in">alias</span> cp=<span class="string">"cp -i"</span>                          <span class="comment"># confirm before overwriting something</span></span><br><span class="line"><span class="built_in">alias</span> df=<span class="string">'df -h'</span>                          <span class="comment"># human-readable sizes</span></span><br><span class="line"><span class="built_in">alias</span> free=<span class="string">'free -m'</span>                      <span class="comment"># show sizes in MB</span></span><br><span class="line"><span class="built_in">alias</span> np=<span class="string">'nano -w PKGBUILD'</span></span><br><span class="line"><span class="built_in">alias</span> more=less</span><br><span class="line"> </span><br><span class="line">xhost +<span class="built_in">local</span>:root &gt; /dev/null 2&gt;&amp;1</span><br><span class="line"> </span><br><span class="line">complete -cf sudo</span><br><span class="line"> </span><br><span class="line"><span class="comment"># Bash won't get SIGWINCH if another process is in the foreground.</span></span><br><span class="line"><span class="comment"># Enable checkwinsize so that bash will check the terminal size when</span></span><br><span class="line"><span class="comment"># it regains control.  #65623</span></span><br><span class="line"><span class="comment"># http://cnswww.cns.cwru.edu/~chet/bash/FAQ (E11)</span></span><br><span class="line"><span class="built_in">shopt</span> -s checkwinsize</span><br><span class="line"> </span><br><span class="line"><span class="built_in">shopt</span> -s expand_aliases</span><br><span class="line"> </span><br><span class="line"><span class="comment"># export QT_SELECT=4</span></span><br><span class="line"> </span><br><span class="line"><span class="comment"># Enable history appending instead of overwriting.  #139609</span></span><br><span class="line"><span class="built_in">shopt</span> -s histappend</span><br><span class="line"> </span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># # ex - archive extractor</span></span><br><span class="line"><span class="comment"># # usage: ex &lt;file&gt;</span></span><br><span class="line">ex ()</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">if</span> [ -f <span class="variable">$1</span> ] ; <span class="keyword">then</span></span><br><span class="line">    <span class="keyword">case</span> <span class="variable">$1</span> <span class="keyword">in</span></span><br><span class="line">      *.tar.bz2)   tar xjf <span class="variable">$1</span>   ;;</span><br><span class="line">      *.tar.gz)    tar xzf <span class="variable">$1</span>   ;;</span><br><span class="line">      *.bz2)       bunzip2 <span class="variable">$1</span>   ;;</span><br><span class="line">      *.rar)       unrar x <span class="variable">$1</span>     ;;</span><br><span class="line">      *.gz)        gunzip <span class="variable">$1</span>    ;;</span><br><span class="line">      *.tar)       tar xf <span class="variable">$1</span>    ;;</span><br><span class="line">      *.tbz2)      tar xjf <span class="variable">$1</span>   ;;</span><br><span class="line">      *.tgz)       tar xzf <span class="variable">$1</span>   ;;</span><br><span class="line">      *.zip)       unzip <span class="variable">$1</span>     ;;</span><br><span class="line">      *.Z)         uncompress <span class="variable">$1</span>;;</span><br><span class="line">      *.7z)        7z x <span class="variable">$1</span>      ;;</span><br><span class="line">      *)           <span class="built_in">echo</span> <span class="string">"'<span class="variable">$1</span>' cannot be extracted via ex()"</span> ;;</span><br><span class="line">    <span class="keyword">esac</span></span><br><span class="line">  <span class="keyword">else</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"'<span class="variable">$1</span>' is not a valid file"</span></span><br><span class="line">  <span class="keyword">fi</span></span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line">[ -f ~/.fzf.bash ] &amp;&amp; <span class="built_in">source</span> ~/.fzf.bash</span><br></pre></td></tr></table></figure>
+<h3 id="修改环境"><a href="#修改环境" class="headerlink" title="修改环境"></a>修改环境</h3><h4 id="用户应该修改哪些文件"><a href="#用户应该修改哪些文件" class="headerlink" title="用户应该修改哪些文件"></a>用户应该修改哪些文件</h4><p>一般要修改.bash_profile等效文件</p>
+<p><strong>修改提示符，可以修改PS1 变量</strong></p>
+<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><h3 id="软件包系统"><a href="#软件包系统" class="headerlink" title="软件包系统"></a>软件包系统</h3><p>一般有三种，debian系的.deb，redhat系的.rpm，还有就是压缩包自己编译，此处只讨论前两种</p>
+<h3 id="软件包系统的工作方式"><a href="#软件包系统的工作方式" class="headerlink" title="软件包系统的工作方式"></a>软件包系统的工作方式</h3><h4 id="高级和低级软件包工具"><a href="#高级和低级软件包工具" class="headerlink" title="高级和低级软件包工具"></a>高级和低级软件包工具</h4><p>debian系：低级 dpkg，高级apt-get;apt</p>
+<p>redhat：低级rpm，高级yum</p>
+<h2 id="存储介质"><a href="#存储介质" class="headerlink" title="存储介质"></a>存储介质</h2><h3 id="挂载、卸载存储设备"><a href="#挂载、卸载存储设备" class="headerlink" title="挂载、卸载存储设备"></a>挂载、卸载存储设备</h3><p>储存系统启动时的挂载信息位置是/etc/fstab</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [21:11:19]</span></span><br><span class="line">$ cat /etc/fstab</span><br><span class="line"><span class="comment"># /etc/fstab: static file system information.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Use 'blkid' to print the universally unique identifier for a device; this may</span></span><br><span class="line"><span class="comment"># be used with UUID= as a more robust way to name devices that works even if</span></span><br><span class="line"><span class="comment"># disks are added and removed. See fstab(5).</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># &lt;file system&gt;             &lt;mount point&gt;  &lt;type&gt;  &lt;options&gt;  &lt;dump&gt;  &lt;pass&gt;</span></span><br><span class="line">UUID=1550-645D                            /boot/efi      vfat    <span class="built_in">umask</span>=0077 0 2</span><br><span class="line">UUID=98173142-60a1-4818-aaac-559c6adea021 /              ext4    defaults,noatime,discard 0 1</span><br><span class="line">tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0</span><br><span class="line">UUID=DC0CD1C50CD19ABA   /mnt/sdb1 ntfs  defaults 0 0</span><br><span class="line">UUID=9874EB8474EB638A   /mnt/sdb2 ntfs  defaults 0 0</span><br><span class="line">UUID=E6DEF47ADEF443F9   /mnt/sdb3 ntfs  defaults 0 0</span><br></pre></td></tr></table></figure>
+<p>mount 查看已挂载的设备</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [21:11:34]</span></span><br><span class="line">$ mount</span><br><span class="line">proc on /proc <span class="built_in">type</span> proc (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">sys on /sys <span class="built_in">type</span> sysfs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">dev on /dev <span class="built_in">type</span> devtmpfs (rw,nosuid,relatime,size=8148412k,nr_inodes=2037103,mode=755)</span><br><span class="line">run on /run <span class="built_in">type</span> tmpfs (rw,nosuid,nodev,relatime,mode=755)</span><br><span class="line">efivarfs on /sys/firmware/efi/efivars <span class="built_in">type</span> efivarfs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">/dev/sda2 on / <span class="built_in">type</span> ext4 (rw,noatime,discard)</span><br><span class="line">securityfs on /sys/kernel/security <span class="built_in">type</span> securityfs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">tmpfs on /dev/shm <span class="built_in">type</span> tmpfs (rw,nosuid,nodev)</span><br><span class="line">devpts on /dev/pts <span class="built_in">type</span> devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)</span><br><span class="line">tmpfs on /sys/fs/cgroup <span class="built_in">type</span> tmpfs (ro,nosuid,nodev,noexec,mode=755)</span><br><span class="line">cgroup2 on /sys/fs/cgroup/unified <span class="built_in">type</span> cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate)</span><br><span class="line">cgroup on /sys/fs/cgroup/systemd <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,xattr,name=systemd)</span><br><span class="line">pstore on /sys/fs/pstore <span class="built_in">type</span> pstore (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">none on /sys/fs/bpf <span class="built_in">type</span> bpf (rw,nosuid,nodev,noexec,relatime,mode=700)</span><br><span class="line">cgroup on /sys/fs/cgroup/cpu,cpuacct <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,cpu,cpuacct)</span><br><span class="line">cgroup on /sys/fs/cgroup/devices <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,devices)</span><br><span class="line">cgroup on /sys/fs/cgroup/pids <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,pids)</span><br><span class="line">cgroup on /sys/fs/cgroup/net_cls,net_prio <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,net_cls,net_prio)</span><br><span class="line">cgroup on /sys/fs/cgroup/memory <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,memory)</span><br><span class="line">cgroup on /sys/fs/cgroup/blkio <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,blkio)</span><br><span class="line">cgroup on /sys/fs/cgroup/freezer <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,freezer)</span><br><span class="line">cgroup on /sys/fs/cgroup/rdma <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,rdma)</span><br><span class="line">cgroup on /sys/fs/cgroup/perf_event <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,perf_event)</span><br><span class="line">cgroup on /sys/fs/cgroup/hugetlb <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,hugetlb)</span><br><span class="line">cgroup on /sys/fs/cgroup/cpuset <span class="built_in">type</span> cgroup (rw,nosuid,nodev,noexec,relatime,cpuset)</span><br><span class="line">systemd-1 on /proc/sys/fs/binfmt_misc <span class="built_in">type</span> autofs (rw,relatime,fd=29,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=15619)</span><br><span class="line">mqueue on /dev/mqueue <span class="built_in">type</span> mqueue (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">hugetlbfs on /dev/hugepages <span class="built_in">type</span> hugetlbfs (rw,relatime,pagesize=2M)</span><br><span class="line">debugfs on /sys/kernel/debug <span class="built_in">type</span> debugfs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">tracefs on /sys/kernel/tracing <span class="built_in">type</span> tracefs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">binfmt_misc on /proc/sys/fs/binfmt_misc <span class="built_in">type</span> binfmt_misc (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">configfs on /sys/kernel/config <span class="built_in">type</span> configfs (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">tmpfs on /tmp <span class="built_in">type</span> tmpfs (rw,noatime)</span><br><span class="line">fusectl on /sys/fs/fuse/connections <span class="built_in">type</span> fusectl (rw,nosuid,nodev,noexec,relatime)</span><br><span class="line">/dev/sda1 on /boot/efi <span class="built_in">type</span> vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=iso8859-1,shortname=mixed,utf8,errors=remount-ro)</span><br><span class="line">/dev/sdb1 on /mnt/sdb1 <span class="built_in">type</span> fuseblk (ro,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096)</span><br><span class="line">/dev/sdb2 on /mnt/sdb2 <span class="built_in">type</span> fuseblk (ro,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096)</span><br><span class="line">/dev/sdb3 on /mnt/sdb3 <span class="built_in">type</span> fuseblk (ro,nosuid,nodev,relatime,user_id=0,group_id=0,allow_other,blksize=4096)</span><br><span class="line">tmpfs on /run/user/1000 <span class="built_in">type</span> tmpfs (rw,nosuid,nodev,relatime,size=1631660k,mode=700,uid=1000,gid=1001)</span><br><span class="line">gvfsd-fuse on /run/user/1000/gvfs <span class="built_in">type</span> fuse.gvfsd-fuse (rw,nosuid,nodev,relatime,user_id=1000,group_id=1001)</span><br><span class="line">portal on /run/user/1000/doc <span class="built_in">type</span> fuse.portal (rw,nosuid,nodev,relatime,user_id=1000,group_id=1001)</span><br></pre></td></tr></table></figure>
+<p>卸载可以用unmount 加目录名</p>
+<p>通过查看/dev 目录可以看到设备信息</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [21:13:03]</span></span><br><span class="line">$ ll /dev</span><br><span class="line">总用量 0</span><br><span class="line">crw-r--r--  1 root root    10,   235  5月 31 10:38 autofs</span><br><span class="line">drwxr-xr-x  2 root root          340  5月 31 10:38 block</span><br><span class="line">drwxr-xr-x  2 root root           80  5月 31 10:38 bsg</span><br><span class="line">crw-------  1 root root    10,   234  5月 31 10:38 btrfs-control</span><br><span class="line">drwxr-xr-x  3 root root           60  5月 31 10:38 bus</span><br><span class="line">drwxr-xr-x  2 root root         3.4K  5月 31 11:25 char</span><br><span class="line">crw-------  1 root root     5,     1  5月 31 10:38 console</span><br><span class="line">lrwxrwxrwx  1 root root           11  5月 31 10:38 core -&gt; /proc/kcore</span><br><span class="line">drwxr-xr-x  2 root root           60  5月 31 10:38 cpu</span><br><span class="line">crw-------  1 root root    10,    60  5月 31 10:38 cpu_dma_latency</span><br><span class="line">crw-------  1 root root    10,   203  5月 31 10:38 cuse</span><br><span class="line">drwxr-xr-x  7 root root          140  5月 31 10:38 disk</span><br><span class="line">drwxr-xr-x  3 root root          140  5月 31 10:38 dri</span><br><span class="line">crw-------  1 root root   240,     0  5月 31 10:38 drm_dp_aux0</span><br><span class="line">crw-rw----  1 root video   29,     0  5月 31 10:38 fb0</span><br><span class="line">lrwxrwxrwx  1 root root           13  5月 31 10:38 fd -&gt; /proc/self/fd</span><br><span class="line">crw-rw-rw-  1 root root     1,     7  5月 31 10:38 full</span><br><span class="line">crw-rw-rw-  1 root root    10,   229  5月 31 10:38 fuse</span><br><span class="line">crw-------  1 root root    10,   228  5月 31 10:38 hpet</span><br><span class="line">drwxr-xr-x  2 root root            0  5月 31 10:38 hugepages</span><br><span class="line">crw-------  1 root root    10,   183  5月 31 10:38 hwrng</span><br><span class="line">lrwxrwxrwx  1 root root           12  5月 31 10:38 initctl -&gt; /run/initctl</span><br><span class="line">drwxr-xr-x  4 root root          480  5月 31 10:38 input</span><br><span class="line">crw-r--r--  1 root root     1,    11  5月 31 10:38 kmsg</span><br><span class="line">crw-rw-rw-  1 root kvm     10,   232  5月 31 10:38 kvm</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>
+    WayneJing
+  </li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://fatelancer.github.io/2020/06/11/shelll%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%8E%AF%E5%A2%83/" title="Shelll配置与环境">http://fatelancer.github.io/2020/06/11/shelll%E9%85%8D%E7%BD%AE%E4%B8%8E%E7%8E%AF%E5%A2%83/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>
+    本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Linux/" <i class="fa fa-tag"></i> Linux</a>
+          
+            <a href="/tags/Shell/" <i class="fa fa-tag"></i> Shell</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/06/11/Shell%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%A4%A7%E5%85%A8/" rel="next" title="Shell命令行大全">
+                <i class="fa fa-chevron-left"></i> Shell命令行大全
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">WayneJing</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:chenjw1995@foxmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/fatelancer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="https://diligentpanda.github.io" target="_blank" title="Jianghe">
+                      
+                        <i class="fa fa-fw fa-globe"></i>Jianghe</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#配置和环境"><span class="nav-number">1.</span> <span class="nav-text">配置和环境</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境"><span class="nav-number">1.1.</span> <span class="nav-text">环境</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境里储存的是什么"><span class="nav-number">1.1.1.</span> <span class="nav-text">环境里储存的是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#检查环境"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">检查环境</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#环境是如何建立的"><span class="nav-number">1.1.2.</span> <span class="nav-text">环境是如何建立的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#login和non-login-shell"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">login和non-login shell</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动文件有什么"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">启动文件有什么</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改环境"><span class="nav-number">1.1.3.</span> <span class="nav-text">修改环境</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#用户应该修改哪些文件"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">用户应该修改哪些文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#软件包管理"><span class="nav-number">1.2.</span> <span class="nav-text">软件包管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#软件包系统"><span class="nav-number">1.2.1.</span> <span class="nav-text">软件包系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#软件包系统的工作方式"><span class="nav-number">1.2.2.</span> <span class="nav-text">软件包系统的工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#高级和低级软件包工具"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">高级和低级软件包工具</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#存储介质"><span class="nav-number">1.3.</span> <span class="nav-text">存储介质</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#挂载、卸载存储设备"><span class="nav-number">1.3.1.</span> <span class="nav-text">挂载、卸载存储设备</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WayneJing</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
+
+  
+
+  
+
+</body>
+</html>
