@@ -11,6 +11,7 @@
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [14:37:21]</span></span><br><span class="line">$ <span class="built_in">echo</span> <span class="variable">$USER</span></span><br><span class="line">wayne</span><br></pre></td></tr></table></figure>
 <p>set 和 printenv 不能查看别名，查看别名要用 alias</p>
 <figure class="highlight sh"><table><tr><td class="code"><pre><span class="line"><span class="comment"># wayne @ wayne in ~ [14:38:48]</span></span><br><span class="line">$ <span class="built_in">alias</span></span><br><span class="line">-=<span class="string">'cd -'</span></span><br><span class="line">..=<span class="string">'cd ..'</span></span><br><span class="line">...=../..</span><br><span class="line">....=../../..</span><br><span class="line">.....=../../../..</span><br><span class="line">......=../../../../..</span><br><span class="line">1=<span class="string">'cd -'</span></span><br><span class="line">2=<span class="string">'cd -2'</span></span><br><span class="line">3=<span class="string">'cd -3'</span></span><br><span class="line">4=<span class="string">'cd -4'</span></span><br><span class="line">5=<span class="string">'cd -5'</span></span><br><span class="line">6=<span class="string">'cd -6'</span></span><br><span class="line">7=<span class="string">'cd -7'</span></span><br><span class="line">8=<span class="string">'cd -8'</span></span><br><span class="line">9=<span class="string">'cd -9'</span></span><br><span class="line">_=<span class="string">'sudo '</span></span><br><span class="line">afind=<span class="string">'ack -il'</span></span><br><span class="line">egrep=<span class="string">'egrep --color=auto --exclude-dir=&#123;.bzr,CVS,.git,.hg,.svn,.idea,.tox&#125;'</span></span><br><span class="line">fgrep=<span class="string">'fgrep --color=auto --exclude-dir=&#123;.bzr,CVS,.git,.hg,.svn,.idea,.tox&#125;'</span></span><br></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="环境是如何建立的"><a href="#环境是如何建立的" class="headerlink" title="环境是如何建立的"></a>环境是如何建立的</h3><h4 id="login和non-login-shell"><a href="#login和non-login-shell" class="headerlink" title="login和non-login shell"></a>login和non-login shell</h4><p>shell会话存在两种，分别为login shell和non-login shell会话</p>
 <p>login shell会提示用户输入用户名和密码，启动文件 一般是.profile文件</p>
 <p>non-login shell不会提示用户输入密码，启动文件一般是 .bashrc</p>
@@ -74,6 +75,7 @@
 </li>
 </ol>
 <hr>
+<a id="more"></a>
 <h3 id="第一次键盘输入"><a href="#第一次键盘输入" class="headerlink" title="第一次键盘输入"></a>第一次键盘输入</h3><p>打开终端后如下所示</p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> waynejing @ waynejing <span class="keyword">in</span> /mnt/c/Users/User [22:07:05]</span></span><br><span class="line"><span class="meta">$</span></span><br></pre></td></tr></table></figure>
 <p>这称为shell 提示符，提示符随发行版不同有可能会变化，但是通常包括username@machinename 气候是当前工作目录和一个 $</p>
