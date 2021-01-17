@@ -306,6 +306,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WayneJing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WayneJing">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/" itemprop="url">LeetCode - 23.合并K个排序链表</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-25T20:35:30+08:00">
+                2019-12-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode题解</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
+<p>合并 k 个排序链表，返回合并后的排序链表。请分析和描述算法的复杂度。</p>
+<p>示例:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">[</span><br><span class="line">  1-&gt;4-&gt;5,</span><br><span class="line">  1-&gt;3-&gt;4,</span><br><span class="line">  2-&gt;6</span><br><span class="line">]</span><br><span class="line">输出: 1-&gt;1-&gt;2-&gt;3-&gt;4-&gt;4-&gt;5-&gt;6</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/merge-k-sorted-lists" target="_blank" rel="noopener">https://leetcode-cn.com/problems/merge-k-sorted-lists</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
+</blockquote>
+<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><p>此题可以分解来看。可以把多个有序链表的合并分解为多组两个有序链表的合并。而两个有序链表的合并刚好是<a href="2019/12/25/LeetCode-21-合并两个有序链表">LeetCode 21.合并两个有序链表</a>所解决的问题。<br>那么现在问题就在如何将多个有序链表的合并分解成两个有序链表了，分治算法可以解决这个问题。<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">mergeKLists</span><span class="params">(lists: List[ListNode])</span> -&gt; ListNode:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> lists:</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> self._merge(lists, <span class="number">0</span>, len(lists)<span class="number">-1</span>)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_merge</span><span class="params">(lists: List[ListNode], left: int, right: int)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> left == right:</span><br><span class="line">        <span class="keyword">return</span> lists[left]</span><br><span class="line">    mid = (left + right) // <span class="number">2</span></span><br><span class="line">    l1 = self._merge(lists, left, mid)</span><br><span class="line">    l2 = self._merge(lists, mid + <span class="number">1</span>, right)</span><br><span class="line">    <span class="keyword">return</span> self._mergeTwoLists(l1, l2)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_mergeTwoLists</span><span class="params">(l1: ListNode, l2: ListNode)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> l1 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l2</span><br><span class="line">    <span class="keyword">if</span> l2 == <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">return</span> l1</span><br><span class="line">    res = ListNode(<span class="number">0</span>)</span><br><span class="line">    <span class="keyword">if</span> l1.val &lt; l2.val:</span><br><span class="line">        res.val = l1.val</span><br><span class="line">        res.next = self._mergeTwoLists(l1.next, l2)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        res.val = l2.val</span><br><span class="line">        res.next = self._mergeTwoLists(l1, l2.next)</span><br><span class="line">    <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/12/25/LeetCode-23-%E5%90%88%E5%B9%B6K%E4%B8%AA%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/25/LeetCode-22-%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1680,173 +1830,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://fatelancer.github.io/2019/12/23/LeetCode-10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WayneJing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WayneJing">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/23/LeetCode-10-%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E5%8C%B9%E9%85%8D/" itemprop="url">LeetCode - 10. 正则表达式匹配</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-23T20:59:17+08:00">
-                2019-12-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/LeetCode%E9%A2%98%E8%A7%A3/" itemprop="url" rel="index">
-                    <span itemprop="name">LeetCode题解</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h1><blockquote>
-<p>给你一个字符串 s 和一个字符规律 p，请你来实现一个支持 ‘.’ 和 ‘*’ 的正则表达式匹配。</p>
-<p>‘.’ 匹配任意单个字符<br>‘*’ 匹配零个或多个前面的那一个元素<br>所谓匹配，是要涵盖 整个 字符串 s的，而不是部分字符串。</p>
-<p>说明:</p>
-<p>s 可能为空，且只包含从 a-z 的小写字母。<br>p 可能为空，且只包含从 a-z 的小写字母，以及字符 . 和 *。</p>
-<p><strong>示例</strong> 1:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aa&quot;</span><br><span class="line">p &#x3D; &quot;a&quot;</span><br><span class="line">输出: false</span><br><span class="line">解释: &quot;a&quot; 无法匹配 &quot;aa&quot; 整个字符串。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 2:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aa&quot;</span><br><span class="line">p &#x3D; &quot;a*&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: 因为 &#39;*&#39; 代表可以匹配零个或多个前面的那一个元素, 在这里前面的元素就是 &#39;a&#39;。因此，字符串 &quot;aa&quot; 可被视为 &#39;a&#39; 重复了一次。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 3:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;ab&quot;</span><br><span class="line">p &#x3D; &quot;.*&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: &quot;.*&quot; 表示可匹配零个或多个（&#39;*&#39;）任意字符（&#39;.&#39;）。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 4:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;aab&quot;</span><br><span class="line">p &#x3D; &quot;c*a*b&quot;</span><br><span class="line">输出: true</span><br><span class="line">解释: 因为 &#39;*&#39; 表示零个或多个，这里 &#39;c&#39; 为 0 个, &#39;a&#39; 被重复一次。因此可以匹配字符串 &quot;aab&quot;。</span><br></pre></td></tr></table></figure></p>
-<p><strong>示例</strong> 5:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">输入:</span><br><span class="line">s &#x3D; &quot;mississippi&quot;</span><br><span class="line">p &#x3D; &quot;mis*is*p*.&quot;</span><br><span class="line">输出: false</span><br></pre></td></tr></table></figure><br>来源：力扣（LeetCode）<br>链接：<a href="https://leetcode-cn.com/problems/regular-expression-matching" target="_blank" rel="noopener">https://leetcode-cn.com/problems/regular-expression-matching</a><br>著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。</p>
-</blockquote>
-<h1 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h1><h2 id="直接调用正则库（略）"><a href="#直接调用正则库（略）" class="headerlink" title="直接调用正则库（略）"></a>直接调用正则库（略）</h2><h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><ol>
-<li>考虑最简单的情况，如果没有<code>.</code>，<code>*</code>，我们所需要对比的就只有两个字符串是否相同，那么最简单的情况可以写成以下方式<br><strong>Python 解法</strong><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    tmpRes = (first_s == first_p)</span><br><span class="line">    <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></li>
-<li>由于<code>.</code>可以匹配任意字符，则以上函数可以改写为：</li>
-</ol>
-<p><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    tmpRes = (first_p <span class="keyword">in</span> [first_s, <span class="string">'.'</span>])</span><br><span class="line">    <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></p>
-<ol>
-<li>最难的部分在于<code>*</code>。由于<code>*</code>指代前面的字符出现了0次或者一次，假设<code>p[j + 1] == &#39;*&#39;</code>那么可以有以下推论：<script type="math/tex; mode=display">
-P(s[i:], p[j:]) = P(s[i:], p[j + 2:]) or P(s[i + 1:], p[j:])</script>根据这个，以上的函数可以改写为：</li>
-</ol>
-<p><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="literal">True</span> <span class="keyword">if</span> <span class="keyword">not</span> s <span class="keyword">else</span> <span class="literal">False</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> s: <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">    first_s = s[<span class="number">0</span>]</span><br><span class="line">    first_p = p[<span class="number">0</span>]</span><br><span class="line">    <span class="keyword">if</span> len(p) &gt;= <span class="number">2</span> <span class="keyword">and</span> p[<span class="number">1</span>] == <span class="string">'*'</span>:</span><br><span class="line">        <span class="keyword">return</span> isMatch(s[:], p[<span class="number">2</span>:]) <span class="keyword">or</span> isMatch(s[<span class="number">1</span>:], p[:])</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        tmpRes = (first_p <span class="keyword">in</span> [first_s, <span class="string">'.'</span>])</span><br><span class="line">        <span class="keyword">return</span> tmpRes <span class="keyword">and</span> isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure><br>将以上函数风格进行优化<br><strong>Python 解法</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">isMatch</span><span class="params">(s: str, p: str)</span> -&gt; bool:</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> p: <span class="keyword">return</span> <span class="keyword">not</span> s </span><br><span class="line">    first = bool(s) <span class="keyword">and</span> p[<span class="number">0</span>] <span class="keyword">in</span> [s[<span class="number">0</span>], <span class="string">'.'</span>]</span><br><span class="line">    <span class="keyword">if</span> len(p) &gt;= <span class="number">2</span> <span class="keyword">and</span> p[<span class="number">1</span>] == <span class="string">"*"</span>:</span><br><span class="line">        <span class="keyword">return</span> (self.isMatch(s, p[<span class="number">2</span>:])) <span class="keyword">or</span> (first <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p)) </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> first <span class="keyword">and</span> self.isMatch(s[<span class="number">1</span>:], p[<span class="number">1</span>:])</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="accessibility.prev_page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="accessibility.prev_page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="accessibility.next_page"></i></a>
   </nav>
 
 
@@ -1892,7 +1880,7 @@ P(s[i:], p[j:]) = P(s[i:], p[j + 2:]) or P(s[i + 1:], p[j:])</script>根据这�
               
                 <a href="/archives/%7C%7C%20archive">
               
-                  <span class="site-state-item-count">50</span>
+                  <span class="site-state-item-count">51</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
